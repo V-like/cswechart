@@ -284,6 +284,20 @@
 		<artifactId>druid</artifactId>
 		<version>1.0.13</version>
 	</dependency>
+	
+	
+	<!-- POI Excel导出工具 -->
+	<dependency>
+	    <groupId>org.apache.poi</groupId>
+	    <artifactId>poi</artifactId>
+	    <version>3.13</version>
+	</dependency>
+	<dependency>
+	    <groupId>org.apache.poi</groupId>
+	    <artifactId>poi-ooxml</artifactId>
+	    <version>3.13</version>
+	</dependency>
+	
   </dependencies>
   <build>
     <finalName>echart</finalName>

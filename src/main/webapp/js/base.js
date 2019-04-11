@@ -39,7 +39,7 @@ function doexcel(){
 		modalTitle('无法导出，请先设置关键查询条件',1);		
 		return;
 	}
-	$("#formSearch").attr('action',$("#fule").val()+"excel/toExcelXlsExecute.web");
+	$("#formSearch").attr('action',$("#fule").val()+"excel/toExcelXlsExecute2.web");
 	document.getElementById("formSearch").submit();
 }
 
