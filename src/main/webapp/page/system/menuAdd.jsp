@@ -81,13 +81,6 @@
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="menuname" class="col-sm-3 control-label">菜单名称</label>
-							<div class="col-sm-6">
-								<input type="text" class="form-control" id="menuname"
-									placeholder="请输入菜单名称">
-							</div>
-						</div>
-						<div class="form-group">
 							<label for="ismenu" class="col-sm-3 control-label">是否父菜单</label>
 							<div class="col-sm-6">
 								<select class="form-control" id="ismenu" name="ismenu"

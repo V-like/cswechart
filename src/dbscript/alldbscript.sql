@@ -64,12 +64,12 @@ CREATE TABLE `t_c_contractexecute` (
 
 insert  into `t_c_contractexecute`(`contractexecuteid`,`contractid`,`monthamount`,`year`,`month`,`remark`,`priority`,`isdisabled`,`operuser`,`operdate`) values (1,1,376.18,2019,2,NULL,1,'0','admin','2019-03-13 17:11:22'),(2,1,234.98,2019,1,NULL,1,'0','admin','2019-03-13 17:16:10'),(3,2,121.52,2019,1,NULL,1,'0','admin','2019-03-13 17:16:49'),(4,2,458.31,2019,2,NULL,1,'0','admin','2019-03-13 17:19:52'),(5,10,111111,2019,2,'66',0,'0','admin','2019-04-08 14:24:38'),(6,1,55555,2019,6,'44',0,'0','admin','2019-04-08 14:25:03'),(7,7,4321,2019,3,'werwqrewq',0,'0','admin','2019-04-08 14:25:18'),(8,10,33333,2019,7,'333',0,'0','admin','2019-04-08 14:25:34');
 
-/*Table structure for table `t_f_feedbackwrite` */
+/*Table structure for table `t_f_feedback` */
 
-DROP TABLE IF EXISTS `t_f_feedbackwrite`;
+DROP TABLE IF EXISTS `t_f_feedback`;
 
-CREATE TABLE `t_f_feedbackwrite` (
-  `id` bigint(11) DEFAULT NULL COMMENT 'id',
+CREATE TABLE `t_f_feedback` (
+  `feedbackid` bigint(11) DEFAULT NULL COMMENT 'ID',
   `number` varchar(200) DEFAULT NULL COMMENT '序号',
   `entnyname` varchar(200) DEFAULT NULL COMMENT '项目名称',
   `subofficeid` varchar(200) DEFAULT NULL COMMENT '分局表外键',
@@ -78,7 +78,7 @@ CREATE TABLE `t_f_feedbackwrite` (
   `code` bigint(13) DEFAULT NULL COMMENT 'coed码'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-/*Data for the table `t_f_feedbackwrite` */
+/*Data for the table `t_f_feedback` */
 
 /*Table structure for table `t_f_financingrepair` */
 

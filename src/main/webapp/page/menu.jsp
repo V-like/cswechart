@@ -139,14 +139,14 @@
 	                    <li><a href="#">已签合同执行情况统计</a></li>
 	             		-->
 					</ul></li>
-				<li><a href="#" class="dropdown-toggle" data-toggle="dropdown">
-						系统管理 <b class="caret"></b>
+				<li id="feedbackli"><a href="#" class="dropdown-toggle"
+					data-toggle="dropdown"> 反馈管理 <b class="caret"></b>
 				</a>
 					<ul class="dropdown-menu">
-						<li><a href="<%=fule%>user/userList.web">用户管理</a></li>
-						<li><a href="<%=fule%>role/roleList.web">角色管理</a></li>
-						<li><a href="<%=fule%>menu/menuList.web">菜单管理</a></li>
+						<li><a href="<%=fule %>feedback/feedbackList.web">反馈填报</a></li>
+			
 					</ul></li>
+					
 			</ul>
 		</div>
 	</div>
