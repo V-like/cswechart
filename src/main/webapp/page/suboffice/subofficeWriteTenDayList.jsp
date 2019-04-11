@@ -49,7 +49,7 @@ String fule = base + "" + contextPath + "/";
 	            <div class="form-group" style="margin-top:-34px;margin-left: 260px;">
                     <div class="col-sm-2">
                     	<select class="form-control" data-width="80px" id="tendaytypeid" name="tendaytypeid" onchange="reloadtable()">
-                    		<option value="0">-请选择-</option><option value="1">上旬</option><option value="2">中旬</option><option value="3">下旬</option>
+                    		<option value="1" selected = "selected">上旬</option><option value="2">中旬</option><option value="3">下旬</option>
                     	</select>
                     </div>
                 </div>

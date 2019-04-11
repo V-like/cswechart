@@ -108,10 +108,22 @@ var TableInit = function () {
 						width : 100,
 						rowspan: 2,
 						formatter:function (value, row, index, field) {
-							var tendaytypeStr = '<option value="1">上旬</option><option value="2">中旬</option><option value="3">下旬</option>'
-							var indexSelect = tendaytypeStr.indexOf('<option value="'+value+'">');
-							tendaytypeStr = tendaytypeStr.replace('<option value="'+value+'">','<option value="'+value+'" selected="selected">');
-							return '<select readonly="true" name="list['+index+'].tendaytype" onchange="calculateAllInvest('+index+')" class="form-control" id="tendaytype'+index+'" data-width="100px" >'+tendaytypeStr+'</select>';
+//							var tendaytypeStr = ''
+//							var indexSelect = tendaytypeStr.indexOf('<option value="'+value+'">');
+//							tendaytypeStr = tendaytypeStr.replace('<option value="'+value+'">','<option value="'+value+'" selected="selected">');
+//							return '<select readonly="true" name="list['+index+'].tendaytype" class="form-control" id="tendaytype'+index+'" data-width="100px" >'+tendaytypeStr+'</select>';
+							var ty = $("#tendaytypeid").val();
+							if(ty == 1){
+								var tendaytypeStr = '<option value="1" selected = "selected">上旬</option><option value="2">中旬</option><option value="3">下旬</option>';
+							}
+							if(ty == 2){
+								var tendaytypeStr = '<option value="1">上旬</option><option value="2" selected = "selected">中旬</option><option value="3">下旬</option>';					
+							}
+							if(ty == 3){
+								var tendaytypeStr = '<option value="1">上旬</option><option value="2">中旬</option><option value="3" selected = "selected">下旬</option>';
+							}
+							
+							return '<select readonly="true" name="list['+index+'].tendaytype" class="form-control" id="tendaytype'+index+'" data-width="100px" >'+tendaytypeStr+'</select>';
 						},
 					    footerFormatter: function (value) {
 					    	return '-';
@@ -326,7 +338,7 @@ var TableInit = function () {
 						title: '自开工以来累计<br/>完成投资（万元）',
 						width : 190,
 						formatter:function (value, row, index, field) {
-							return '<div id="finishinvest_'+index+'" contenteditable="true" onblur="$(this).html(fmoney($(this).html(),4))">' + fmoney(value,4) + '</div>' + 
+							return '<div id="finishinvest_'+index+'" onblur="$(this).html(fmoney($(this).html(),4))">' + fmoney(value,4) + '</div>' + 
 							'<input type="hidden" value="'+(value || "")+'" id="finishinvest'+index+'" name="list['+index+'].finishinvest" />';
 					    },
 					    footerFormatter: function (value) {
@@ -394,7 +406,7 @@ var TableInit = function () {
 						title: '本年度实际完成<br/>投资（万元）',
 						width : 120,
 						formatter:function (value, row, index, field) {
-							return '<div id="yearrealityinvest_'+index+'" contenteditable="true" onblur="$(this).html(fmoney($(this).html(),4))">' + fmoney(value,4) + '</div>' + 
+							return '<div id="yearrealityinvest_'+index+'" onblur="$(this).html(fmoney($(this).html(),4))">' + fmoney(value,4) + '</div>' + 
 							'<input type="hidden" value="'+(value || "")+'" id="yearrealityinvest'+index+'" name="list['+index+'].yearrealityinvest" />';
 					    },
 					    footerFormatter: function (value) {
@@ -411,7 +423,7 @@ var TableInit = function () {
 						title: '本月实际完成<br/>投资（万元）',
 						width : 120,
 						formatter:function (value, row, index, field) {
-							return '<div id="monthrealityinvest_'+index+'" contenteditable="true" onblur="$(this).html(fmoney($(this).html(),4))">' + fmoney(value,4) + '</div>' + 
+							return '<div id="monthrealityinvest_'+index+'" onblur="$(this).html(fmoney($(this).html(),4))">' + fmoney(value,4) + '</div>' + 
 							'<input type="hidden" value="'+(value || "")+'" id="monthrealityinvest'+index+'" name="list['+index+'].monthrealityinvest" />';
 					    },
 					    footerFormatter: function (value) {
@@ -428,7 +440,7 @@ var TableInit = function () {
 						title: '本旬实际完成<br/>投资（万元）',
 						width : 120,
 						formatter:function (value, row, index, field) {
-							return '<div id="tendayrealityinvest_'+index+'" contenteditable="true" onblur="$(this).html(fmoney($(this).html(),4))">' + fmoney(value,4) + '</div>' + 
+							return '<div id="tendayrealityinvest_'+index+'" contenteditable="true" onblur="$(this).html(uptTendayrealityinvest($(this).html(),4,'+index+'))">' + fmoney(value,4) + '</div>' + 
 							'<input type="hidden" value="'+(value || "")+'" id="tendayrealityinvest'+index+'" name="list['+index+'].tendayrealityinvest" />';
 					    },
 					    footerFormatter: function (value) {
@@ -593,16 +605,103 @@ function loadContractDataBySubofficeid(subofficeid){
 	});
 	return returnData;
 }
+/**
+ * 合同下拉修改事件
+ */
 function setcontractnum(_this){
 	$("#contractnum"+_index).html("");
-	var index = _this.selectedIndex ;
+	
+	var index = _this.selectedIndex;
 	var _contractnum = $(_this.options[index]).attr("title");
 	var _contractamount = $(_this.options[index]).attr("amount");
 	var _index = $(_this).attr("id").split("_")[1];
 	$("#contractnum"+_index).html(_contractnum);
 	$("#contractamount"+_index).html(fmoney(_contractamount));
+	//年份,月份,旬
+	var year = $("#belongTimeStr").val().split("-")[0];
+	var month = $("#belongTimeStr").val().split("-")[1];
+	var tendaytype = $("#tendaytypeid").val();
+	//第一步：点击合同下拉，填充多个某某累计投资金额
+	//发送ajax
+	var returnData;
+	$.ajax({
+		url:$("#fule").val()+"subofficewrite/aa.json",
+		type:"POST",
+		dataType:"json",
+		async :false,
+		data: {contractid : $("#contractid_"+_index).val(),year : year,month : month,tendaytype: tendaytype},
+		success:function(data){
+			returnData=data;
+			console.info(data);
+		},
+		error:function(){
+			console.info("报错");
+		}
+	});
+	if(returnData!=null){
+			
+	var _ti = returnData.tendayrealityinvest;
+	var _finishinvest = returnData.finishinvest + _ti;
+	if(month=='1' && tendaytype == '1'){
+		var _yearrealityinvest = 0.0000;
+	}else{
+		var _yearrealityinvest = returnData.yearrealityinvest + _ti;
+	}
+	if(tendaytype == '1'){
+		var _monthrealityinvest = 0.0000;
+	}else{
+		var _monthrealityinvest = returnData.monthrealityinvest + _ti;
+	}
 	
+	console.info("_ti====="+_ti);
+	console.info("_finishinvest====="+_finishinvest);
+	console.info("_yearrealityinvest====="+_yearrealityinvest);
+	console.info("_monthrealityinvest====="+_monthrealityinvest);
+	//调用统一修改方法
+	unifyUpt(_finishinvest , _yearrealityinvest , _monthrealityinvest , _index);
+	}
 }
+/**
+ * 第二步：修改旬累计投资金额时其他累计投资金额累加;
+ */
+function uptTendayrealityinvest(s,n,index){
+	var _index = index;
+	console.info(_index);
+	var f = $("#finishinvest"+_index).val();
+	var y = $("#yearrealityinvest"+_index).val();
+	var m = $("#monthrealityinvest"+_index).val()
+	if(""==f || f==undefined){
+		f=0.0000;
+	}
+	if(""==y || y==undefined){
+		y = 0.0000;
+	}
+	if(""==m || m==undefined){
+		m = 0.0000;
+	}
+	var _finishinvest = parseFloat( f ) + parseFloat(s);
+	var _yearrealityinvest = parseFloat( y ) + parseFloat(s);
+	var _monthrealityinvest = parseFloat( m ) + parseFloat(s);
+	
+	//赋值给展示列
+	$("#finishinvest_"+_index).html(fmoney(_finishinvest));
+	$("#yearrealityinvest_"+_index).html(fmoney(_yearrealityinvest));
+	$("#monthrealityinvest_"+_index).html(fmoney(_monthrealityinvest));
+}
+/**
+ * 统一修改 （自开工，年，月）累计投资金额
+ */
+function unifyUpt(f,y,m,i){
+	//赋值给展示列
+	$("#finishinvest_"+i).html(f);
+	$("#yearrealityinvest_"+i).html(y);
+	$("#monthrealityinvest_"+i).html(m);
+	//赋值隐藏域
+	$("#finishinvest"+i).val(f);
+	$("#yearrealityinvest"+i).val(y);
+	$("#monthrealityinvest"+i).val(m);
+}
+
 /**
  * 新增一行数据
  */

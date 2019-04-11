@@ -150,6 +150,25 @@
 			</foreach>
 		</if>
     </update>
+    <!-- 查询上个旬的旬填报 -->
+    <select id="aa"  parameterType="java.util.Map" resultType="java.util.Map" >
+    	select finishinvest,yearrealityinvest,monthrealityinvest,tendayrealityinvest
+    	from t_s_subofficewrite where type = 1
+    	<if test="contractid != 0">
+    		and contractid = #{contractid}
+    	</if>
+    	<if test="year!=null and year!=''">
+			and year = #{year} 
+		</if>
+    	<if test="month!=null and month!=''">
+			and month = #{month} 
+		</if>
+		<if test="tendaytype!=null and tendaytype!=0">
+			and tendaytype = #{tendaytype} 
+    	</if>
+    </select>
+    
+    
     <!-- 加载计算本月实际完成投资 -->
 	<select id="calculateMonthRealityInvest" parameterType="java.util.Map" resultType="java.util.Map" >
 		select ifnull(sum(tendayrealityinvest), 0.00) calculatemonthrealityinvest 

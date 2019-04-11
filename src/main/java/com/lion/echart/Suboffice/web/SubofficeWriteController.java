@@ -402,4 +402,49 @@ public class SubofficeWriteController {
 		resp.getWriter().print(obj.toString());
 		//return obj.toString();
 	}
+	
+	//查询上个旬的填报
+	@RequestMapping(value = "subofficewrite/aa.json",method=RequestMethod.POST)
+	public @ResponseBody Map<String, Object> aa(String contractid,String year,String month,String tendaytype,HttpServletRequest req,HttpServletResponse resp, HttpSession session) throws IOException { 
+		try {
+			//判断合同id是否为空
+			if(tendaytype!=null&&!tendaytype.equals("0")){
+				HashMap<String, Object> paramUpdate = new HashMap<String, Object>();
+				if("1".equals(tendaytype) && "1".equals(month)) {
+					year = ""+(Integer.parseInt(year)-1);					
+				}
+				if("1".equals(tendaytype)) {
+					if("1".equals(month)) {
+						month = "12";
+					}else {
+						
+						month = ""+(Integer.parseInt(month)-1);
+					}
+					tendaytype = "3" ;
+				}else {
+					tendaytype = ""+(Integer.parseInt(tendaytype)-1);
+				}
+				paramUpdate.put("contractid",contractid);
+				paramUpdate.put("year",year);
+				paramUpdate.put("month",""+(Integer.parseInt(month)));
+				paramUpdate.put("tendaytype",tendaytype);
+				List<Map<String, Object>> calculateMonthRealityInvestList = baseService.queryList("comle.SubofficeWrite.aa", paramUpdate);
+				System.out.println(calculateMonthRealityInvestList.toString());
+				if(calculateMonthRealityInvestList.size()==0) {
+					return null;
+				}
+				return calculateMonthRealityInvestList.get(0);		
+			}else{
+				return null;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+		
+	}
+	
+	
+	
+	
 }
