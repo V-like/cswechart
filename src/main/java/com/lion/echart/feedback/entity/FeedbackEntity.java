@@ -4,20 +4,20 @@ import java.io.Serializable;
 
 public class FeedbackEntity implements Serializable{
 	
-	private long id;
+	private long feedbackid;
 	private Integer priority;//序号
 	private String entnyname;//项目名称
-	private long subofficeid;//分局ID
-	private String grade;//分级
+	private String grade;//层级
 	private long perentid;//父ID
-	private long code;//coed码
+	private long codeno;//coed码
+	private String unit; //单位
 	
 	
-	public long getId() {
-		return id;
+	public long getFeedbackid() {
+		return feedbackid;
 	}
-	public void setId(long id) {
-		this.id = id;
+	public void setFeedbackid(long feedbackid) {
+		this.feedbackid = feedbackid;
 	}
 	public Integer getPriority() {
 		return priority;
@@ -31,12 +31,6 @@ public class FeedbackEntity implements Serializable{
 	public void setEntnyname(String entnyname) {
 		this.entnyname = entnyname;
 	}
-	public long getSubofficeid() {
-		return subofficeid;
-	}
-	public void setSubofficeid(long subofficeid) {
-		this.subofficeid = subofficeid;
-	}
 	public String getGrade() {
 		return grade;
 	}
@@ -49,12 +43,20 @@ public class FeedbackEntity implements Serializable{
 	public void setPerentid(long perentid) {
 		this.perentid = perentid;
 	}
-	public long getCode() {
-		return code;
+	public long getCodeno() {
+		return codeno;
 	}
-	public void setCode(long code) {
-		this.code = code;
+	public void setCodeno(long codeno) {
+		this.codeno = codeno;
 	}
+	public String getUnit() {
+		return unit;
+	}
+	public void setUnit(String unit) {
+		this.unit = unit;
+	}
+	
+	
 	
 	
 
