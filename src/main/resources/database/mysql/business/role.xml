@@ -9,6 +9,14 @@
 			and rolename like CONCAT('%',#{rolename},'%')
 		</if>
 	</select>
+	<select id="getRoleListDataByPage" parameterType="java.util.Map" resultType="java.util.Map" >
+		select 
+			*,date_format(createdate, '%Y-%m-%d') createdateStr
+		from t_sys_role where isdisabled=0
+		<if test="rolename != null and rolename != ''">
+			and rolename like CONCAT('%',#{rolename},'%')
+		</if>
+	</select>
 	<!-- 查询角色 -->
 	<select id="getRoleData" parameterType="java.util.Map" resultType="com.lion.echart.system.entity.RoleEntity" >
 		select 

@@ -21,6 +21,19 @@
 			and subofficename like CONCAT('%',#{subofficename},'%')
 		</if>
 	</select>
+	<select id="getSubofficeListDBDataByPage" parameterType="java.util.Map" resultType="java.util.Map" >
+		select *, 
+		case when isonlysubo = '1' then '是' 
+        else '否' end  isonlysubostr
+		from t_s_suboffice
+		where 1=1 and isdisabled = 0
+		<if test="subofficeid != null and subofficeid != 0">
+			and subofficeid = #{subofficeid} 
+		</if>
+		<if test="subofficename != null and subofficename != ''">
+			and subofficename like CONCAT('%',#{subofficename},'%')
+		</if>
+	</select>
 	<!-- 查询部门 -->
 	<select id="getSubofficeData" parameterType="java.util.Map" resultType="com.lion.echart.Suboffice.entity.SubofficeEntity" >
 		select 

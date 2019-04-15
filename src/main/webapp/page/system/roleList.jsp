@@ -26,6 +26,7 @@
 	src="<%=contextPath%>/js/bootstrap.min.js"></script>
 <script type="text/javascript"
 	src="<%=contextPath%>/js/bootstrap-table.min.js"></script>
+	<script type="text/javascript" src="<%=contextPath%>/js/bootstrap-table-zh-CN.min.js"></script>
 <script type="text/javascript"
 	src="<%=contextPath%>/js/jquery.the-modal.js"></script>
 <script type="text/javascript"

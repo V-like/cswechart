@@ -56,9 +56,9 @@ public class UserController {
 		param.put("username", username);
 		param.put("currPage", Integer.valueOf(currPage));
 		param.put("pageSize", Integer.valueOf(pageSize));
-		List<Map<String, Object>> list = baseService.queryListByPage("comle.user.getUserListDataByPage", param);
+		List<Map<String, Object>> list = baseService.queryList("comle.user.getUserListDataByPage", param);
 		//数据总条数
-		List<Map<String, Object>> listAll = baseService.queryListByPage("comle.user.getUserListData", param);
+		List<Map<String, Object>> listAll = baseService.queryList("comle.user.getUserListData", param);
 		 //封装返回结果
         Page page = new Page();
         page.setTotal(listAll.size()+"");

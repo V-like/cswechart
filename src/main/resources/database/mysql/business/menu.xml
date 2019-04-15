@@ -10,6 +10,15 @@
 			</if>
             order by a.priority 
 	</select>
+	<select id="getMenuListDataByPage" parameterType="java.util.Map" resultType="java.util.Map" >
+		select a.id,a.menuname,a.url,a.priority,case when a.ismenu = 1 then '是' 
+            else '否' end  ismenu,a.pid,b.menuname pmenuname from t_sys_menu a left join t_sys_menu b on a.pid=b.id
+            where a.isdisabled=0
+            <if test="menuname != null and menuname != ''">
+				and a.menuname like CONCAT('%',#{menuname},'%')
+			</if>
+            order by a.priority 
+	</select>
 	<!-- 查询菜单 -->
 	<select id="getMenuData" parameterType="java.util.Map" resultType="com.lion.echart.system.entity.MenuEntity" >
 		select 

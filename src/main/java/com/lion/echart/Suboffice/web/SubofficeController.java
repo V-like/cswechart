@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.lion.echart.Suboffice.entity.SubofficeEntity;
 import com.lion.echart.Suboffice.entity.SubofficeWriteEntity;
+import com.lion.echart.base.entity.Page;
 import com.lion.echart.base.logic.BaseService;
 import com.lion.echart.global.GlobalThings;
 import com.lion.echart.project.entity.MonthTotalEntity;
@@ -48,11 +49,21 @@ public class SubofficeController {
 	
 	//获取分局列表数据数据库
 	@RequestMapping(value = "/suboffice/subofficeGetDBData.json",method=RequestMethod.POST)
-	public @ResponseBody List<Map<String, Object>> subofficewriteGetDBData(String subofficename,HttpServletRequest req,HttpServletResponse resp, HttpSession session) throws IOException { 
+	public @ResponseBody Page subofficewriteGetDBData(String currPage, String pageSize,String subofficename,HttpServletRequest req,HttpServletResponse resp, HttpSession session) throws IOException { 
+		currPage=currPage==null?"1":currPage;   //当前页码
+	    pageSize=pageSize==null?"10":pageSize;   //页面大小
 		HashMap<String, Object> param = new HashMap<String, Object>();
 		param.put("subofficename", subofficename);
-		List<Map<String, Object>> list = baseService.queryList("comle.Suboffice.getSubofficeListDBData", param);
-		return list;
+		param.put("currPage", Integer.valueOf(currPage));
+		param.put("pageSize", Integer.valueOf(pageSize));
+		List<Map<String, Object>> list = baseService.queryList("comle.Suboffice.getSubofficeListDBDataByPage", param);
+		//数据总条数
+		List<Map<String, Object>> listAll = baseService.queryList("comle.Suboffice.getSubofficeListDBData", param);
+		 //封装返回结果
+        Page page = new Page();
+        page.setTotal(listAll.size()+"");
+        page.setRows(list);
+		return page;
 	}
 	
 	//获取分局列表数据

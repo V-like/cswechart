@@ -72,7 +72,6 @@ var TableInit = function () {
 			currPage: params.offset/params.limit+1,  //offset为数据开始索引,转换为显示当前页
             pageSize: params.limit  //页面大小
 		};
-		console.log(temp);
 		return temp;
 	};
 	return oTableInit;
