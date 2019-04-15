@@ -8,7 +8,7 @@ var TableInit = function () {
 	//初始化Table
 	oTableInit.Init = function () {
 		$('#t_datagrid').bootstrapTable({
-			url: $("#fule").val()+"menu/menuGetData.json",       //请求后台的URL（*）
+			url: $("#fule").val()+"maintenance/maintenanceGetDBData.json",       //请求后台的URL（*）
 			method: 'post',                      //请求方式（*）
 			toolbar: false,                //工具按钮用哪个容器
 			striped: true,                      //是否显示行间隔色
@@ -28,7 +28,6 @@ var TableInit = function () {
 			showRefresh: false,                  //是否显示刷新按钮
 			minimumCountColumns: 2,             //最少允许的列数
 			clickToSelect: true,                //是否启用点击选中行
-			//height: 700,                        //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
 			uniqueId: "no",                     //每一行的唯一标识，一般为主键列
 			showToggle: false,                    //是否显示详细视图和列表视图的切换按钮
 			cardView: false,                    //是否显示详细视图
@@ -40,31 +39,24 @@ var TableInit = function () {
                     checkbox: true
 	              }
 				  ,{
-						field: 'menuname',
-						title: '菜单名称'
-				  }
-				 ,{
-						field: 'url',
-						title: 'URL'
-				  }
-				 ,{
-						field: 'ismenu',
-						title: '是否父菜单'
-				  }
-				 ,{
-						field: 'pmenuname',
-						title: '上级菜单'
-				  }
-				 ,{
 						field: 'priority',
-						title: '排序序号'
+						title: '序号'
+				  }
+				 ,{
+						field: 'entnyname',
+						title: '项目名称'
 				  },
-				  {field: '',align: 'center',title: '操作' ,width : 100,
+				  {
+						field: 'unit',
+						title: '单位'
+				  },				  
+				  {field: '',align: 'center',title: '操作' ,width : 250,
 						formatter:function (value, row, index, field) {
 					        return [
-					        	'<button type="button" onclick="menuEdit('+row["id"]+')" class="RoleOfedit btn btn-primary  btn-sm" style="margin-right:15px;">修改</button>',
+					        	  '<button type="button" onclick="maintenanceAdd('+row["maintenanceid"]+')" class="RoleOfedit btn btn-primary  btn-sm" style="margin-right:15px;">同级添加</button>',
+					        	  '<button type="button" onclick="maintenanceAdd('+row["maintenanceid"]+')" class="RoleOfedit btn btn-primary  btn-sm" style="margin-right:15px;">下级添加</button>',
 							      ].join('');
-					    }
+					    },
 				  }
 				]
 			],
@@ -91,9 +83,11 @@ var TableInit = function () {
 	};
 	return oTableInit;
 };
+
+
 function reloadtable(){
 	$.ajax({
-		url: $("#fule").val()+'menu/menuGetData.json',
+		url: $("#fule").val()+'maintenance/maintenanceGetDBData.json',
 		data: $("#formSearch").serializeObj(),
 		type: "post",
 		dataType:"json",
@@ -101,40 +95,4 @@ function reloadtable(){
 			$("#t_datagrid").bootstrapTable('load', json);
 		}
 	});
-}
-//修改用户
-function menuEdit(_id){
-	window.location.href = $("#fule").val()+'menu/menuEdit.web?menuid='+_id;
-}
-//菜单删除
-function delMenu(){
-	var checkRow= $("#t_datagrid").bootstrapTable('getSelections');
-  if(checkRow.length<=0){
-  	modalTitle("请选中一条数据",1);
-	}else{
-		var checkIds = "";
-		$.each(checkRow,function(key,value){
-			checkIds+=value.id+",";
-		});
-		if(checkIds.length>0){
-			checkIds=checkIds.substring(0,checkIds.length-1);
-		}
-		showloding();
-		$.ajax({
-			url: $("#fule").val()+'menu/menuDel.json?checkIds='+checkIds,
-			type: 'post',
-			dataType: "json",
-			success: function (data) {
-				if(data.msgType == 1){
-					modalTitle("操作成功",1);
-					window.location.reload();
-				}else{
-					modalTitle(data.message,1);
-				}
-			},error:function(data){
-				closeloding();
-				modalTitle("操作失败，请重试",1);
-			}
-		});
-	}
 }
