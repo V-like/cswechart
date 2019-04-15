@@ -22,7 +22,7 @@ var TableInit = function () {
 			pageSize: 10,                       //每页的记录行数（*）
 			pageList: [10, 25, 50, 100],        //可供选择的每页的行数（*）
 			search: false,                       //是否显示表格搜索，此搜索是客户端搜索，不会进服务端，所以，个人感觉意义不大
-			contentType: "json",
+			contentType: "application/x-www-form-urlencoded; charset=UTF-8",
 			strictSearch: false,
 			showColumns: false,                  //是否显示所有的列
 			showRefresh: false,                  //是否显示刷新按钮
@@ -68,9 +68,11 @@ var TableInit = function () {
 	//得到查询的参数
 	oTableInit.queryParams = function (params) {
 		var temp = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
-			limit: params.limit,   //页面大小
-			offset:params.offset
+			username :$("#username").val(),
+			currPage: params.offset/params.limit+1,  //offset为数据开始索引,转换为显示当前页
+            pageSize: params.limit  //页面大小
 		};
+		console.log(temp);
 		return temp;
 	};
 	return oTableInit;

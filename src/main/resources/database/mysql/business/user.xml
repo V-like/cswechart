@@ -13,6 +13,18 @@
 			and t.username like CONCAT('%',#{username},'%')
 		</if>
 	</select>
+	<select id="getUserListDataByPage" parameterType="java.util.Map" resultType="java.util.Map" >
+		select st.subofficename,t.*
+			,date_format(createdate, '%Y-%m-%d') createdateStr,
+			case when sex = 'F' then '女' 
+            else '男' end  sexStr
+		from t_sys_user t
+    	left join t_s_suboffice st on t.subofficeid = st.subofficeid
+			where 1=1 and t.isdisabled=0
+		<if test="username != null and username != ''">
+			and t.username like CONCAT('%',#{username},'%')
+		</if>
+	</select>
 	<select id="getUserData" parameterType="java.util.Map" resultType="com.lion.echart.system.entity.UserEntity" >
 		select 
 			t.*,st.subofficename

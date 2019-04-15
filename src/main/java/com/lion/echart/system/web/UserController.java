@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.lion.echart.Suboffice.entity.SubofficeWriteEntity;
+import com.lion.echart.base.entity.Page;
 import com.lion.echart.base.logic.BaseService;
 import com.lion.echart.contract.entity.ContractEntity;
 import com.lion.echart.project.entity.MonthTotalEntity;
@@ -48,11 +49,21 @@ public class UserController {
 	
 	//用户信息列表数据
 	@RequestMapping(value = "/user/userGetData.json",method=RequestMethod.POST)
-	public @ResponseBody List<Map<String, Object>> userGetData(String username,HttpServletRequest req,HttpServletResponse resp, HttpSession session) throws IOException { 
+	public @ResponseBody Page userGetData(String currPage, String pageSize, String username,HttpServletRequest req,HttpServletResponse resp, HttpSession session) throws IOException { 
+		currPage=currPage==null?"1":currPage;   //当前页码
+	    pageSize=pageSize==null?"10":pageSize;   //页面大小
 		HashMap<String, Object> param = new HashMap<String, Object>();
 		param.put("username", username);
-		List<Map<String, Object>> list = baseService.queryList("comle.user.getUserListData", param);
-		return list;
+		param.put("currPage", Integer.valueOf(currPage));
+		param.put("pageSize", Integer.valueOf(pageSize));
+		List<Map<String, Object>> list = baseService.queryListByPage("comle.user.getUserListDataByPage", param);
+		//数据总条数
+		List<Map<String, Object>> listAll = baseService.queryListByPage("comle.user.getUserListData", param);
+		 //封装返回结果
+        Page page = new Page();
+        page.setTotal(listAll.size()+"");
+        page.setRows(list);
+		return page;
 	}
 	
 	//用户信息添加列表页 

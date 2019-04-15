@@ -60,6 +60,10 @@ public class BaseDaoImpl implements BaseDao{
 		return getSqlMapClient().selectList(sqlid, param);
 	}
 
+	public List queryListByPage(String sqlid, Object param) {
+		return getSqlMapClient().selectList(sqlid, param);
+	}
+	
 	public Object queryObject(String sqlid, Object param) {
 		List list = getSqlMapClient().selectList(sqlid, param);
 		Object obj = null;

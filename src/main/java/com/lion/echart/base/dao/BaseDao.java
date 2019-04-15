@@ -60,6 +60,14 @@ public interface BaseDao {
 	public abstract List queryList(String sqlid, Object param);
 	
 	/**
+	 * 统一查询分页列表方法
+	 * @param sqlid
+	 * @param param
+	 * @return
+	 */
+	public abstract List queryListByPage(String sqlid, Object param);
+	
+	/**
 	 * 统一查询对象方法
 	 * @param sqlid
 	 * @param param

@@ -35,6 +35,10 @@ public class BaseServiceImpl implements BaseService{
 	public List queryList(String sqlid, Object param) {
 		return baseDao.queryList(sqlid, param);
 	}
+	
+	public List queryListByPage(String sqlid, Object param) {
+		return baseDao.queryListByPage(sqlid, param);
+	}
 
 	public Object queryObject(String sqlid, Object param) {
 		return baseDao.queryObject(sqlid, param);
