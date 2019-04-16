@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="comle.Maintenance">
+
+	<resultMap
+		type="com.lion.echart.maintenance.entity.MaintenanceEntity"
+		id="maintenance">
+		<id property="maintenanceId" column="maintenanceid" />
+		<result property="priority" column="priority" />
+		<result property="entnyname" column="entnyname" />
+		<result property="grade" column="grade" />
+		<result property="perentId" column="perentid" />
+		<result property="codeno" column="codeno" />
+		<result property="unit" column="unit" />
+
+
+	</resultMap>
+	<!-- 仅供分局填报查询列表使用 -->
+	<select id="getMaintenanceListData"
+		parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+		maintenanceid,priority,entnyname,grade,perentid,`index`,codeno,unit
+		FROM
+		t_f_maintenance
+		
+	</select>
+	<insert id="insertMaintenance" parameterType="com.lion.echart.maintenance.entity.MaintenanceEntity">
+           insert into t_f_maintenance(maintenanceid,priority,entnyname,grade,perentid,`index`,codeno,unit)  
+               values( #{maintenanceid}, #{priority}, #{entnyname},#{grade},  #{perentid},  #{index},  #{codeno},  #{unit})
+   	</insert>
+</mapper>

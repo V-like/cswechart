@@ -13,16 +13,7 @@ function validatef(){
 			amount: {
 				validators: {
 					notEmpty: {
-						message: '合同金额不能为空'
-					},
-					stringLength: {
-                        min: 1,
-                        max: 2,
-                        message: '月份长度为1到2位'
-                    },
-					regexp: {
-						regexp: /^[0-9]+$/,
-						message: '月份必须为位数字'
+						message: '项目名称不能为空'
 					}
 				}
 			}
@@ -31,23 +22,23 @@ function validatef(){
 }
 function save(){
 	
-	var subofficename = $("#subofficename").val();
-	var isonlysubo = $("#isonlysubo").val();
-	if(subofficename == ''){
-    	alert('请输入部门名称');
+	var entnyname = $("#entnyname").val();
+	var priority = $("#priority").val();
+	if(entnyname == ''){
+    	alert('请输入项目名称');
         return false;
     }
 	$.ajax({
-		url: $("#fule").val()+"suboffice/subofficeSave.json",
+		url: $("#fule").val()+"maintenance/maintenanceSave.json",
 		type:"POST",
 		dataType:"json",
 		data: {
-			subofficename : subofficename,
-			isonlysubo : isonlysubo
+			entnyname : entnyname,
+			priority : priority
         },
 		success:function(data){
 			 alert("操作成功");
-			 window.location.href=$("#fule").val()+"suboffice/subofficeList.web";
+			 window.location.href=$("#fule").val()+"maintenance/maintenanceList.web";
 		},
 		error:function(){
 			console.log("失败");

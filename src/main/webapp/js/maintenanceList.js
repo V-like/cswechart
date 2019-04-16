@@ -96,3 +96,67 @@ function reloadtable(){
 		}
 	});
 }
+
+//添加维护
+function maintenanceAdd(_id){
+	/*
+	 * id添加下级时 + 1
+	 * index添加下级时选择数据的下级的数量 + 1
+	  * 添加下级时选择数据的id
+          * 添加下级时选择数据的全值001 000 000 000 000 000
+     * 1
+     * 1.1
+     * 1.2
+     * 1.2.1
+     * 2
+     * 2.1
+          * 以上是序号，序号是codeno码去零之后加上 . 点分层级显示
+
+SELECT RPAD(
+CONCAT(
+LEFT('001001000000000000',2*3)
+,LPAD('2',3,0))
+,18,0) FROM DUAL; 
+
+ 
+if(父id!=0){
+//首先获取一个父层级别
+parentcj='';
+//在获取一个父层code
+parentcode='';
+IF(){
+leftcode = parrentcode.substring(parentcengji*3);
+}
+idnex = "3";
+WHILE(idnex.length < 3){
+idnex = ‘0’+ idnex ；
+}
+leftcode = leftcode + idnex
+
+WHILE(leftcode.leng < 18){
+str = str + '0';
+}
+}
+    * 
+     * 
+	 * */
+	parentcengji = '';
+	parrentcode = '';
+	//当前选中的
+	if(codeno==null){
+		codeno = '001001000000000000';
+	}
+	if(codeno){
+	leftcode = parrentcode.substring(parentcengji*3);
+	}
+	index = "3";
+	while(idnex.length < 3){
+	idnex = '0'+ index ;
+	}
+	leftcode = leftcode + idnex
+
+	while(leftcode.leng < 18){
+	str = str + '0';
+	}
+	window.location.href = $("#fule").val()+'maintenance/maintenanceAdd.web?subofficeid='+_id;
+}
