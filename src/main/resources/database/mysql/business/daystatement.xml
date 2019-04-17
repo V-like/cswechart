@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="comle.daystatement">
+	<resultMap type="com.lion.echart.project.entity.DaystatementEntity" id="daystatement">
+		<id property="subofficeWriteId" column="dayScheduid"/>
+		<result property="contractId" column="monthscheduleid"/>
+		<result property="constructionContent" column="todayaccomplish"/>
+		<result property="beginDate" column="describe"/>
+	</resultMap>
+	
+	<!-- 查询工程日填报 -->
+	<select id="getdaystatementListData" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT 
+		fms.priority priority,fms.entnyname entnyname,fms.unit unit,fms.mid `mid`,sd.todayaccomplish todayaccomplish,(sd.todayaccomplish/fms.plannedvolume*100+'') finishratio,sd.describe 'describe',sd.dayScheduid dayScheduid
+		FROM (SELECT 
+		fm.priority priority,fm.entnyname entnyname,fm.unit unit,fm.codeno codeno,ms.plannedvolume plannedvolume,ms.mid MID,ms.date DATE
+		FROM t_f_maintenance fm
+		LEFT JOIN t_month_schedule ms
+		ON fm.maintenanceid = ms.fid
+		WHERE ms.date = #{date}) fms
+		LEFT JOIN (SELECT * FROM t_s_daystatement WHERE DAY = #{day}) sd
+		ON sd.monthscheduleid = fms.mid
+		ORDER BY fms.codeno ASC
+		
+	</select>
+	<!-- 新增工程日填报 -->
+	<insert id="daystatementInsert" parameterType="com.lion.echart.project.entity.DaystatementEntity">
+           INSERT 
+           INTO t_s_daystatement 
+           (monthscheduleid, todayaccomplish,`day`,`describe`) 
+           VALUES (#{monthscheduleid}, #{todayaccomplish}, #{day}, #{describe})
+   	</insert>
+	<!-- 修改工程日填报 -->
+	<update id="daystatementUpdate" parameterType="com.lion.echart.project.entity.DaystatementEntity">
+    	UPDATE t_s_daystatement 
+    	SET todayaccomplish = #{todayaccomplish}, `DESCRIBE` = #{describe}
+		WHERE dayScheduid = #{dayScheduid}
+    </update>
+	
+</mapper>
