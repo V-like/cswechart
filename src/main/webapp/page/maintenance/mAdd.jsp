@@ -5,7 +5,6 @@
 	String contextPath = this.getServletContext().getContextPath();
 	String fule = base + "" + contextPath + "/";
 %>
-<%@ page isELIgnored="false"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -40,7 +39,9 @@
 </head>
 <body class="bgdiv"
 	style="height: 100%; background-image: url('/echart/image/loginbk1.jpg');">
-	<input type="hidden" id="maintenanceid" value="${maintenanceid }" />
+	<div id="head">
+		<%@include file="../menu.jsp"%>
+	</div>
 	<div id="content" class="content">
 		<div class="panel-body" style="padding-bottom: 0px;">
 			<div class="panel panel-default">
