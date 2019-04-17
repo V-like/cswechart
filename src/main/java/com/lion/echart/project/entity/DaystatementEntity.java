@@ -2,7 +2,6 @@ package com.lion.echart.project.entity;
 
 import com.lion.echart.base.entity.BaseEntity;
 
-
 public class DaystatementEntity extends BaseEntity{
 	
 	private Long dayScheduid;		//id

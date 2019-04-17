@@ -31,6 +31,7 @@ String fule = base + "" + contextPath + "/";
 	.table {table-layout:fixed;}
 </style>
 </head>
+
 <body class="bgdiv" style="height:100%;background-image:url('/echart/image/loginbk1.jpg');" >
 	<div id="head" >
 		<%@include file="../menu.jsp" %>

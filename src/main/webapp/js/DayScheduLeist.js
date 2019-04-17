@@ -12,7 +12,6 @@ $(document).ready(function(){
 	oTable.Init();
 	$("#contentTablediv").height(window.innerHeight-$("#head").height()-$("#searchdiv").height()-40);
 });
-
 var TableInit = function () {
 	var oTableInit = new Object();
 	//初始化Table
