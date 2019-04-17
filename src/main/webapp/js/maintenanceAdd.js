@@ -14,6 +14,7 @@ function validatef(){
 				validators: {
 					notEmpty: {
 						message: '项目名称不能为空'
+		
 					}
 				}
 			}
@@ -23,22 +24,27 @@ function validatef(){
 function save(){
 	
 	var entnyname = $("#entnyname").val();
-	var priority = $("#priority").val();
+	var priority = $("#unit").val();
+	var maintenanceid = $("#maintenanceid").val();
 	if(entnyname == ''){
     	alert('请输入项目名称');
         return false;
     }
+	if(entnyname == ''){
+    	alert('请输入单位');
+        return false;
+    }
 	$.ajax({
-		url: $("#fule").val()+"maintenance/maintenanceSave.json",
+		url: "maintenanceSave.json",
 		type:"POST",
 		dataType:"json",
 		data: {
 			entnyname : entnyname,
-			priority : priority
+			priority : priority,
+			maintenanceid : maintenanceid
         },
 		success:function(data){
 			 alert("操作成功");
-			 window.location.href=$("#fule").val()+"maintenance/maintenanceList.web";
 		},
 		error:function(){
 			console.log("失败");

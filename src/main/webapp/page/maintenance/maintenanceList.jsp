@@ -35,8 +35,7 @@ String fule = base + "" + contextPath + "/";
             	<a href="http://127.0.0.1:8080/echart/login.json"
 						style="color: #000; text-decoration: none;">反馈管理</a> / <a
 						href="http://127.0.0.1:8080/echart/maintenance/maintenanceList.web"
-						style="color: #000; text-decoration: none;">进度反馈及对比分析</a> 
-            	
+						style="color: #000; text-decoration: none;">进度反馈及对比分析</a>             	
             </div>
         </div>       
 

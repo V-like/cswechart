@@ -21,11 +21,27 @@
 		SELECT
 		maintenanceid,priority,entnyname,grade,perentid,`index`,codeno,unit
 		FROM
-		t_f_maintenance
-		
+		t_f_maintenance where 1 = 1
+		<if test="maintenanceid != null">
+		 and maintenanceid = #{maintenanceid} 
+		</if>
+		order by codeno
 	</select>
 	<insert id="insertMaintenance" parameterType="com.lion.echart.maintenance.entity.MaintenanceEntity">
-           insert into t_f_maintenance(maintenanceid,priority,entnyname,grade,perentid,`index`,codeno,unit)  
-               values( #{maintenanceid}, #{priority}, #{entnyname},#{grade},  #{perentid},  #{index},  #{codeno},  #{unit})
+           insert into t_f_maintenance(priority,entnyname,grade,perentid,`index`,codeno,unit)  
+               values(#{priority}, #{entnyname},#{grade},  #{perentid},  #{index},  #{codeno}, #{unit})
    	</insert>
+   	
+   	<select id="getSubMaxInxdexAo" parameterType="java.util.Map" resultType="java.lang.Integer" >
+    	SELECT 
+    	ifnull(MAX(t.index),0)+1 
+    	FROM t_f_maintenance t 
+    	WHERE t.maintenanceid = #{maintenanceid}
+   	</select>
+   		<select id="getSubMaxGradeAo" parameterType="java.util.Map" resultType="java.lang.String" >
+    	SELECT 
+    	ifnull(MAX(t.index),0)+1 
+    	FROM t_f_maintenance t 
+    	WHERE t.grade = #{grade}
+   	</select>
 </mapper>
