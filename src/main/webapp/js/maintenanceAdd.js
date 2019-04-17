@@ -14,6 +14,7 @@ function validatef(){
 				validators: {
 					notEmpty: {
 						message: '项目名称不能为空'
+		
 					}
 				}
 			}

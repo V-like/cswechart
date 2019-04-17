@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 public class MaintenanceEntity implements Serializable{
 	
+	
 	private long maintenanceid;
 	private String priority;//序号
 	private String entnyname;//项目名称
@@ -12,7 +13,7 @@ public class MaintenanceEntity implements Serializable{
 	private long index;//自己所在位置
 	private String codeno;//coed码
 	private String unit; //单位
-	
+
 	
 	public long getMaintenanceid() {
 		return maintenanceid;

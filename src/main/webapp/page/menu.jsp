@@ -31,6 +31,7 @@
 							if(sonvalue.pid==pid){
 								strHtml+='<li><a href="<%=fule %>'+sonvalue.url+'">'+sonvalue.menuname+'</a></li>';
 							}
+							
 						});
 						strHtml+='</ul>';
 					}
@@ -39,8 +40,7 @@
 			});
 			$("#menuUl").html(strHtml);
 		},
-		error:function(){
-			
+		error:function(){			
 		}
 	});
 </script>

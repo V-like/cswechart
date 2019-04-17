@@ -69,6 +69,7 @@ var TableInit = function () {
 		});
 	};
 	
+	
 	//得到查询的参数
 	oTableInit.queryParams = function (params) {
 		var temp = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
@@ -79,7 +80,6 @@ var TableInit = function () {
 	};
 	return oTableInit;
 };
-
 
 function reloadtable(){
 	$.ajax({
@@ -121,23 +121,19 @@ function maintenanceAdd(_id){
 
 function saveFun(){
 	var entnyname = $("#entnyname").val();
-	console.log(1);
 	var priority = $("#priority").val();
-	console.log(2);
-	var unit = $("#unit").val();
-	console.log(3);
+	var unit = $("#unit").val();	
 	var maintenanceid = $("#maintenanceid").val();	
-	console.log(4);
 	if(entnyname == ""){
     	alert('请输入项目名称');
         return false;
     }
-	console.log(5);
+	
 	if(unit == ""){
     	alert('请输入单位');
         return false;
     }
-	console.log(6);
+	
 	$.ajax({
 		url:$("#fule").val()+"maintenance/maintenanceSave.json",
 		type:"POST",
@@ -155,5 +151,4 @@ function saveFun(){
 			console.log("失败");
 		}
 	});
-	console.log(7);
 }

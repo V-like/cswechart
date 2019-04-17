@@ -38,10 +38,10 @@
     	FROM t_f_maintenance t 
     	WHERE t.maintenanceid = #{maintenanceid}
    	</select>
-   		<select id="getSubMaxGradeAo" parameterType="java.util.Map" resultType="java.lang.Integer" >
+   		<select id="getSubMaxGradeAo" parameterType="java.util.Map" resultType="java.lang.String" >
     	SELECT 
     	ifnull(MAX(t.index),0)+1 
     	FROM t_f_maintenance t 
-    	WHERE t.maintenanceid = #{maintenanceid}
+    	WHERE t.grade = #{grade}
    	</select>
 </mapper>

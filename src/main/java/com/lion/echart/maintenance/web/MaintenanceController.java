@@ -74,6 +74,7 @@ public class MaintenanceController {
 			return "/page/maintenance/maintenanceAdd";
 		}
 		
+		
 		//部门添加保存
 		@RequestMapping(value = "/maintenance/maintenanceSave.json",method=RequestMethod.POST)
 		public @ResponseBody String maintenanceSave(Long maintenanceid, String priority,String entnyname,String unit,String grade,HttpServletRequest req,HttpServletResponse resp, HttpSession session) throws IOException { 			
@@ -132,8 +133,7 @@ public class MaintenanceController {
 				selfGrade = "1";
 			}else {
 				selfGrade = baseService.queryObject("comle.Maintenance.getSubMaxGradeAo", param).toString(); //上一级的index位置	
-			}
-			
+			}			
 			MaintenanceEntity maintenance = new MaintenanceEntity(leftpriority,entnyname,selfGrade,maintenanceid,selfIndex,leftcode,unit);//增加	
 			System.out.println(maintenance.toString());
 	         //放入对象存入数据库			
