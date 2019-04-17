@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="comle.monthschedule">
+
+	<resultMap
+		type="com.lion.echart.project.entity.MonthScheduleEntity" id="monthscheduleData">
+		<id property="mid" column="mid" />
+		<id property="unit" column="unit" />
+		<result property="designquantity" column="designquantity" />
+		<result property="changequantity" column="changequantity" />
+		<result property="plannedvolume" column="plannedvolume" />
+		<result property="accumulationcumulant" column="accumulationcumulant" />
+		<result property="completionrate" column="completionrate" />
+		<result property="accumulationcompletionrate" column="accumulationcompletionrate" />
+		<result property="date" column="date" />
+		<result property="backups" column="backups" />
+		<result property="number" column="number" />
+		<result property="entnyname" column="entnyname" />
+		<result property="codeno" column="code" /> 
+		<result property="fid" column="fid" /> 
+
+	</resultMap>
+	<!-- 仅供月进度分期对比分期功能页面查询列表使用 -->
+	<select id="monthscheduleData"  parameterType="java.util.Map"
+		resultType="java.util.Map">
+	SELECT
+		 f.maintenanceid AS "fid",f.priority AS "number",f.entnyname AS "entnyname",f.codeno AS "code" ,
+		s.mid AS "mid", s.unit AS "unit", s.designquantity AS "designquantity", s.changequantity AS "changequantity", s.plannedvolume AS "plannedvolume", s.accumulationcumulant AS "accumulationcumulant", s.completionrate AS "completionrate", 
+		s.accumulationcompletionrate AS "accumulationcompletionrate", s.DATE AS "DATE", s.backups AS "backups"
+		 FROM t_f_maintenance AS f LEFT JOIN t_month_schedule AS s ON s.fid = f.maintenanceid AND s.date=#{date}  ORDER BY f.codeno ASC
+	</select>
+	
+	
+	<!-- 仅供月进度分期对比分期功能页面添加列表使用 -->
+	<insert id="monthscheduleInsert" parameterType="com.lion.echart.project.entity.MonthScheduleEntity">
+		INSERT 
+		INTO t_month_schedule 
+		(`unit`,`designquantity`,`changequantity`,`plannedvolume`,`accumulationcumulant`,`completionrate`,`accumulationcompletionrate`,`date`,`backups`,`fid`)
+		VALUES 
+		(#{unit},#{designquantity},#{changequantity},#{plannedvolume},#{accumulationcumulant},#{completionrate},#{accumulationcompletionrate},#{date},#{backups},#{fid});
+	</insert>
+	<!-- 仅供月进度分期对比分期功能页面添加列表使用 -->
+	<update id="monthscheduleUpdate"  parameterType="com.lion.echart.project.entity.MonthScheduleEntity">
+		UPDATE
+			 t_month_schedule
+	    	SET unit = #{unit},
+		    designquantity =#{designquantity}, 
+		    changequantity = #{changequantity},
+		    plannedvolume = #{plannedvolume},
+		    accumulationcumulant = #{accumulationcumulant},
+		    completionrate = #{completionrate},
+    	    accumulationcompletionrate = #{accumulationcompletionrate},
+    	    DATE = #{date},
+    	    backups = #{backups}
+	    WHERE MID = #{mid} 
+	</update>
+	
+</mapper>
