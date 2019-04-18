@@ -54,7 +54,7 @@ String fule = base + "" + contextPath + "/";
 						style="color: #000; text-decoration: none;">月进度计划编制对比</a> 
 						
 	            <div class='input-group date' id='belongTime' style="width: 200px;margin-left:250px;margin-top: -25px;">
-	                <input type='text' class="form-control" name="belongTimeStr" id="belongTimeStr" value="2019-04" readonly="readonly" onchange="dateChange()"/>
+	                <input type='text' class="form-control" name="belongTimeStr" id="belongTimeStr"  readonly="readonly"/>
 	                <span class="input-group-addon">
 	                    <span class="glyphicon glyphicon-calendar"></span>
 	                </span>

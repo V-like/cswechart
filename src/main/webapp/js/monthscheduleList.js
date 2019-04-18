@@ -6,32 +6,35 @@ $(document).ready(function(){
 		autoclose : true,
 		format : 'yyyy-mm'
 	}).on('changeDate', reloadtable);
-
+	var date=new Date;
+	var year=date.getFullYear(); 
+	var month=date.getMonth()+1;
+	if(month<10){
+		month="0"+month;
+	}
+	$("#belongTimeStr").val(year+"-"+month);
 	
+	$('#belongTime').datetimepicker({
+		minView: 3,
+		startView: 3,
+		language:'zh-CN',
+		autoclose: true,
+		format: 'yyyy-mm' 
+	}).on('changeDate',reloadtable);
 	var oTable = new TableInit();
 	oTable.Init();
 	$("#contentTablediv").height(window.innerHeight-$("#head").height()-$("#searchdiv").height()-40);
-//	$("#operinfo").css({'color':'red','font-weight':'bold','margin-left':(window.innerWidth/2-250)});
-//	var date=new Date;
-//	var year=date.getFullYear(); 
-//	var month=date.getMonth()+1;
-//	if(month<10){
-//		month="0"+month;
-//	}
-	//$("#belongTimeStr").val(year+"-"+month);
-	
-	
 });
-function dateChange(){
-	TableInit();
-};
+//function dateChange(){
+//	TableInit();
+//};
 
 var TableInit = function () {
 	var oTableInit = new Object();
 	//初始化Table
 	oTableInit.Init = function () {
 		$('#t_datagrid').bootstrapTable({
-			url: $("#fule").val()+"project/monthscheduleData.json?date="+ $("#belongTimeStr").val(),       //请求后台的URL（*）
+			url: $("#fule").val()+"project/monthscheduleData.json?date="+ $("#belongTimeStr").val(),  //请求后台的URL（*）
 			method: 'post',                      //请求方式（*）
 			toolbar: false,                		//工具按钮用哪个容器
 			striped: true,                      //是否显示行间隔色
@@ -199,10 +202,12 @@ var TableInit = function () {
 	};
 	
 	//得到查询的参数
-	oTableInit.queryParams = function (params) {
-		var temp = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
-			limit: params.limit,   //页面大小
-			offset:params.offset
+	oTableInit.queryParams = function(params) {
+		console.info($("#belongTimeStr").val());
+		var temp = { // 这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
+//			limit : params.limit, // 页面大小
+//			offset : params.offset,
+			belongTimeStr : $("#belongTimeStr").val()
 		};
 		return temp;
 	};
@@ -210,11 +215,12 @@ var TableInit = function () {
 };
 
 
+
 function reloadtable(){
 	$.ajax({
-		url: $("#fule").val()+'project/monthscheduleData.json',
-		data: $("#formSearch").serializeObj(),
-		type: "post",
+		url: $("#fule").val()+'project/monthscheduleData.json?date='+$("#belongTimeStr").val(),
+		data: $("#belongTimeStr").val(),
+		type: "get",
 		dataType:"json",
 		success : function(json) {
 			$("#t_datagrid").bootstrapTable('load', json);
@@ -344,7 +350,5 @@ function saveRow() {
 			modalTitle("操作失败，请重试",1);
 		}
 	});
-
-	
 	modalTitle("是否确定提交", 2);
 }

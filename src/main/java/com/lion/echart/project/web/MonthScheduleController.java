@@ -59,14 +59,12 @@ public class MonthScheduleController {
 		JSONObject obj = new JSONObject();
 		Integer a=1;
 		try {
-		
 		JSONArray jlist = JSONArray.fromObject(data);
 		List<MonthScheduleEntity> list=new ArrayList<MonthScheduleEntity>();
 		for(int i=0;i<jlist.size();i++) {
 			MonthScheduleEntity entity = (MonthScheduleEntity) JSONObject.toBean((JSONObject) jlist.get(i), MonthScheduleEntity.class);
 			if("".equals(entity.getDesignquantity())|| entity.getDesignquantity() ==null || "".equals(entity.getUnit())|| entity.getUnit() ==null|| "".equals(entity.getPlannedvolume())|| entity.getPlannedvolume() ==null) {
 			}else {
-				System.out.println(entity);
 				list.add(entity);
 			}
 		}
