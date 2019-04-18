@@ -113,11 +113,7 @@ var TableInit = function () {
 				  {
 						field: 'unit',
 						title: '单位',
-						width : 60,
-						formatter:function (value, row, index, field) {
-							return '<div id="unit_'+index+'" contenteditable="true" >' + (value || "") + '</div>' +
-							'<input type="hidden" value="'+(value || "")+'" id="unit'+index+'" name="list['+index+'].unit" />';
-					    }
+						width : 60
 				  },
 				  {
 						field: 'designquantity',
@@ -241,13 +237,6 @@ function saveRow(){
 	var _date = '';
 	for(var i = 0; i < length; i++){
 		
-		_unit = $("#unit_"+i).html();
-		if(_unit != null && _unit != undefined)
-		while(_unit.indexOf(",") != -1){
-			_unit = _unit.replace(",","");
-		}
-		$("#unit"+i).val(_unit);
-		
 		_designquantity = $("#designquantity_"+i).html();
 		if(_designquantity != null && _designquantity != undefined)
 		while(_designquantity.indexOf(",") != -1){
@@ -322,7 +311,6 @@ function saveRow() {
 		obj.mid = $("#mid_"+i).val();
 		obj.fid = $("#fid_"+i).val();
 		obj.date = $("#date_"+i).html();
-		obj.unit = $("#unit_"+i).html();
 		obj.designquantity = $("#designquantity_"+i).html();
 		obj.changequantity = $("#changequantity_"+i).html();
 		obj.plannedvolume = $("#plannedvolume_"+i).html();
