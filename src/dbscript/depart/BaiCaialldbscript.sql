@@ -58,11 +58,11 @@ CREATE TABLE `t_c_contractexecute` (
   `operuser` varchar(20) DEFAULT NULL COMMENT '操作人',
   `operdate` datetime DEFAULT NULL COMMENT '操作时间',
   PRIMARY KEY (`contractexecuteid`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 /*Data for the table `t_c_contractexecute` */
 
-insert  into `t_c_contractexecute`(`contractexecuteid`,`contractid`,`monthamount`,`year`,`month`,`remark`,`priority`,`isdisabled`,`operuser`,`operdate`) values (1,1,376.18,2019,2,NULL,1,'0','admin','2019-03-13 17:11:22'),(2,1,234.98,2019,1,NULL,1,'0','admin','2019-03-13 17:16:10'),(3,2,121.52,2019,1,NULL,1,'0','admin','2019-03-13 17:16:49'),(4,2,458.31,2019,2,NULL,1,'0','admin','2019-03-13 17:19:52'),(5,10,111111,2019,2,'66',0,'0','admin','2019-04-08 14:24:38'),(6,1,55555,2019,6,'44',0,'0','admin','2019-04-08 14:25:03'),(7,7,4321,2019,3,'werwqrewq',0,'0','admin','2019-04-08 14:25:18'),(8,10,33333,2019,7,'333',0,'0','admin','2019-04-08 14:25:34');
+insert  into `t_c_contractexecute`(`contractexecuteid`,`contractid`,`monthamount`,`year`,`month`,`remark`,`priority`,`isdisabled`,`operuser`,`operdate`) values (1,1,376.18,2019,2,NULL,1,'0','admin','2019-03-13 17:11:22'),(2,1,234.98,2019,1,NULL,1,'0','admin','2019-03-13 17:16:10'),(3,2,121.52,2019,1,NULL,1,'0','admin','2019-03-13 17:16:49'),(4,2,458.31,2019,2,NULL,1,'0','admin','2019-03-13 17:19:52');
 
 /*Table structure for table `t_f_financingrepair` */
 
@@ -78,15 +78,12 @@ CREATE TABLE `t_f_financingrepair` (
   `summoney` double(19,6) DEFAULT NULL COMMENT '累计金额',
   `tytmmoney` double(19,6) DEFAULT NULL COMMENT 'this year to month 本年至当月完成金额',
   `mmoney` double(19,6) DEFAULT NULL COMMENT '当月金额',
-  `sourcemoney` varchar(200) DEFAULT NULL COMMENT '资金来源',
   `operdate` date DEFAULT NULL COMMENT '操作时间',
   `operuser` int(11) DEFAULT NULL COMMENT '操作人',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `t_f_financingrepair` */
-
-insert  into `t_f_financingrepair`(`id`,`year`,`month`,`ctype`,`classes`,`cmoney`,`summoney`,`tytmmoney`,`mmoney`,`sourcemoney`,`operdate`,`operuser`) values (19,2019,3,'01','1',120.000000,0.000000,0.000000,0.000000,NULL,'2019-03-22',1),(20,2019,3,'02','1',0.000000,0.000000,34.000000,0.000000,NULL,'2019-03-22',1),(21,2019,3,'03','1',0.000000,450.000000,12.000000,0.000000,NULL,'2019-03-22',1),(22,2019,3,'04','1',0.000000,65.000000,0.000000,67.000000,NULL,'2019-03-22',1),(23,2019,3,'14','3',0.000000,0.000000,0.000000,0.000000,NULL,'2019-03-22',1),(24,2019,3,NULL,'2',NULL,NULL,NULL,NULL,'0##345##67.9##0##0','2019-03-22',1),(25,2019,2,NULL,'2',NULL,NULL,NULL,NULL,'23##33##67.9##0##0','2019-03-22',1),(26,2019,2,'01','1',120.000000,34.000000,0.000000,0.000000,NULL,'2019-03-22',1),(27,2019,2,'02','1',0.000000,0.000000,0.000000,0.000000,NULL,'2019-03-22',1),(28,2019,2,'03','1',0.000000,560.000000,0.000000,0.000000,NULL,'2019-03-22',1),(29,2019,2,'04','1',0.000000,0.000000,990.000000,0.000000,NULL,'2019-03-22',1),(30,2019,2,'14','3',45.000000,0.000000,0.000000,0.000000,NULL,'2019-03-22',1),(32,2019,4,'01','1',0.000000,0.000000,0.000000,0.000000,NULL,'2019-04-02',1),(33,2019,4,'02','1',0.000000,0.000000,0.000000,0.000000,NULL,'2019-04-02',1),(34,2019,4,'03','1',0.000000,0.000000,0.000000,0.000000,NULL,'2019-04-02',1),(35,2019,4,'04','1',0.000000,0.000000,0.000000,0.000000,NULL,'2019-04-02',1),(36,2019,4,'14','3',0.000000,0.000000,0.000000,0.000000,NULL,'2019-04-02',1),(37,2019,4,NULL,'2',NULL,NULL,NULL,NULL,'0##0##0##0##0','2019-04-02',1);
 
 /*Table structure for table `t_f_financingwrite` */
 
@@ -136,6 +133,29 @@ CREATE TABLE `t_f_maintenance` (
 
 insert  into `t_f_maintenance`(`maintenanceid`,`priority`,`entnyname`,`grade`,`perentid`,`index`,`codeno`,`unit`) values (1,'1','大理分局',1,0,1,'001000000000000000','100cm'),(2,'1.1','大理1段',2,1,1,'001001000000000000',NULL),(3,'1.2.1','大理1段施工1标',3,2,1,'001002001000000000',NULL),(4,'2','丽江分局',1,0,2,'002000000000000000',NULL),(5,'2.1','丽江1段',2,4,1,'002001000000000000',NULL);
 
+/*Table structure for table `t_month_schedule` */
+
+DROP TABLE IF EXISTS `t_month_schedule`;
+
+CREATE TABLE `t_month_schedule` (
+  `mid` int(10) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `unit` varchar(10) DEFAULT NULL COMMENT '单位',
+  `designquantity` varchar(50) NOT NULL COMMENT '设计工程量',
+  `changequantity` varchar(50) NOT NULL COMMENT '变更工程量',
+  `plannedvolume` int(50) DEFAULT NULL COMMENT '本月计划完成量',
+  `accumulationcumulant` varchar(50) DEFAULT NULL COMMENT '本月累计完成量',
+  `completionrate` varchar(50) DEFAULT NULL COMMENT '本月完成率',
+  `accumulationcompletionrate` varchar(50) DEFAULT NULL COMMENT '积累完成率',
+  `date` varchar(50) NOT NULL COMMENT '日期',
+  `backups` varchar(100) DEFAULT NULL COMMENT '备注',
+  `fid` varchar(50) NOT NULL,
+  UNIQUE KEY `mid` (`mid`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+
+/*Data for the table `t_month_schedule` */
+
+insert  into `t_month_schedule`(`mid`,`unit`,`designquantity`,`changequantity`,`plannedvolume`,`accumulationcumulant`,`completionrate`,`accumulationcompletionrate`,`date`,`backups`,`fid`) values (1,NULL,'100','0',100,'0','0','0','2019-03',NULL,'1'),(2,NULL,'100','0',20,'8','8','8','2019-03',NULL,'2'),(3,NULL,'100','0',30,'7','7','7','2019-03',NULL,'3'),(4,NULL,'100','0',50,'5','5','5','2019-03',NULL,'4'),(5,NULL,'100','0',30,'2','2','2','2019-03',NULL,'5');
+
 /*Table structure for table `t_p_monthtotal` */
 
 DROP TABLE IF EXISTS `t_p_monthtotal`;
@@ -176,7 +196,24 @@ CREATE TABLE `t_s_code` (
 
 /*Data for the table `t_s_code` */
 
-insert  into `t_s_code`(`codetype`,`codedescribe`,`key`,`value`,`maintype`,`maintypedescribe`,`orderby`) values ('costtype','费用类型','01','工程款','1','合同款项','01'),('costtype','费用类型','02','监理费','1','合同款项','02'),('costtype','费用类型','03','施工供电费','1','合同款项','03'),('costtype','费用类型','04','勘察设计费','2','其他款项','04'),('costtype','费用类型','05','征地拆迁安置补偿','2','其他款项','05'),('costtype','费用类型','06','环境影响','2','其他款项','06'),('costtype','费用类型','07','耕地占用税','2','其他款项','07'),('costtype','费用类型','08','水土保持补偿费','2','其他款项','08'),('costtype','费用类型','09','金中公司清算费用','2','其他款项','09'),('costtype','费用类型','10','印花税','2','其他款项','10'),('costtype','费用类型','11','其他技术服务合同款','2','其他款项','11'),('costtype','费用类型','12','建设管理费','2','其他款项','12'),('costtype','费用类型','13','临时用地复垦保证金','2','其他款项','13'),('costtypesub','设计费用','01','主体工程设计费','1','设计费用','01'),('costtypesub','设计费用','02','二期工程设计费用','1','设计费用','02'),('costtypesub','设计费用','03','施工控制网设计及建网','1','设计费用','03'),('costtypesub','设计费用','04','其他咨询服务费用','1','设计费用','04'),('costtypejgf','建管费描述','01','六州市滇引办工作经费','1','建管费','01'),('costtypejgf','建管费描述','02','工程建设管理费','1','建管费','02'),('costtypejgf','建管费描述','03','建设管理调度中心建设费','1','建管费','03'),('costtypetax','印花税','14','印花税','1','印花税','14');
+insert  into `t_s_code`(`codetype`,`codedescribe`,`key`,`value`,`maintype`,`maintypedescribe`,`orderby`) values ('costtype','费用类型','01','工程款','1','合同款项','01'),('costtype','费用类型','02','监理费','1','合同款项','02'),('costtype','费用类型','03','施工供电费','1','合同款项','03'),('costtype','费用类型','04','勘察设计费','2','其他款项','04'),('costtype','费用类型','05','征地拆迁安置补偿','2','其他款项','05'),('costtype','费用类型','06','环境影响','2','其他款项','06'),('costtype','费用类型','07','耕地占用税','2','其他款项','07'),('costtype','费用类型','08','水土保持补偿费','2','其他款项','08'),('costtype','费用类型','09','金中公司清算费用','2','其他款项','09'),('costtype','费用类型','10','印花税','2','其他款项','10'),('costtype','费用类型','11','其他技术服务合同款','2','其他款项','11'),('costtype','费用类型','12','建设管理费','2','其他款项','12'),('costtype','费用类型','13','临时用地复垦保证金','2','其他款项','13'),('costtypesub','设计费用','01','主体工程设计费','1','设计费用','01'),('costtypesub','设计费用','02','二期工程设计费用','1','设计费用','02'),('costtypesub','设计费用','03','施工控制网设计及建网','1','设计费用','03'),('costtypesub','设计费用','04','其他咨询服务费用','1','设计费用','04'),('costtypejgf','建管费描述','01','六州市滇引办工作经费','1','建管费','01'),('costtypejgf','建管费描述','02','工程建设管理费','1','建管费','02'),('costtypejgf','建管费描述','03','建设管理调度中心建设费','1','建管费','03');
+
+/*Table structure for table `t_s_daystatement` */
+
+DROP TABLE IF EXISTS `t_s_daystatement`;
+
+CREATE TABLE `t_s_daystatement` (
+  `dayScheduid` int(10) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `monthscheduleid` int(10) NOT NULL COMMENT '工程月计划id',
+  `todayaccomplish` int(20) DEFAULT NULL COMMENT '本日完成量',
+  `day` int(2) NOT NULL COMMENT '日',
+  `describe` varchar(2000) DEFAULT NULL COMMENT '施工形象描述',
+  PRIMARY KEY (`dayScheduid`)
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
+
+/*Data for the table `t_s_daystatement` */
+
+insert  into `t_s_daystatement`(`dayScheduid`,`monthscheduleid`,`todayaccomplish`,`day`,`describe`) values (1,1,2,1,'no'),(2,2,3,1,'透了'),(3,3,6,1,'没带'),(4,4,6,1,'男人嘛!!!'),(5,5,6,1,'我们是真爱'),(9,1,2,2,'hhhhhhhhhhhhh'),(10,2,2,2,'hhhhhhhhhhhhh'),(11,3,2,2,'hhhhhhhhhhh'),(12,4,2,2,'hhhhhhhhhhh'),(13,5,2,2,'hhhhhhhhhhhhhh'),(14,1,22,3,'hhh'),(15,2,22,3,'hhh'),(16,3,22,3,'hhh'),(17,4,22,3,'hhh'),(18,5,22,3,'hhh');
 
 /*Table structure for table `t_s_dcdysqlid` */
 
@@ -184,14 +221,14 @@ DROP TABLE IF EXISTS `t_s_dcdysqlid`;
 
 CREATE TABLE `t_s_dcdysqlid` (
   `dcdytype` varchar(30) NOT NULL COMMENT '导出打印类型',
-  `sqlid` varchar(100) NOT NULL COMMENT '导出类型对应的sqlid',
+  `sqlid` varchar(50) NOT NULL COMMENT '导出类型对应的sqlid',
   `sqltype` varchar(1) DEFAULT '' COMMENT '1为内容取值sql，2为表头填充取值',
   `comment` varchar(200) DEFAULT NULL COMMENT '备注'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='导出打印对应的sqlid';
 
 /*Data for the table `t_s_dcdysqlid` */
 
-insert  into `t_s_dcdysqlid`(`dcdytype`,`sqlid`,`sqltype`,`comment`) values ('cwtbhzczlb','comle.financing.getfinancingListData','1','财务填报汇总操作列表'),('cwsjtj','comle.financing.getFinancingReportData','1','财务数据统计表列表'),('gctzwchzytj','comle.financing.getFinancingReportTwoData','1','工程投资完成汇总月统计'),('htzxytjb','comle.contract.getcontractExecuteMonthTotalListData','1','合同月度统计表');
+insert  into `t_s_dcdysqlid`(`dcdytype`,`sqlid`,`sqltype`,`comment`) values ('cwtbhzczlb','comle.financing.getfinancingListData','1','财务填报汇总操作列表'),('cwsjtj','comle.financing.getFinancingReportData','1','财务数据统计表列表');
 
 /*Table structure for table `t_s_dcdysqlproperty` */
 
@@ -210,7 +247,7 @@ CREATE TABLE `t_s_dcdysqlproperty` (
 
 /*Data for the table `t_s_dcdysqlproperty` */
 
-insert  into `t_s_dcdysqlproperty`(`dcdytype`,`keyname`,`talign`,`formartstr`,`orderby`,`sepcial`,`protype`,`comment`) values ('cwtbhzczlb','costTypeStr','left',NULL,1,NULL,'1','款项类型'),('cwtbhzczlb','mainTypeStr','center',NULL,2,NULL,'1','款项所属'),('cwtbhzczlb','year','center',NULL,3,NULL,'1','所属年份'),('cwtbhzczlb','total','right','vnd.ms-excel.numberformat:#,##0.00',4,NULL,'1','累计金额'),('cwsjtj','costTypeStr','left',NULL,2,NULL,'1','支付款项'),('cwsjtj','moneyyi','right','vnd.ms-excel.numberformat:#,##0.00',3,NULL,'1','金额1'),('cwsjtj','moneyer','right','vnd.ms-excel.numberformat:#,##0.00',4,NULL,'1','金额2'),('cwsjtj','moneysan','right','vnd.ms-excel.numberformat:#,##0.00',5,NULL,'1','金额3'),('cwsjtj','moneysi','right','vnd.ms-excel.numberformat:#,##0.00',6,NULL,'1','金额4'),('cwsjtj','moneys','right','vnd.ms-excel.numberformat:#,##0.00',7,NULL,'1','累计'),('cwsjtj','rnum','left',NULL,1,NULL,'1','序号'),('gctzwchzytj','typename','left',NULL,1,NULL,'1',NULL),('gctzwchzytj','contractmoney','right','vnd.ms-excel.numberformat:#,##0.00',2,NULL,'1',NULL),('gctzwchzytj','contractfinish','right','vnd.ms-excel.numberformat:#,##0.00',3,NULL,'1',NULL),('gctzwchzytj','nytnmmoney','right','vnd.ms-excel.numberformat:#,##0.00',4,NULL,'1',NULL),('gctzwchzytj','nymonth','right','vnd.ms-excel.numberformat:#,##0.00',5,NULL,'1',NULL),('htzxytjb','departStr','left',NULL,1,NULL,'1','直属分局'),('htzxytjb','contractTotalStr','right','excel.numberformat:#,##0.00',2,NULL,'1','合同金额'),('htzxytjb','thisYearPlanStr','right','excel.numberformat:#,##0.00',3,NULL,'1','本年度计划完成'),('htzxytjb','thisMonthInvestStr','right','excel.numberformat:#,##0.00',4,'','1','当月完成投资'),('htzxytjb','thisYtmTotalStr','right','excel.numberformat:#,##0.00',5,NULL,'1','本年至当月完成'),('htzxytjb','investTotalStr','right','excel.numberformat:#,##0.00',6,NULL,'1','开工以来累计完成'),('htzxytjb','balanceTotalStr','right','excel.numberformat:#,##0.00',7,NULL,'1','累计结算工程款'),('htzxytjb','payforTotalStr','right','excel.numberformat:#,##0.00',8,NULL,'1','工程款累计支付情况');
+insert  into `t_s_dcdysqlproperty`(`dcdytype`,`keyname`,`talign`,`formartstr`,`orderby`,`sepcial`,`protype`,`comment`) values ('cwtbhzczlb','costTypeStr','left',NULL,1,NULL,'1','款项类型'),('cwtbhzczlb','mainTypeStr','center',NULL,2,NULL,'1','款项所属'),('cwtbhzczlb','year','center',NULL,3,NULL,'1','所属年份'),('cwtbhzczlb','total','right','vnd.ms-excel.numberformat:#,##0.00',4,NULL,'1','累计金额'),('cwsjtj','costTypeStr','left',NULL,2,NULL,'1','支付款项'),('cwsjtj','moneyyi','right','vnd.ms-excel.numberformat:#,##0.00',3,NULL,'1','金额1'),('cwsjtj','moneyer','right','vnd.ms-excel.numberformat:#,##0.00',4,NULL,'1','金额2'),('cwsjtj','moneysan','right','vnd.ms-excel.numberformat:#,##0.00',5,NULL,'1','金额3'),('cwsjtj','moneysi','right','vnd.ms-excel.numberformat:#,##0.00',6,NULL,'1','金额4'),('cwsjtj','moneys','right','vnd.ms-excel.numberformat:#,##0.00',7,NULL,'1','累计'),('cwsjtj','rnum','left',NULL,1,NULL,'1','序号');
 
 /*Table structure for table `t_s_dcdytitles` */
 
@@ -227,13 +264,12 @@ CREATE TABLE `t_s_dcdytitles` (
   `colindex` int(2) NOT NULL COMMENT '列序号',
   `mrowspan` int(2) NOT NULL COMMENT '跨行',
   `mcolspan` int(2) NOT NULL COMMENT '跨列',
-  `comment` varchar(200) DEFAULT NULL COMMENT '备注',
-  `istitleortail` varchar(1) NOT NULL DEFAULT '1' COMMENT '表头还是表尾'
+  `comment` varchar(200) DEFAULT NULL COMMENT '备注'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='打印导出表头';
 
 /*Data for the table `t_s_dcdytitles` */
 
-insert  into `t_s_dcdytitles`(`dcdytype`,`tdid`,`showtitle`,`talign`,`isdytype`,`isdctype`,`rowindex`,`colindex`,`mrowspan`,`mcolspan`,`comment`,`istitleortail`) values ('cwtbhzczlb',NULL,'款项类型','center','1','1',2,1,1,1,NULL,'1'),('cwtbhzczlb',NULL,'款项所属','center','1','1',2,2,1,1,NULL,'1'),('cwtbhzczlb',NULL,'所属年份','center','1','1',2,3,1,1,NULL,'1'),('cwtbhzczlb',NULL,'累计金额','center','1','1',2,4,1,1,NULL,'1'),('cwtbhzczlb','filename','文件名称','center','1','1',1,1,1,4,NULL,'1'),('cwsjtj','filename','文件名称','center','1','1',1,1,1,7,NULL,'1'),('cwsjtj',NULL,'填报处室：计划财务处1','left','1','1',2,1,1,2,NULL,'1'),('cwsjtj',NULL,'填报截至日期','right','1','1',2,2,1,3,NULL,'1'),('cwsjtj','reportDaten','截至日期的值','left','1','1',2,3,1,2,NULL,'1'),('cwsjtj',NULL,'序号','center','1','1',3,1,2,1,NULL,'1'),('cwsjtj',NULL,'支付款项','center','1','1',3,2,2,1,NULL,'1'),('cwsjtj',NULL,'支付金额','center','1','1',3,3,1,5,NULL,'1'),('cwsjtj','year1n','年份1','center','1','1',4,1,1,1,NULL,'1'),('cwsjtj','year2n','年份2','center','1','1',4,2,1,1,NULL,'1'),('cwsjtj','monthn','当月','center','1','1',4,3,1,1,NULL,'1'),('cwsjtj','year3n','当年至当月','center','1','1',4,4,1,1,NULL,'1'),('cwsjtj',NULL,'累计','center','1','1',4,5,1,1,NULL,'1'),('gctzwchzytj','filename','文件名称','center','1','1',1,1,1,5,NULL,'1'),('gctzwchzytj','yearmonth','年月','center','1','1',2,1,1,5,NULL,'1'),('gctzwchzytj',NULL,'填报单位（盖章）：','right','1','1',3,1,1,1,NULL,'1'),('gctzwchzytj',NULL,'建设管理处','left','1','1',3,2,1,4,NULL,'1'),('gctzwchzytj',NULL,'填报时间：','right','1','1',4,1,1,1,NULL,'1'),('gctzwchzytj','reportDaten','填报时间的值','left','1','1',4,2,1,4,NULL,'1'),('gctzwchzytj',NULL,'序号-项目类型','center','1','1',5,1,1,1,NULL,'1'),('gctzwchzytj',NULL,'（合同、协议）<br/>总金额（万元）','center','1','1',5,2,1,1,NULL,'1'),('gctzwchzytj',NULL,'开工以来累计完成投资（万元）','center','1','1',5,3,1,1,NULL,'1'),('gctzwchzytj','yearn','当年至当月','center','1','1',5,4,1,1,NULL,'1'),('gctzwchzytj','monthn','当年的当月','center','1','1',5,5,1,1,NULL,'1'),('gctzwchzytj',NULL,'合计','center','1','1',1,1,1,1,NULL,'2'),('gctzwchzytj','tailyyi','合计金额1','right','1','1',1,2,1,1,NULL,'2'),('gctzwchzytj','tailyer','合计金额2','right','1','1',1,3,1,1,NULL,'2'),('gctzwchzytj','tailysan','合计金额3','right','1','1',1,4,1,1,NULL,'2'),('gctzwchzytj','tailysi','合计金额4','right','1','1',1,5,1,1,NULL,'2'),('gctzwchzytj','tailestr','尾部第二行描述','left','1','1',2,1,1,5,NULL,'2'),('htzxytjb','filename','文件名称','center','1','1',1,1,1,8,NULL,'1'),('htzxytjb','yearmonth','年月','center','1','1',2,1,1,8,NULL,'1'),('htzxytjb',NULL,'填报单位(盖章)：建设管理处','left','1','1',3,1,1,8,NULL,'1'),('htzxytjb',NULL,'填报时间：','right','1','1',4,1,1,1,NULL,'1'),('htzxytjb','reportDaten','填报时间得值','left','1','1',4,2,1,4,NULL,'1'),('htzxytjb','','填报人：','right','1','1',4,3,1,1,NULL,'1'),('htzxytjb','reportUser','填报人得值','left','1','1',4,4,1,2,NULL,'1'),('htzxytjb',NULL,'直属分局','center','1','1',5,1,1,1,NULL,'1'),('htzxytjb',NULL,'合同总金额(万元)','center','1','1',5,2,1,1,NULL,'1'),('htzxytjb',NULL,'本年度计划完成投资(万元)','center','1','1',5,3,1,1,NULL,'1'),('htzxytjb','monthn','当月完成投资','center','1','1',5,4,1,1,NULL,'1'),('htzxytjb','ytmn','当年至当月完成投资','center','1','1',5,5,1,1,NULL,'1'),('htzxytjb',NULL,'自开工以来累计完成投资','center','1','1',5,6,1,1,NULL,'1'),('htzxytjb',NULL,'累计结算工程款额(万元)','center','1','1',5,7,1,1,NULL,'1'),('htzxytjb',NULL,'工程款累计支付情况(万元)','center','1','1',5,8,1,1,NULL,'1');
+insert  into `t_s_dcdytitles`(`dcdytype`,`tdid`,`showtitle`,`talign`,`isdytype`,`isdctype`,`rowindex`,`colindex`,`mrowspan`,`mcolspan`,`comment`) values ('cwtbhzczlb',NULL,'款项类型','center','1','1',2,1,1,1,NULL),('cwtbhzczlb',NULL,'款项所属','center','1','1',2,2,1,1,NULL),('cwtbhzczlb',NULL,'所属年份','center','1','1',2,3,1,1,NULL),('cwtbhzczlb',NULL,'累计金额','center','1','1',2,4,1,1,NULL),('cwtbhzczlb','filename','文件名称','center','1','1',1,1,1,4,NULL),('cwsjtj','filename','文件名称','center','1','1',1,1,1,7,NULL),('cwsjtj',NULL,'填报处室：计划财务处1','left','1','1',2,1,1,2,NULL),('cwsjtj',NULL,'填报截至日期','right','1','1',2,2,1,3,NULL),('cwsjtj','reportDaten','截至日期的值','left','1','1',2,3,1,2,NULL),('cwsjtj',NULL,'序号','center','1','1',3,1,2,1,NULL),('cwsjtj',NULL,'支付款项','center','1','1',3,2,2,1,NULL),('cwsjtj',NULL,'支付金额','center','1','1',3,3,1,5,NULL),('cwsjtj','year1n','年份1','center','1','1',4,1,1,1,NULL),('cwsjtj','year2n','年份2','center','1','1',4,2,1,1,NULL),('cwsjtj','monthn','当月','center','1','1',4,3,1,1,NULL),('cwsjtj','year3n','当年至当月','center','1','1',4,4,1,1,NULL),('cwsjtj',NULL,'累计','center','1','1',4,5,1,1,NULL);
 
 /*Table structure for table `t_s_suboffice` */
 
@@ -290,11 +326,11 @@ CREATE TABLE `t_s_subofficewrite` (
   `operuser` varchar(20) DEFAULT NULL COMMENT '操作人',
   `operdate` datetime DEFAULT NULL COMMENT '操作时间',
   PRIMARY KEY (`subofficewriteid`)
-) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8;
 
 /*Data for the table `t_s_subofficewrite` */
 
-insert  into `t_s_subofficewrite`(`subofficewriteid`,`contractid`,`subofficeid`,`constructioncontent`,`begindate`,`planfinishdate`,`budgetinvest`,`finishinvest`,`surplusinvest`,`yearplaninvest`,`monthplaninvest`,`yearrealityinvest`,`monthrealityinvest`,`tendayrealityinvest`,`earthwork`,`stonework`,`beton`,`overallimageprogress`,`nextmonthplaninvest`,`remark`,`year`,`month`,`priority`,`status`,`type`,`tendaytype`,`isdisabled`,`operuser`,`operdate`) values (1,2,4,'龙泉倒虹吸始发井围护结构和主体结构施工，接收井围护结构和主体结构施工','2017-11-30 00:00:00','2020-06-30 00:00:00',9787,7367.76,1926.18,1662.61,115.08,152.08,36.76,10.35,2.11,0.48,1.33,'龙泉倒虹吸始发井本旬进行基坑开挖及钢支撑安装施工，始发井基坑开挖共计19155.5m³，本旬完成610m³，累计完成9776m³，占比51%，剩余9379.5m³，分三区开挖，西侧第一区（1号井）已开挖至基底，深度17.5m，中部第二区（2号井西侧）已开挖至第三道砼支撑，深度13m，东侧第三区（2号井东侧）已开挖至第二道钢支撑，深度8m。第二道钢支撑本旬完成1榀直撑安装，已累计完成2榀角撑、2榀斜撑及7榀直撑安装，第三道钢支撑本旬完成2榀直撑安装，已累计完成2榀角撑、2榀斜撑、5榀直撑安装。\r\n龙泉倒虹吸接收井本旬进行降水井施工及冠梁基础面清理施工，降水井共计632m，本旬完成155m，累计完成365m，完成率57.7%，剩余267m。',183.06,'',2019,2,0,3,2,NULL,'0','admin','2019-03-14 15:17:12'),(2,8,4,'路基土石方开挖、防护工程、路基路面等','2018-08-20 00:00:00','2019-12-31 00:00:00',6085.51,3731.64,1535.38,2348.47,420.28,813.09,265.21,105.07,8.31,46.02,0.5,'进场道路总长11.419公里，累计完成毛路开挖9.695公里，占84.90%，其中路基开挖完成8.289公里，占72.58%。',654.58,'',2019,2,0,4,2,NULL,'0','15','2019-03-19 16:31:53'),(3,9,4,'路基土石方开挖、防护工程、路基路面等','2019-01-07 00:00:00','2019-12-31 00:00:00',7250,873.41,3361.54,160,3584.95,223.41,23.41,0.41,2.16,8.64,2.9,'进场道路完成松林1#支洞和龙庆1#支洞进场道路复测放线，龙庆1#支洞毛路开挖完成1.5公里，土方开挖完成2.16万方，石方开挖完成8.64万方。',180,'',2019,2,0,1,2,NULL,'0','15','2019-03-19 16:31:53'),(27,3,2,'施工监理','2017-11-30 00:00:00','2020-06-30 00:00:00',0,0,0,0,0,0,0,0,0,0,0,'',0,'',2019,3,0,3,2,NULL,'0','13','2019-03-19 16:36:37'),(28,10,1,'丽江建设','2018-02-01 00:00:00','1970-01-01 00:00:00',0,0,0,0,0,0,0,0,0,0,0,'',0,'',2019,3,0,2,2,NULL,'0','12','2019-03-19 16:39:14'),(29,0,0,'建设内容上旬','2019-01-01 00:00:00','2020-08-13 00:00:00',0,12.98,0,0,0,12.98,12.98,12.98,0,0,0,'',0,'',2019,3,0,2,1,1,'0','1','2019-04-03 15:45:30'),(38,11,1,'主要建设111111','2019-04-01 00:00:00','2019-04-28 00:00:00',0,0,0,0,0,0,0,0,0,0,0,'',0,'',2019,3,0,2,1,1,'0','1','2019-04-08 10:04:58'),(39,8,4,'啦啦啦啦啦啦啦啦绿绿绿绿绿绿绿绿绿绿绿绿绿绿绿','2019-04-01 00:00:00','2019-04-29 00:00:00',0,0,0,0,0,0,0,0,0,0,0,'',0,'',2019,4,0,1,1,3,'0','1','2019-04-08 10:06:07'),(40,1,2,'的分工','1969-12-23 00:00:00','1970-01-15 00:00:00',0,0,0,0,0,0,0,0,0,0,0,'',0,'',2019,4,0,1,1,1,'0','1','2019-04-08 10:06:07'),(41,10,1,'啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊','2019-04-03 00:00:00','2019-04-12 00:00:00',0,0,0,0,0,0,0,0,0,0,0,'',0,'',2019,4,0,1,1,1,'0','1','2019-04-08 10:06:07'),(42,3,2,'aaaaaaaaaaaaaaaaaaaaaa','2019-04-01 00:00:00','2019-04-23 00:00:00',0,0,0,0,0,0,0,NULL,0,0,0,'',0,'',2019,4,0,1,2,NULL,'0','1','2019-04-08 14:31:55'),(43,9,4,'rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr','2019-04-02 00:00:00','2019-04-17 00:00:00',0,0,0,0,0,0,0,NULL,0,0,0,'',0,'',2019,4,0,1,2,NULL,'0','1','2019-04-08 14:31:55'),(44,5,5,'jth','2019-04-03 00:00:00','2019-04-09 00:00:00',0,0,0,0,0,0,0,NULL,0,0,0,'',0,'',2019,4,0,1,2,NULL,'0','1','2019-04-08 14:31:55');
+insert  into `t_s_subofficewrite`(`subofficewriteid`,`contractid`,`subofficeid`,`constructioncontent`,`begindate`,`planfinishdate`,`budgetinvest`,`finishinvest`,`surplusinvest`,`yearplaninvest`,`monthplaninvest`,`yearrealityinvest`,`monthrealityinvest`,`tendayrealityinvest`,`earthwork`,`stonework`,`beton`,`overallimageprogress`,`nextmonthplaninvest`,`remark`,`year`,`month`,`priority`,`status`,`type`,`tendaytype`,`isdisabled`,`operuser`,`operdate`) values (1,2,4,'龙泉倒虹吸始发井围护结构和主体结构施工，接收井围护结构和主体结构施工','2017-11-30 00:00:00','2020-06-30 00:00:00',9787,7367.76,1926.18,1662.61,115.08,152.08,36.76,10.35,2.11,0.48,1.33,'龙泉倒虹吸始发井本旬进行基坑开挖及钢支撑安装施工，始发井基坑开挖共计19155.5m³，本旬完成610m³，累计完成9776m³，占比51%，剩余9379.5m³，分三区开挖，西侧第一区（1号井）已开挖至基底，深度17.5m，中部第二区（2号井西侧）已开挖至第三道砼支撑，深度13m，东侧第三区（2号井东侧）已开挖至第二道钢支撑，深度8m。第二道钢支撑本旬完成1榀直撑安装，已累计完成2榀角撑、2榀斜撑及7榀直撑安装，第三道钢支撑本旬完成2榀直撑安装，已累计完成2榀角撑、2榀斜撑、5榀直撑安装。\r\n龙泉倒虹吸接收井本旬进行降水井施工及冠梁基础面清理施工，降水井共计632m，本旬完成155m，累计完成365m，完成率57.7%，剩余267m。',183.06,'',2019,2,0,3,2,NULL,'0','admin','2019-03-14 15:17:12'),(2,8,4,'路基土石方开挖、防护工程、路基路面等','2018-08-20 00:00:00','2019-12-31 00:00:00',6085.51,3731.64,1535.38,2348.47,420.28,813.09,265.21,105.07,8.31,46.02,0.5,'进场道路总长11.419公里，累计完成毛路开挖9.695公里，占84.90%，其中路基开挖完成8.289公里，占72.58%。',654.58,'',2019,2,0,4,2,NULL,'0','15','2019-03-19 16:31:53'),(3,9,4,'路基土石方开挖、防护工程、路基路面等','2019-01-07 00:00:00','2019-12-31 00:00:00',7250,873.41,3361.54,160,3584.95,223.41,23.41,0.41,2.16,8.64,2.9,'进场道路完成松林1#支洞和龙庆1#支洞进场道路复测放线，龙庆1#支洞毛路开挖完成1.5公里，土方开挖完成2.16万方，石方开挖完成8.64万方。',180,'',2019,2,0,1,2,NULL,'0','15','2019-03-19 16:31:53'),(4,3,2,'55','2019-02-24 00:00:00','2019-03-02 00:00:00',43,33,33,23,333,33,33,NULL,3,3,3,'333334',3,'',2019,3,0,1,2,2,'0','1','2019-04-03 16:09:44'),(23,2,4,'施工内容','2019-03-19 00:00:00','2019-03-19 00:00:00',0,0,0,0,0,0,0,NULL,0,0,0,'',0,'',2019,3,0,1,2,1,'0','1','2019-04-03 16:09:44'),(24,9,4,'施工ssss','2017-11-30 00:00:00','2020-06-30 00:00:00',0,0,0,0,0,0,0,0,0,0,0,'',0,'',2019,3,0,1,2,NULL,'1','15','2019-03-19 16:31:53'),(25,1,2,'33333','2017-11-30 00:00:00','2020-06-30 00:00:00',0,0,0,0,0,0,0,NULL,0,0,0,'',0,'',2019,3,0,1,2,1,'0','1','2019-04-03 16:09:44'),(26,9,4,'2标施工','2017-11-30 00:00:00','2020-06-30 00:00:00',0,0,0,0,0,0,0,0,0,0,0,'',0,'',2019,2,0,1,2,NULL,'0','15','2019-03-19 16:31:53'),(27,3,2,'施工监理','2017-11-30 00:00:00','2020-06-30 00:00:00',0,0,0,0,0,0,0,NULL,0,0,0,'',0,'',2019,3,0,1,2,1,'0','1','2019-04-03 16:09:44'),(28,10,1,'丽江建设','2018-02-01 00:00:00','1970-01-01 00:00:00',0,0,0,0,0,0,0,NULL,0,0,0,'',0,'',2019,3,0,1,2,1,'0','1','2019-04-03 16:09:44'),(29,8,4,'建设内容上旬','2019-01-01 00:00:00','2020-08-13 00:00:00',0,35.32,0,0,0,35.32,12.98,12.98,0,0,0,'',0,'',2019,3,0,1,1,1,'0','1','2019-04-09 09:15:52'),(30,8,4,'建设内容中旬','2019-01-01 00:00:00','2020-08-13 00:00:00',0,0,0,0,0,0,0,22.34,0,0,0,'',0,'',2019,3,0,1,1,2,'0','1','2019-04-09 09:54:18'),(43,1,2,'dd','2019-04-04 00:00:00','2019-04-06 00:00:00',0,0,0,0,0,0,0,0,0,0,0,'',0,'',2019,4,0,1,1,1,'0','1','2019-04-16 14:45:44'),(44,6,5,'嘿嘿嘿嘿，陈紫嫣陈紫嫣陈紫嫣陈紫嫣，你咋又被人拴住了','2019-04-03 00:00:00','2019-04-06 00:00:00',0,0,0,0,0,0,0,0,0,0,0,'',0,'',2019,4,0,1,1,2,'0','1','2019-04-03 19:37:43'),(45,8,4,'','1970-01-01 00:00:00','1970-01-01 00:00:00',0,33.34,0,0,0,33.34,33.34,11,0,0,0,'',0,'',2019,3,0,1,1,3,'0','1','2019-04-09 09:54:18'),(46,7,6,'沙雕！！','2018-12-20 00:00:00','2018-12-31 00:00:00',0,12,0,0,0,12,12,12,0,0,0,'',0,'',2018,12,0,1,1,3,'0','1','2019-04-10 16:17:15');
 
 /*Table structure for table `t_sys_menu` */
 
@@ -318,7 +354,7 @@ CREATE TABLE `t_sys_menu` (
 
 /*Data for the table `t_sys_menu` */
 
-insert  into `t_sys_menu`(`id`,`menuname`,`url`,`ismenu`,`pid`,`createdate`,`remark`,`priority`,`status`,`isdisabled`,`operuser`,`operdate`) values (1,'分局填报','',1,0,'2019-03-14 21:20:12',NULL,1,1,'0','1','2019-03-14 21:20:35'),(2,'月填报','subofficewrite/subofficewriteMonthList.web',0,1,'2019-03-14 21:21:18',NULL,3,1,'0','1','2019-03-14 21:21:28'),(3,'财务管理','',1,0,'2019-03-14 21:22:05',NULL,4,1,'0','1','2019-03-14 21:22:15'),(4,'合同管理',NULL,1,0,'2019-03-14 21:23:43',NULL,7,1,'0','1','2019-03-14 21:23:35'),(5,'合同签订','contract/contractSignedList.web',0,4,'2019-03-14 21:24:55',NULL,8,1,'0','1','2019-03-14 21:25:00'),(6,'合同执行','contract/contractExecuteList.web',0,4,'2019-03-14 21:42:11',NULL,9,1,'0','1','2019-03-14 21:42:08'),(10,'系统管理','',1,0,'2019-03-15 11:00:48','',14,1,'0','1','2019-03-15 11:00:48'),(11,'用户管理','user/userList.web',0,10,'2019-03-15 11:02:50','',15,1,'0','1','2019-03-15 11:02:50'),(12,'角色管理','role/roleList.web',0,10,'2019-03-15 11:03:14','',16,1,'0','1','2019-03-15 11:03:14'),(13,'菜单管理','menu/menuList.web',0,10,'2019-03-15 11:03:38','',17,1,'0','1','2019-03-15 11:03:38'),(14,'统计报表','',1,0,'2019-03-18 14:00:19','',10,1,'0','1','2019-03-18 14:00:19'),(15,'合同执行月统计','contract/contractExecuteMonthTotalList.web',0,14,'2019-03-18 14:01:03','',11,1,'0','1','2019-03-18 14:01:03'),(16,'财务数据统计','financing/financingReport.web',0,14,'2019-03-18 14:01:24','',12,1,'0','1','2019-03-18 14:01:24'),(17,'审批管理','',1,0,'2019-03-19 09:51:39','',18,1,'0','1','2019-03-19 09:51:39'),(18,'分局填报审批','subofficewrite/subofficewriteApproveList.web',0,17,'2019-03-19 09:52:00','',19,1,'0','1','2019-03-19 09:52:00'),(19,'财务填报审批','',0,17,'2019-03-19 09:52:18','',20,1,'1','1','2019-03-19 09:52:18'),(20,'旬填报','subofficewrite/subofficewriteTenDayList.web',0,1,'2019-03-20 10:09:08','',2,1,'0','1','2019-03-20 10:09:08'),(21,'工程投资完成汇总月统计','financing/financingReportTwo.web',0,14,'2019-03-20 14:59:22','',13,1,'0','1','2019-03-20 14:59:22'),(22,'财务填报','financing/financingList.web',0,3,'2019-03-20 14:59:58','',5,1,'0','1','2019-03-20 14:59:58'),(23,'工程投资完成汇总数据补录','financing/financingRepair.web',0,3,'2019-03-20 15:00:27','',6,1,'0','1','2019-03-20 15:00:27'),(28,'部门管理','suboffice/subofficeList.web',0,10,'2019-03-21 15:37:50','',17,1,'0','1','2019-03-21 15:37:50'),(30,'维护管理','',1,0,'2019-04-11 15:35:05','',21,1,'0','1','2019-04-11 15:35:05'),(31,'进度反馈对比分析','maintenance/maintenanceList.web',0,30,'2019-04-11 15:38:29','',22,1,'0','1','2019-04-11 15:38:29'),(32,'工程月进度','maintenancemonthScheduList.web',0,1,'2019-04-15 15:25:05','',23,1,'0','1','2019-04-15 15:25:05');
+insert  into `t_sys_menu`(`id`,`menuname`,`url`,`ismenu`,`pid`,`createdate`,`remark`,`priority`,`status`,`isdisabled`,`operuser`,`operdate`) values (1,'分局填报','',1,0,'2019-03-14 21:20:12',NULL,1,1,'0','1','2019-03-14 21:20:35'),(2,'月填报','subofficewrite/subofficewriteMonthList.web',0,1,'2019-03-14 21:21:18',NULL,3,1,'0','1','2019-03-14 21:21:28'),(3,'财务管理','',1,0,'2019-03-14 21:22:05',NULL,4,1,'0','1','2019-03-14 21:22:15'),(4,'合同管理',NULL,1,0,'2019-03-14 21:23:43',NULL,7,1,'0','1','2019-03-14 21:23:35'),(5,'合同签订','contract/contractSignedList.web',0,4,'2019-03-14 21:24:55',NULL,8,1,'0','1','2019-03-14 21:25:00'),(6,'合同执行','contract/contractExecuteList.web',0,4,'2019-03-14 21:42:11',NULL,9,1,'0','1','2019-03-14 21:42:08'),(10,'系统管理','',1,0,'2019-03-15 11:00:48','',14,1,'0','1','2019-03-15 11:00:48'),(11,'用户管理','user/userList.web',0,10,'2019-03-15 11:02:50','',15,1,'0','1','2019-03-15 11:02:50'),(12,'角色管理','role/roleList.web',0,10,'2019-03-15 11:03:14','',16,1,'0','1','2019-03-15 11:03:14'),(13,'菜单管理','menu/menuList.web',0,10,'2019-03-15 11:03:38','',17,1,'0','1','2019-03-15 11:03:38'),(14,'统计报表','',1,0,'2019-03-18 14:00:19','',10,1,'0','1','2019-03-18 14:00:19'),(15,'合同执行月统计','contract/contractExecuteMonthTotalList.web',0,14,'2019-03-18 14:01:03','',11,1,'0','1','2019-03-18 14:01:03'),(16,'财务数据统计','financing/financingReport.web',0,14,'2019-03-18 14:01:24','',12,1,'0','1','2019-03-18 14:01:24'),(17,'审批管理','',1,0,'2019-03-19 09:51:39','',18,1,'0','1','2019-03-19 09:51:39'),(18,'分局填报审批','subofficewrite/subofficewriteApproveList.web',0,17,'2019-03-19 09:52:00','',19,1,'0','1','2019-03-19 09:52:00'),(19,'财务填报审批','',0,17,'2019-03-19 09:52:18','',20,1,'0','1','2019-03-19 09:52:18'),(20,'旬填报','subofficewrite/subofficewriteTenDayList.web',0,1,'2019-03-20 10:09:08','',2,1,'0','1','2019-03-20 10:09:08'),(21,'工程投资完成汇总月统计','financing/financingReportTwo.web',0,14,'2019-03-20 14:59:22','',13,1,'0','1','2019-03-20 14:59:22'),(22,'财务填报','financing/financingList.web',0,3,'2019-03-20 14:59:58','',5,1,'0','1','2019-03-20 14:59:58'),(23,'工程投资完成汇总数据补录','financing/financingRepair.web',0,3,'2019-03-20 15:00:27','',6,1,'0','1','2019-03-20 15:00:27'),(28,'部门管理','suboffice/subofficeList.web',0,10,'2019-03-21 15:37:50','',17,1,'0','1','2019-03-21 15:37:50'),(29,'进度反馈','',1,0,'2019-04-12 09:52:22',NULL,21,1,'0','1','2019-04-12 09:52:22'),(30,'工程维护','project/maintainList.web',0,29,'2019-04-12 09:52:22',NULL,22,1,'0','1','2019-04-12 09:52:22'),(31,'工程月进度','project/monthscheduleList.web',0,29,'2019-04-12 09:52:22',NULL,23,1,'0','1','2019-04-12 09:52:22'),(32,'工程日进度','project/DayScheduLeist.web',0,29,'2019-04-12 09:52:22',NULL,24,1,'0','1','2019-04-12 09:52:22');
 
 /*Table structure for table `t_sys_role` */
 
@@ -350,11 +386,11 @@ CREATE TABLE `t_sys_role_menu` (
   `roleid` int(11) NOT NULL COMMENT '角色ID',
   `menuid` int(11) NOT NULL COMMENT '菜单ID',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=207 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=188 DEFAULT CHARSET=utf8;
 
 /*Data for the table `t_sys_role_menu` */
 
-insert  into `t_sys_role_menu`(`id`,`roleid`,`menuid`) values (93,10,17),(94,10,18),(95,10,19),(185,1,1),(186,1,20),(187,1,2),(188,1,3),(189,1,22),(190,1,23),(191,1,4),(192,1,5),(193,1,6),(194,1,14),(195,1,15),(196,1,16),(197,1,21),(198,1,10),(199,1,11),(200,1,12),(201,1,13),(202,1,28),(203,1,17),(204,1,18),(205,1,30),(206,1,31);
+insert  into `t_sys_role_menu`(`id`,`roleid`,`menuid`) values (93,10,17),(94,10,18),(95,10,19),(110,2,20),(111,2,1),(112,2,2),(163,1,1),(164,1,20),(165,1,2),(166,1,3),(167,1,22),(168,1,23),(169,1,4),(170,1,5),(171,1,6),(172,1,14),(173,1,15),(174,1,16),(175,1,21),(176,1,10),(177,1,11),(178,1,12),(179,1,13),(180,1,28),(181,1,17),(182,1,18),(183,1,19),(184,1,29),(185,1,30),(186,1,31),(187,1,32);
 
 /*Table structure for table `t_sys_user` */
 
