@@ -2,7 +2,8 @@
 SQLyog Ultimate v8.32 
 MySQL - 5.5.49 : Database - echart
 *********************************************************************
-*/
+*/
+
 
 /*!40101 SET NAMES utf8 */;
 
@@ -12,7 +13,7 @@ MySQL - 5.5.49 : Database - echart
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-CREATE DATABASE /*!32312 IF NOT EXISTS*/`echart` /*!40100 DEFAULT CHARACTER SET utf8 */;
+CREATE DATABASE /*!32312 IF NOT EXISTS*/`echart` /*!40100 DEFAULT CHARACTER SET latin1 */;
 
 USE `echart`;
 
@@ -127,11 +128,27 @@ CREATE TABLE `t_f_maintenance` (
   `codeno` varchar(18) DEFAULT NULL COMMENT 'coed码',
   `unit` varchar(200) DEFAULT NULL COMMENT '单位',
   PRIMARY KEY (`maintenanceid`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 
 /*Data for the table `t_f_maintenance` */
 
 insert  into `t_f_maintenance`(`maintenanceid`,`priority`,`entnyname`,`grade`,`perentid`,`index`,`codeno`,`unit`) values (1,'1','大理分局',1,0,1,'001000000000000000','100cm'),(2,'1.1','大理1段',2,1,1,'001001000000000000',NULL),(3,'1.2.1','大理1段施工1标',3,2,1,'001002001000000000',NULL),(4,'2','丽江分局',1,0,2,'002000000000000000',NULL),(5,'2.1','丽江1段',2,4,1,'002001000000000000',NULL);
+
+/*Table structure for table `t_m_user_authority` */
+
+DROP TABLE IF EXISTS `t_m_user_authority`;
+
+CREATE TABLE `t_m_user_authority` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `authority` varchar(10) NOT NULL COMMENT '0为可修改1为可查看',
+  `uid` varchar(10) NOT NULL COMMENT '用户id',
+  `mid` varchar(10) NOT NULL COMMENT '工程id',
+  UNIQUE KEY `id` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=latin1;
+
+/*Data for the table `t_m_user_authority` */
+
+insert  into `t_m_user_authority`(`id`,`authority`,`uid`,`mid`) values (17,'0','10','1'),(19,'0','1','1'),(20,'0','14','1'),(21,'0','13','1'),(22,'1','15','1');
 
 /*Table structure for table `t_month_schedule` */
 
@@ -150,11 +167,11 @@ CREATE TABLE `t_month_schedule` (
   `backups` varchar(100) DEFAULT NULL COMMENT '备注',
   `fid` varchar(50) NOT NULL,
   UNIQUE KEY `mid` (`mid`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
 /*Data for the table `t_month_schedule` */
 
-insert  into `t_month_schedule`(`mid`,`unit`,`designquantity`,`changequantity`,`plannedvolume`,`accumulationcumulant`,`completionrate`,`accumulationcompletionrate`,`date`,`backups`,`fid`) values (1,NULL,'100','0',100,'0','0','0','2019-03',NULL,'1'),(2,NULL,'100','0',20,'8','8','8','2019-03',NULL,'2'),(3,NULL,'100','0',30,'7','7','7','2019-03',NULL,'3'),(4,NULL,'100','0',50,'5','5','5','2019-03',NULL,'4'),(5,NULL,'100','0',30,'2','2','2','2019-03',NULL,'5');
+insert  into `t_month_schedule`(`mid`,`unit`,`designquantity`,`changequantity`,`plannedvolume`,`accumulationcumulant`,`completionrate`,`accumulationcompletionrate`,`date`,`backups`,`fid`) values (1,NULL,'5645','6546',45645,'6456','4564','456456','2019-04','456456','1'),(2,'45645','645','6456',45654,'6546','546','45645','2019-02','6456','1'),(3,NULL,'56356356','3563563',56356,'365356','653','3563','2019-04','56356','2'),(4,NULL,'5452','45245',45245,'2452','2452','454','2019-04','52456','3'),(5,NULL,'546456','54645',645,'6456','45645','645','2019-04','65','4');
 
 /*Table structure for table `t_p_monthtotal` */
 
@@ -209,11 +226,11 @@ CREATE TABLE `t_s_daystatement` (
   `day` int(2) NOT NULL COMMENT '日',
   `describe` varchar(2000) DEFAULT NULL COMMENT '施工形象描述',
   PRIMARY KEY (`dayScheduid`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
 
 /*Data for the table `t_s_daystatement` */
 
-insert  into `t_s_daystatement`(`dayScheduid`,`monthscheduleid`,`todayaccomplish`,`day`,`describe`) values (1,1,2,1,'no'),(2,2,3,1,'透了'),(3,3,6,1,'没带'),(4,4,6,1,'男人嘛!!!'),(5,5,6,1,'我们是真爱'),(9,1,2,2,'hhhhhhhhhhhhh'),(10,2,2,2,'hhhhhhhhhhhhh'),(11,3,2,2,'hhhhhhhhhhh'),(12,4,2,2,'hhhhhhhhhhh'),(13,5,2,2,'hhhhhhhhhhhhhh');
+insert  into `t_s_daystatement`(`dayScheduid`,`monthscheduleid`,`todayaccomplish`,`day`,`describe`) values (1,1,2,1,'no'),(2,2,3,1,'透了'),(3,3,6,1,'没带'),(4,4,6,1,'男人嘛!!!'),(5,5,6,1,'我们是真爱'),(9,1,2,2,'hhhhhhhhhhhhh'),(10,2,2,2,'hhhhhhhhhhhhh'),(11,3,2,2,'hhhhhhhhhhh'),(12,4,2,2,'hhhhhhhhhhh'),(13,5,2,2,'hhhhhhhhhhhhhh'),(14,1,22,3,'hhh'),(15,2,22,3,'hhh'),(16,3,22,3,'hhh'),(17,4,22,3,'hhh'),(18,5,22,3,'hhh'),(19,9,0,19,'66464'),(20,9,0,9,'4554');
 
 /*Table structure for table `t_s_dcdysqlid` */
 
@@ -354,7 +371,7 @@ CREATE TABLE `t_sys_menu` (
 
 /*Data for the table `t_sys_menu` */
 
-insert  into `t_sys_menu`(`id`,`menuname`,`url`,`ismenu`,`pid`,`createdate`,`remark`,`priority`,`status`,`isdisabled`,`operuser`,`operdate`) values (1,'分局填报','',1,0,'2019-03-14 21:20:12',NULL,1,1,'0','1','2019-03-14 21:20:35'),(2,'月填报','subofficewrite/subofficewriteMonthList.web',0,1,'2019-03-14 21:21:18',NULL,3,1,'0','1','2019-03-14 21:21:28'),(3,'财务管理','',1,0,'2019-03-14 21:22:05',NULL,4,1,'0','1','2019-03-14 21:22:15'),(4,'合同管理',NULL,1,0,'2019-03-14 21:23:43',NULL,7,1,'0','1','2019-03-14 21:23:35'),(5,'合同签订','contract/contractSignedList.web',0,4,'2019-03-14 21:24:55',NULL,8,1,'0','1','2019-03-14 21:25:00'),(6,'合同执行','contract/contractExecuteList.web',0,4,'2019-03-14 21:42:11',NULL,9,1,'0','1','2019-03-14 21:42:08'),(10,'系统管理','',1,0,'2019-03-15 11:00:48','',14,1,'0','1','2019-03-15 11:00:48'),(11,'用户管理','user/userList.web',0,10,'2019-03-15 11:02:50','',15,1,'0','1','2019-03-15 11:02:50'),(12,'角色管理','role/roleList.web',0,10,'2019-03-15 11:03:14','',16,1,'0','1','2019-03-15 11:03:14'),(13,'菜单管理','menu/menuList.web',0,10,'2019-03-15 11:03:38','',17,1,'0','1','2019-03-15 11:03:38'),(14,'统计报表','',1,0,'2019-03-18 14:00:19','',10,1,'0','1','2019-03-18 14:00:19'),(15,'合同执行月统计','contract/contractExecuteMonthTotalList.web',0,14,'2019-03-18 14:01:03','',11,1,'0','1','2019-03-18 14:01:03'),(16,'财务数据统计','financing/financingReport.web',0,14,'2019-03-18 14:01:24','',12,1,'0','1','2019-03-18 14:01:24'),(17,'审批管理','',1,0,'2019-03-19 09:51:39','',18,1,'0','1','2019-03-19 09:51:39'),(18,'分局填报审批','subofficewrite/subofficewriteApproveList.web',0,17,'2019-03-19 09:52:00','',19,1,'0','1','2019-03-19 09:52:00'),(19,'财务填报审批','',0,17,'2019-03-19 09:52:18','',20,1,'0','1','2019-03-19 09:52:18'),(20,'旬填报','subofficewrite/subofficewriteTenDayList.web',0,1,'2019-03-20 10:09:08','',2,1,'0','1','2019-03-20 10:09:08'),(21,'工程投资完成汇总月统计','financing/financingReportTwo.web',0,14,'2019-03-20 14:59:22','',13,1,'0','1','2019-03-20 14:59:22'),(22,'财务填报','financing/financingList.web',0,3,'2019-03-20 14:59:58','',5,1,'0','1','2019-03-20 14:59:58'),(23,'工程投资完成汇总数据补录','financing/financingRepair.web',0,3,'2019-03-20 15:00:27','',6,1,'0','1','2019-03-20 15:00:27'),(28,'部门管理','suboffice/subofficeList.web',0,10,'2019-03-21 15:37:50','',17,1,'0','1','2019-03-21 15:37:50'),(29,'进度反馈','',1,0,'2019-04-12 09:52:22',NULL,21,1,'0','1','2019-04-12 09:52:22'),(30,'工程维护','project/maintainList.web',0,29,'2019-04-12 09:52:22',NULL,22,1,'0','1','2019-04-12 09:52:22'),(31,'工程月进度','project/monthScheduList.web',0,29,'2019-04-12 09:52:22',NULL,23,1,'0','1','2019-04-12 09:52:22'),(32,'工程日进度','project/DayScheduLeist.web',0,29,'2019-04-12 09:52:22',NULL,24,1,'0','1','2019-04-12 09:52:22');
+insert  into `t_sys_menu`(`id`,`menuname`,`url`,`ismenu`,`pid`,`createdate`,`remark`,`priority`,`status`,`isdisabled`,`operuser`,`operdate`) values (1,'分局填报','',1,0,'2019-03-14 21:20:12',NULL,1,1,'0','1','2019-03-14 21:20:35'),(2,'月填报','subofficewrite/subofficewriteMonthList.web',0,1,'2019-03-14 21:21:18',NULL,3,1,'0','1','2019-03-14 21:21:28'),(3,'财务管理','',1,0,'2019-03-14 21:22:05',NULL,4,1,'0','1','2019-03-14 21:22:15'),(4,'合同管理',NULL,1,0,'2019-03-14 21:23:43',NULL,7,1,'0','1','2019-03-14 21:23:35'),(5,'合同签订','contract/contractSignedList.web',0,4,'2019-03-14 21:24:55',NULL,8,1,'0','1','2019-03-14 21:25:00'),(6,'合同执行','contract/contractExecuteList.web',0,4,'2019-03-14 21:42:11',NULL,9,1,'0','1','2019-03-14 21:42:08'),(10,'系统管理','',1,0,'2019-03-15 11:00:48','',14,1,'0','1','2019-03-15 11:00:48'),(11,'用户管理','user/userList.web',0,10,'2019-03-15 11:02:50','',15,1,'0','1','2019-03-15 11:02:50'),(12,'角色管理','role/roleList.web',0,10,'2019-03-15 11:03:14','',16,1,'0','1','2019-03-15 11:03:14'),(13,'菜单管理','menu/menuList.web',0,10,'2019-03-15 11:03:38','',17,1,'0','1','2019-03-15 11:03:38'),(14,'统计报表','',1,0,'2019-03-18 14:00:19','',10,1,'0','1','2019-03-18 14:00:19'),(15,'合同执行月统计','contract/contractExecuteMonthTotalList.web',0,14,'2019-03-18 14:01:03','',11,1,'0','1','2019-03-18 14:01:03'),(16,'财务数据统计','financing/financingReport.web',0,14,'2019-03-18 14:01:24','',12,1,'0','1','2019-03-18 14:01:24'),(17,'审批管理','',1,0,'2019-03-19 09:51:39','',18,1,'0','1','2019-03-19 09:51:39'),(18,'分局填报审批','subofficewrite/subofficewriteApproveList.web',0,17,'2019-03-19 09:52:00','',19,1,'0','1','2019-03-19 09:52:00'),(19,'财务填报审批','',0,17,'2019-03-19 09:52:18','',20,1,'0','1','2019-03-19 09:52:18'),(20,'旬填报','subofficewrite/subofficewriteTenDayList.web',0,1,'2019-03-20 10:09:08','',2,1,'0','1','2019-03-20 10:09:08'),(21,'工程投资完成汇总月统计','financing/financingReportTwo.web',0,14,'2019-03-20 14:59:22','',13,1,'0','1','2019-03-20 14:59:22'),(22,'财务填报','financing/financingList.web',0,3,'2019-03-20 14:59:58','',5,1,'0','1','2019-03-20 14:59:58'),(23,'工程投资完成汇总数据补录','financing/financingRepair.web',0,3,'2019-03-20 15:00:27','',6,1,'0','1','2019-03-20 15:00:27'),(28,'部门管理','suboffice/subofficeList.web',0,10,'2019-03-21 15:37:50','',17,1,'0','1','2019-03-21 15:37:50'),(29,'进度反馈','',1,0,'2019-04-12 09:52:22',NULL,21,1,'0','1','2019-04-12 09:52:22'),(30,'工程维护','maintenance/maintenanceList.web',0,29,'2019-04-12 09:52:22',NULL,22,1,'0','1','2019-04-12 09:52:22'),(31,'工程月进度','project/monthscheduleList.web',0,29,'2019-04-12 09:52:22',NULL,23,1,'0','1','2019-04-12 09:52:22'),(32,'工程日进度','project/DayScheduLeist.web',0,29,'2019-04-12 09:52:22',NULL,24,1,'0','1','2019-04-12 09:52:22');
 
 /*Table structure for table `t_sys_role` */
 
@@ -371,11 +388,11 @@ CREATE TABLE `t_sys_role` (
   `operuser` varchar(20) DEFAULT NULL COMMENT '操作人',
   `operdate` datetime DEFAULT NULL COMMENT '操作时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 
 /*Data for the table `t_sys_role` */
 
-insert  into `t_sys_role`(`id`,`rolename`,`createdate`,`remark`,`priority`,`status`,`isdisabled`,`operuser`,`operdate`) values (1,'超级管理员','2019-03-14 17:12:45',NULL,0,1,'0','1','2019-03-14 17:13:02'),(2,'分局用户','2019-03-14 17:17:20',NULL,0,1,'0','1','2019-03-14 17:17:34'),(10,'审批用户','2019-03-15 10:28:52','',0,1,'0','1','2019-03-15 10:28:52');
+insert  into `t_sys_role`(`id`,`rolename`,`createdate`,`remark`,`priority`,`status`,`isdisabled`,`operuser`,`operdate`) values (1,'超级管理员','2019-03-14 17:12:45',NULL,0,1,'0','1','2019-03-14 17:13:02'),(2,'分局用户','2019-03-14 17:17:20',NULL,0,1,'0','1','2019-03-14 17:17:34'),(10,'审批用户','2019-03-15 10:28:52','',0,1,'0','1','2019-03-15 10:28:52'),(11,'213','2019-04-19 09:40:37','',0,1,'1','1','2019-04-19 09:40:37');
 
 /*Table structure for table `t_sys_role_menu` */
 
