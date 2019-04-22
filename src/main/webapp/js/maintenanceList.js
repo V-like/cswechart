@@ -40,17 +40,31 @@ var TableInit = function () {
 				 ,{field: 'priority',title: '序号'}
 				 ,{field: 'entnyname',title: '项目名称'}
 				 ,{field: 'unit',title: '单位' }
-				 ,{field: 'perentid',align: 'center',title: '' ,width:100,
+				 ,{field: 'perentid',align: 'center',title: '同级添加' ,width:100,
 					 formatter:function (value, row, index, field) {
 				        return [
 				        	  '<button type="button" onclick="maintenanceAdd('+row["perentid"]+')" class="RoleOfedit btn btn-primary  btn-sm" style="margin-right:15px;" >同级添加</button>',
 				        	 ].join('');
 				    },
 				 }
-				 ,{field: 'maintenanceid',align: 'center',title: '' ,width:100,
+				 ,{field: 'maintenanceid',align: 'center',title: '下级添加' ,width:100,
 						formatter:function (value, row, index, field) {
 					        return [
 					        	   '<button type="button" onclick="maintenanceAdd('+row["maintenanceid"]+')" class="RoleOfedit btn btn-primary  btn-sm" style="margin-right:15px;" >下级添加</button>',
+							      ].join('');
+					    },
+				  }
+				 ,{field: 'maintenanceid',align: 'center',title: '添加权限' ,width:100, 
+						formatter:function (value, row, index, field) {
+					        return [
+					        	   '<button type="button" onclick="maintenanceAdd2('+row["maintenanceid"]+')" class="RoleOfedit btn btn-primary  btn-sm" style="margin-right:15px;" >添加权限</button>',
+							      ].join('');
+					    },
+				  }
+				 ,{field: 'maintenanceid',align: 'center',title: '查看权限' ,width:100,
+						formatter:function (value, row, index, field) {
+					        return [
+					        	   '<button type="button" onclick="maintenanceAdd3('+row["maintenanceid"]+')" class="RoleOfedit btn btn-primary  btn-sm" style="margin-right:15px;" >查看权限</button>',
 							      ].join('');
 					    },
 				  }
@@ -98,57 +112,216 @@ function maintenanceAdd(_id){
 	var _html = '';
 	_html = _html + '<input type="hidden" id="maintenanceid" value="'+_id+'" />';
 	_html = _html + '<div style="width:600px;height:100px;">';
-	_html = _html + '<div class="panel-body" style="padding-bottom:0px;width:600px;height:100px;">';
-	_html = _html + '		  <div class="form-group">';
+	_html = _html + '	<div class="panel-body" style="padding-bottom:0px;width:600px;height:100px;">';
+	_html = _html + '		<div class="form-group">';
 	_html = _html + '			<label for="subofficename" class="col-sm-3 control-label">项目名称</label>';
 	_html = _html + '			<div class="col-sm-7">';
 	_html = _html + '				<input type="text" class="form-control" id="entnyname"';
 	_html = _html + '					placeholder="请输入项目名称" style="margin-top:-10px;">';
 	_html = _html + '			</div>';
-	_html = _html + '		  </div><br/><br/>';
-	_html = _html + '		  <div class="form-group">';
+	_html = _html + '		</div><br/><br/>';
+	_html = _html + '		<div class="form-group">';
 	_html = _html + '			<label for="subofficename" class="col-sm-3 control-label">单位(CM)</label>';
 	_html = _html + '			<div class="col-sm-7">';
 	_html = _html + '				<input type="text" class="form-control" id="unit" ';
 	_html = _html + '					placeholder="请输入单位"  style="margin-top:-10px;">';
 	_html = _html + '			</div>';
-	_html = _html + '		  </div>';
 	_html = _html + '		</div>';
+	_html = _html + '	</div>';
 	_html = _html + '</div>';
 		
 	modalTitle(_html,2);
-	}
+}
 
-function saveFun(){
-	var entnyname = $("#entnyname").val();
-	var priority = $("#priority").val();
-	var unit = $("#unit").val();	
-	var maintenanceid = $("#maintenanceid").val();	
-	if(entnyname == ""){
-    	alert('请输入项目名称');
-        return false;
-    }
-	
-	if(unit == ""){
-    	alert('请输入单位');
-        return false;
-    }
-	
+
+
+//权限添加
+function maintenanceAdd2(_id){
 	$.ajax({
-		url:$("#fule").val()+"maintenance/maintenanceSave.json",
+		url:$("#fule").val()+"muserauthority/muserauthorityData.json",
 		type:"POST",
 		dataType:"json",
 		data: {
-			entnyname : entnyname,
-			priority : priority,
-			unit : unit,
-			maintenanceid : maintenanceid
+			id : _id,
         },
 		success:function(data){
-			 alert("操作成功");
+			var _html = '';
+			_html = _html + '<input type="hidden" id="maintenanceid2" value="'+_id+'" />';
+			_html = _html + '<div style="width:600px;height:150px;">';
+			_html = _html + '	<div class="panel-body" style="padding-bottom:0px;width:600px;height:100px;">';
+			_html = _html + '		<div class="form-group">';
+			_html = _html + '			<label for="subofficename" class="col-sm-3 control-label">分局/姓名</label>';
+			_html = _html + '			<div class="col-sm-7">';
+			_html = _html + '				<select name="uid" id="uid" style="width:300px;height:30px;">';
+												for(var i=0;i<data.length;i++){
+			_html = _html + '					<option value ="'+data[i].uid+'">'+data[i].realname+" : "+data[i].username+'</option>';
+												}
+			_html = _html + '				</select>';
+			_html = _html + '			</div>';
+			_html = _html + '		</div><br/><br/>';
+			_html = _html + '		<div class="form-group">';
+			_html = _html + '			<label for="subofficename" class="col-sm-3 control-label">权限</label>';
+			_html = _html + '			<div class="col-sm-7">';
+			_html = _html + '				<select name="authority" id="authority" style="width:300px;height:30px;">';
+			_html = _html + '					<option value ="0">标段负责人</option>';
+			_html = _html + '					<option value ="1">可查看用户</option>';
+			_html = _html + '				</select>';
+			_html = _html + '			</div>';
+			_html = _html + '		</div><br/><br/>';
+			_html = _html + '	</div>';
+			_html = _html + '</div>';
+				
+			modalTitle(_html,2);
 		},
 		error:function(){
 			console.log("失败");
 		}
 	});
+	
+
+}
+
+
+//权限查看
+function maintenanceAdd3(_id){
+	$.ajax({
+		url:$("#fule").val()+"muserauthority/muserauthorityData2.json",
+		type:"POST",
+		dataType:"json",
+		data: {
+			id : _id,
+        },
+		success:function(data){
+			var _html = '';
+			_html = _html + '<input type="hidden" id="maintenanceid" value="'+_id+'" />';
+			_html = _html + '<div style="width:600px;height:150px;">';
+			_html = _html + '	<table border="0">';
+			_html = _html + '		<tr>';
+			_html = _html + '			<th>标段负责人</th>';
+			_html = _html + '			<th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>';
+									var v=0;
+									for(var i=0;i<data.length;i++){
+										if(data[i].authority==0){
+											v++;
+			_html = _html + 				'<th><a style="color:black;" onclick="deleteAuthority('+data[i].id+')">'+data[i].realname+" : "+data[i].username+'</a></th>';
+										}
+										if(v==2){
+											v=0;
+			_html = _html + '		</tr><tr><th></th><th></th>';
+										}
+									}
+			_html = _html + '		</tr>';
+			_html = _html + '		<tr><th>&nbsp;&nbsp;</th></tr>';
+			_html = _html + '		<tr>';
+			_html = _html + '			<th>可查看用户</th>';
+			_html = _html + '			<th></th>';
+									var v2=0;
+									for(var i=0;i<data.length;i++){
+										if(data[i].authority==1){
+											v2++;
+			_html = _html + 				'<th><a style="color:black;" onclick="deleteAuthority('+data[i].id+')">'+data[i].realname+" : "+data[i].username+'</a></th>';
+										}
+										if(v2==2){
+											v2=0;
+			_html = _html + '		</tr><tr><th></th><th></th>';
+										}
+									}
+			_html = _html + '		</tr>';
+			_html = _html + '		<tr><font color="red" size="3px">点击用户名删除此用户<font></tr>';
+			_html = _html + '	</table>';
+			_html = _html + '</div>';
+				
+			modalTitle(_html,2);
+		},
+		error:function(){
+			console.log("失败");
+		}
+	});
+	
+}
+
+
+
+function deleteAuthority(id){
+	var msg = "您真的确定要删除吗？\n\n请确认！";
+	if (confirm(msg)==true){
+		$.ajax({
+			url:$("#fule").val()+"muserauthority/deleteMuserauthority.json",
+			type:"POST",
+			dataType:"json",
+			data: {
+				id : id,
+	        },
+			success:function(data){
+				 alert("操作成功");
+			},
+			error:function(){
+				console.log("失败");
+			}
+		});
+		alert("操作成功")
+		closeloding();
+	return true;
+	}else{
+	return false;
+	}
+//	alert(id)
+}
+function saveFun(){
+	var entnyname = $("#entnyname").val();
+	var priority = $("#priority").val();
+	var unit = $("#unit").val();	
+	var maintenanceid = $("#maintenanceid").val();	
+	var authority = $("#authority").val();	
+	var uid = $("#uid").val();
+	var mid = $("#mid").val();
+	if(uid!=null && uid !=""&& uid!=undefined){
+		var mid = $("#maintenanceid2").val();	
+		$.ajax({
+			url:$("#fule").val()+"muserauthority/muserauthoritySave.json",
+			type:"POST",
+			dataType:"json",
+			data: {
+				uid : uid,
+				authority : authority,
+				mid : mid
+	        },
+			success:function(data){
+				 alert("操作成功");
+			},
+			error:function(){
+				console.log("失败");
+			}
+		});
+		closeloding();
+	}else{
+		if(entnyname == ""){
+	    	alert('请输入项目名称');
+	        return false;
+	    }
+		
+		if(unit == ""){
+	    	alert('请输入单位');
+	        return false;
+	    }
+		
+		$.ajax({
+			url:$("#fule").val()+"maintenance/maintenanceSave.json",
+			type:"POST",
+			dataType:"json",
+			data: {
+				entnyname : entnyname,
+				priority : priority,
+				unit : unit,
+				maintenanceid : maintenanceid
+	        },
+			success:function(data){
+				 alert("操作成功");
+			},
+			error:function(){
+				console.log("失败");
+			}
+		});
+		closeloding();
+	}
 }

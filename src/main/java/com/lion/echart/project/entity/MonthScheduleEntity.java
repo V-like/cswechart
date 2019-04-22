@@ -3,7 +3,6 @@ package com.lion.echart.project.entity;
 import java.io.Serializable;
 
 import com.lion.echart.base.entity.BaseEntity;
-import com.lion.echart.feedback.entity.FeedbackEntity;
 
 public class MonthScheduleEntity  extends BaseEntity{
 

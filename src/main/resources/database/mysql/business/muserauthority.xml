@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="comle.muserauthority">
+<resultMap
+		type="com.lion.echart.maintenance.entity.MuserAuthorityEntity"
+		id="maintenance">
+		<id property="id" column="id" />
+		<result property="authority" column="authority" />
+		<result property="uid" column="uid"/>
+		<result property="mid" column="mid"/>
+		<result property="username" column="username"/>
+		<result property="realname" column="realname"/>
+		
+
+	</resultMap>
+	<!-- 仅供权限添加查询列表使用 -->
+	<select id="getMuserauthorityData"
+		parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT t.id AS "uid",t.username,t.realname FROM t_sys_user t WHERE t.id NOT IN
+			(SELECT  tsu.id FROM t_m_user_authority tmua LEFT JOIN t_sys_user tsu 
+				ON tmua.mid=#{mid} AND tmua.uid =tsu.id)
+	</select>
+	<select id="getMuserauthorityData2"
+		parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT 
+		id as uid,username,realname FROM t_sys_user 
+	</select>
+	<select id="getMuserauthorityData3"
+		parameterType="java.util.Map" resultType="java.util.Map">
+			SELECT 
+			tsu.id AS 'uid',tsu.username,tsu.realname,tmua.authority,tmua.id FROM t_m_user_authority tmua,t_sys_user tsu 
+			WHERE tmua.mid=#{mid} AND tmua.uid =tsu.id
+	</select>
+	
+	<insert id="muserauthoritySave" parameterType="com.lion.echart.maintenance.entity.MuserAuthorityEntity">
+           INSERT INTO t_m_user_authority (authority,uid,mid)  
+               VALUES(#{authority},#{uid},#{mid})
+   	</insert>
+   	
+   	<delete  id="deleteMuserauthority" parameterType="com.lion.echart.maintenance.entity.MuserAuthorityEntity"> 
+   		DELETE FROM t_m_user_authority WHERE id=#{id}
+   	</delete>
+
+</mapper>
