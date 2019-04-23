@@ -1,4 +1,4 @@
-package com.lion.echart.maintenance.web;
+package com.lion.echart.project.web;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.lion.echart.base.logic.BaseService;
-import com.lion.echart.maintenance.entity.MaintenanceEntity;
+import com.lion.echart.project.entity.MaintenanceEntity;
 import com.lion.echart.system.entity.UserEntity;
 
 
@@ -32,15 +32,15 @@ public class MaintenanceController {
 	@Autowired
 	private BaseService baseService;
 	//反馈填报列表页 
-	@RequestMapping(value = "/maintenance/maintenanceList.web",method=RequestMethod.GET)
+	@RequestMapping(value = "/project/maintenanceList.web",method=RequestMethod.GET)
 	public String maintenanceList(HttpServletRequest req,HttpServletResponse resp, HttpSession session) throws IOException { 
 		req.setAttribute("ts", System.currentTimeMillis());
 		req.setAttribute("who", "maintenance");
-		return "/page/maintenance/maintenanceList";
+		return "/page/project/maintenanceList";
 	}
 	
 	//获取填报列表数据
-		@RequestMapping(value = "/maintenance/maintenanceGetDBData.json",method=RequestMethod.POST)
+		@RequestMapping(value = "/project/maintenanceGetDBData.json",method=RequestMethod.POST)
 		public @ResponseBody List<Map<String, Object>> maintenanceGetData(String belongTimeStr,HttpServletRequest req,HttpServletResponse resp, 
 				HttpSession session, String subofficeid) throws IOException { 
 			UserEntity user = (UserEntity)session.getAttribute("USER_SESSION");
@@ -66,21 +66,21 @@ public class MaintenanceController {
 		
 		
 		//部门信息添加列表页 
-		@RequestMapping(value = "/maintenance/maintenanceAdd.web",method=RequestMethod.GET)
+		@RequestMapping(value = "/project/maintenanceAdd.web",method=RequestMethod.GET)
 		public String subofficeAdd(HttpServletRequest req,HttpServletResponse resp, HttpSession session , Model model,String maintenanceid) throws IOException { 
 			req.setAttribute("ts", System.currentTimeMillis());
 			req.setAttribute("who", "contract");
 			model.addAttribute("maintenanceid", maintenanceid);
-			return "/page/maintenance/maintenanceAdd";
+			return "/page/project/maintenanceAdd";
 		}
 		
 		
 		//部门添加保存
-		@RequestMapping(value = "/maintenance/maintenanceSave.json",method=RequestMethod.POST)
-		public @ResponseBody String maintenanceSave(Long maintenanceid, String priority,String entnyname,String unit,String grade,HttpServletRequest req,HttpServletResponse resp, HttpSession session) throws IOException { 			
+		@RequestMapping(value = "/project/maintenanceSave.json",method=RequestMethod.POST)
+		public @ResponseBody String maintenanceSave(MaintenanceEntity maintenance,HttpServletRequest req,HttpServletResponse resp, HttpSession session) throws IOException { 			
 			JSONObject obj = new JSONObject();
 			HashMap<String, Object> param = new HashMap<String, Object>();
-			param.put("maintenanceid", maintenanceid); //获取上一级id，也就是当前选中
+			param.put("maintenanceid", maintenance.getMaintenanceid()); //获取上一级id，也就是当前选中
 			Object tempobj = baseService.queryObject("comle.Maintenance.getMaintenanceListData", param); //获取上一级id下的对象
 			
 			Map<String, Object> parentobj = null; 
@@ -134,11 +134,11 @@ public class MaintenanceController {
 			}else {
 				selfGrade = baseService.queryObject("comle.Maintenance.getSubMaxGradeAo", param).toString(); //上一级的index位置	
 			}			
-			MaintenanceEntity maintenance = new MaintenanceEntity(leftpriority,entnyname,selfGrade,maintenanceid,selfIndex,leftcode,unit);//增加	
-			System.out.println(maintenance.toString());
+			MaintenanceEntity maintenances = new MaintenanceEntity(leftpriority,"",selfGrade,"",selfIndex,leftcode,maintenance.getMaintenanceid(),new Date(),new Date(),0);//增加	
+			System.out.println(maintenances.toString());
 	         //放入对象存入数据库			
 			try {				
-				baseService.insertObject("comle.Maintenance.insertMaintenance",maintenance);
+				baseService.insertObject("comle.Maintenance.insertMaintenance",maintenances);
 				obj.put("msgType", 1);
 			} catch (Exception e) {
 				e.printStackTrace();

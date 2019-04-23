@@ -143,9 +143,9 @@
 					data-toggle="dropdown"> 维护管理 <b class="caret"></b>
 				</a>
 					<ul class="dropdown-menu">
-						<li><a href="<%=fule%>maintenance/maintenanceList.web">进度反馈对比分析</a></li>
-						<li><a href="<%=fule%>maintenance/monthScheduList.web">工程月进度</a></li>
-						<li><a href="<%=fule%>maintenance/daySchedueList.web">工程日进度</a></li>
+						<li><a href="<%=fule%>project/maintenanceList.web">进度反馈对比分析</a></li>
+						<li><a href="<%=fule%>project/monthscheduleList.web">工程月进度</a></li>
+						<li><a href="<%=fule%>project/DayScheduLeist.web">工程日进度</a></li>
 					</ul>
 			  </li>
 			</ul>

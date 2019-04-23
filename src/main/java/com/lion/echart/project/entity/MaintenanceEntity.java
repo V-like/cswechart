@@ -1,6 +1,7 @@
-package com.lion.echart.maintenance.entity;
+package com.lion.echart.project.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 
 public class MaintenanceEntity implements Serializable{
 	
@@ -13,7 +14,9 @@ public class MaintenanceEntity implements Serializable{
 	private long index;//自己所在位置
 	private String codeno;//coed码
 	private String unit; //单位
-
+	private Date begindate;//开工时间
+	private Date planfinishdate;//计划完工时间
+	private int workload;//工作量
 	
 	public long getMaintenanceid() {
 		return maintenanceid;
@@ -63,27 +66,35 @@ public class MaintenanceEntity implements Serializable{
 	public void setUnit(String unit) {
 		this.unit = unit;
 	}
-	public MaintenanceEntity(String priority, String entnyname, String grade, long perentid,
-			long index, String codeno, String unit) {
-		super();
-		this.priority = priority;
-		this.entnyname = entnyname;
-		this.grade = grade;
-		this.perentid = perentid;
-		this.index = index;
-		this.codeno = codeno;
-		this.unit = unit;
+	public Date getBegindate() {
+		return begindate;
+	}
+	public void setBegindate(Date begindate) {
+		this.begindate = begindate;
+	}
+	public Date getPlanfinishdate() {
+		return planfinishdate;
+	}
+	public void setPlanfinishdate(Date planfinishdate) {
+		this.planfinishdate = planfinishdate;
+	}
+	
+	public int getWorkload() {
+		return workload;
+	}
+	public void setWorkload(int workload) {
+		this.workload = workload;
 	}
 	@Override
 	public String toString() {
-		return "MaintenanceEntity [maintenanceid=" + maintenanceid + ", priority=" + priority + ", entnyname="
-				+ entnyname + ", grade=" + grade + ", perentid=" + perentid + ", index=" + index + ", codeno=" + codeno
-				+ ", unit=" + unit + "]";
+		return "MaintenanceEntity [priority=" + priority + ", entnyname=" + entnyname + ", grade=" + grade
+				+ ", perentid=" + perentid + ", index=" + index + ", codeno=" + codeno + ", unit=" + unit
+				+ ", begindate=" + begindate + ", planfinishdate=" + planfinishdate + ", workload=" + workload + "]";
 	}
 	
 	
 
-	
+
 	
 
 }

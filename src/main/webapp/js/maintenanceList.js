@@ -9,7 +9,7 @@ var TableInit = function () {
 	//初始化Table
 	oTableInit.Init = function () {
 		$('#t_datagrid').bootstrapTable({
-			url: $("#fule").val()+"maintenance/maintenanceGetDBData.json",       //请求后台的URL（*）
+			url: $("#fule").val()+"project/maintenanceGetDBData.json",       //请求后台的URL（*）
 			method: 'post',                      //请求方式（*）
 			toolbar: false,                //工具按钮用哪个容器
 			striped: true,                      //是否显示行间隔色
@@ -40,6 +40,9 @@ var TableInit = function () {
 				 ,{field: 'priority',title: '序号'}
 				 ,{field: 'entnyname',title: '项目名称'}
 				 ,{field: 'unit',title: '单位' }
+				 ,{field: 'begindate',title: '开工时间' }
+				 ,{field: 'planfinishdate',title: '计划完工时间' }
+				 ,{field: 'workload',title: '工作量' }
 				 ,{field: 'perentid',align: 'center',title: '同级添加' ,width:100,
 					 formatter:function (value, row, index, field) {
 				        return [
@@ -97,7 +100,7 @@ var TableInit = function () {
 
 function reloadtable(){
 	$.ajax({
-		url: $("#fule").val()+'maintenance/maintenanceGetDBData.json',
+		url: $("#fule").val()+'project/maintenanceGetDBData.json',
 		data: $("#formSearch").serializeObj(),
 		type: "post",
 		dataType:"json",
@@ -268,10 +271,14 @@ function deleteAuthority(id){
 //	alert(id)
 }
 function saveFun(){
-	var entnyname = $("#entnyname").val();
-	var priority = $("#priority").val();
-	var unit = $("#unit").val();	
-	var maintenanceid = $("#maintenanceid").val();	
+	var entnyname = $("#entnyname").val();//项目名称
+	var priority = $("#priority").val();//序号
+	var unit = $("#unit").val();	//单位
+	var maintenanceid = $("#maintenanceid").val();//id
+	var begindate = $("#begindate").val();
+	var planfinishdate = $("#planfinishdate").val();
+	var workload = $("#workload").val();
+	
 	var authority = $("#authority").val();	
 	var uid = $("#uid").val();
 	var mid = $("#mid").val();
@@ -285,6 +292,7 @@ function saveFun(){
 				uid : uid,
 				authority : authority,
 				mid : mid
+				
 	        },
 			success:function(data){
 				 alert("操作成功");
@@ -306,14 +314,18 @@ function saveFun(){
 	    }
 		
 		$.ajax({
-			url:$("#fule").val()+"maintenance/maintenanceSave.json",
+			url:$("#fule").val()+"project/maintenanceSave.json",
 			type:"POST",
 			dataType:"json",
 			data: {
 				entnyname : entnyname,
 				priority : priority,
 				unit : unit,
-				maintenanceid : maintenanceid
+				maintenanceid : maintenanceid,
+				begindate:begindate,
+				planfinishdate:planfinishdate,
+				workload:workload
+				
 	        },
 			success:function(data){
 				 alert("操作成功");
