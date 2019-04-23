@@ -90,7 +90,7 @@ public class MaintenanceController {
 			}
 			
 			//SELECT MAX(t.index)+1 FROM t_f_maintenance t WHERE t.perentid = ?		
-			int selfIndex = 0;
+			long selfIndex = 0;
 			if(baseService.queryObject("comle.Maintenance.getSubMaxInxdexAo", param).toString()==null) {
 				selfIndex = 1;
 			}else {	
@@ -133,8 +133,10 @@ public class MaintenanceController {
 				selfGrade = "1";
 			}else {
 				selfGrade = baseService.queryObject("comle.Maintenance.getSubMaxGradeAo", param).toString(); //上一级的index位置	
-			}			
-			MaintenanceEntity maintenances = new MaintenanceEntity(leftpriority,"",selfGrade,"",selfIndex,leftcode,maintenance.getMaintenanceid(),new Date(),new Date(),0);//增加	
+			}
+			
+			MaintenanceEntity maintenances = new MaintenanceEntity(leftpriority,"",selfGrade,maintenance.getMaintenanceid(),selfIndex,leftcode,"",new Date(),new Date(),0);//增加	
+			
 			System.out.println(maintenances.toString());
 	         //放入对象存入数据库			
 			try {				

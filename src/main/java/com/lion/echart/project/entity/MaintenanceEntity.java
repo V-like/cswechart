@@ -18,6 +18,26 @@ public class MaintenanceEntity implements Serializable{
 	private Date planfinishdate;//计划完工时间
 	private int workload;//工作量
 	
+	
+	public MaintenanceEntity() {
+		super();
+	}
+	
+	public MaintenanceEntity(String priority, String entnyname, String grade, long perentid, long index, String codeno,
+			String unit, Date begindate, Date planfinishdate, int workload) {
+		super();
+		this.priority = priority;
+		this.entnyname = entnyname;
+		this.grade = grade;
+		this.perentid = perentid;
+		this.index = index;
+		this.codeno = codeno;
+		this.unit = unit;
+		this.begindate = begindate;
+		this.planfinishdate = planfinishdate;
+		this.workload = workload;
+	}
+
 	public long getMaintenanceid() {
 		return maintenanceid;
 	}
