@@ -55,4 +55,34 @@
 	    WHERE MID = #{mid} 
 	</update>
 	
+	
+	<!-- 三级联动，根据三级查询工作面 -->
+	<select id="findByperentidon3on4"  parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+		fm.maintenanceid maintenanceid,
+		fm.priority priority,
+		fm.entnyname entnyname,
+		fm.codeno codeno,
+		fm.unit unit,
+		fm.begindate begindate,
+		fm.planfinishdate planfinishdate,
+		fm.workload workload,
+		ms.mid `mid`,
+		ms.designquantity designquantity,
+		ms.changequantity changequantity,
+		ms.plannedvolume plannedvolume,
+		ms.accumulationcumulant accumulationcumulant,
+		ms.completionrate completionrate,
+		ms.accumulationcompletionrate accumulationcompletionrate,
+		ms.fid fid
+		FROM t_f_maintenance fm
+		LEFT JOIN t_month_schedule ms
+		ON ms.fid = fm.maintenanceid
+		WHERE fm.perentid IN (#{perentid},
+		(SELECT 
+		maintenanceid
+		FROM t_f_maintenance
+		WHERE perentid = #{perentid}))
+		ORDER BY fm.codeno ASC
+	</select>
 </mapper>

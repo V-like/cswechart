@@ -67,4 +67,23 @@
     	FROM t_f_maintenance t 
     	WHERE t.grade = #{grade}
    	</select>
+   	
+   	<!-- 查找一级 -->
+	<select id="getstairsubofficeGet" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+		maintenanceid,priority,entnyname,grade,perentid,`index`,codeno,unit
+		FROM
+		t_f_maintenance where 1 = 1
+		<if test="grade != null">
+		 and grade = #{grade}
+		</if>
+		
+		<if test="perentid != null">
+		 and perentid = #{perentid} 
+		</if>
+		<!-- <if test="maintenanceid != null">
+		 and maintenanceid = #{maintenanceid} 
+		</if> -->
+		order by codeno
+	</select>
 </mapper>
