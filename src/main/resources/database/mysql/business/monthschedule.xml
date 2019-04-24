@@ -18,16 +18,19 @@
 		<result property="entnyname" column="entnyname" />
 		<result property="codeno" column="code" /> 
 		<result property="fid" column="fid" /> 
+		<result property="authortyMId" column="authortyMId" /> 
+		<result property="grade" column="grade" /> 
 
 	</resultMap>
 	<!-- 仅供月进度分期对比分期功能页面查询列表使用 -->
 	<select id="monthscheduleData"  parameterType="java.util.Map"
 		resultType="java.util.Map">
-	SELECT
-		 f.maintenanceid AS "fid",f.priority AS "number",f.entnyname AS "entnyname",f.codeno AS "code" ,
-		s.mid AS "mid", f.unit AS "unit", s.designquantity AS "designquantity", s.changequantity AS "changequantity", s.plannedvolume AS "plannedvolume", s.accumulationcumulant AS "accumulationcumulant", s.completionrate AS "completionrate", 
-		s.accumulationcompletionrate AS "accumulationcompletionrate", s.DATE AS "DATE", s.backups AS "backups"
-		 FROM t_f_maintenance AS f LEFT JOIN t_month_schedule AS s ON s.fid = f.maintenanceid AND s.date=#{date}  ORDER BY f.codeno ASC
+		SELECT  a.*,b.authortyMId,b.authority FROM
+			(SELECT  f.maintenanceid AS "fid",f.priority AS "number",f.entnyname AS "entnyname",f.codeno AS "code" ,f.grade,
+			s.mid AS "mid", f.unit AS "unit", s.designquantity AS "designquantity", s.changequantity AS "changequantity", s.plannedvolume AS "plannedvolume", s.accumulationcumulant AS "accumulationcumulant", s.completionrate AS "completionrate", 
+			s.accumulationcompletionrate AS "accumulationcompletionrate", s.DATE AS "DATE", s.backups AS "backups"
+			 FROM t_f_maintenance AS f LEFT JOIN t_month_schedule AS s ON s.fid = f.maintenanceid AND s.date=#{date}  ORDER BY f.codeno ASC) a LEFT JOIN
+			 (SELECT tmua.mid AS 'authortyMId' ,tmua.authority  FROM t_m_user_authority tmua WHERE tmua.uid=#{uid}) b on a.fid=b.authortyMId
 	</select>
 	
 	

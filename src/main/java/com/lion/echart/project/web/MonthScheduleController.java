@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.lion.echart.base.logic.BaseService;
 import com.lion.echart.project.entity.MonthScheduleEntity;
+import com.lion.echart.system.entity.UserEntity;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -43,13 +45,63 @@ public class MonthScheduleController {
 	// 获取进度反馈对比情况列表数据
 	@RequestMapping("/project/monthscheduleData.json")
 	@ResponseBody
-	public List<Map<String, Object>> payforGetData( String date ) throws IOException {
+	public List<Map<String, Object>> payforGetData( String date,HttpSession session ) throws IOException {
+		  UserEntity user = (UserEntity)session.getAttribute("USER_SESSION");
 		  Map<String, Object> param = new HashMap<String, Object>();
 		  param.put("date", date);
+		  param.put("uid", user.getId());
 		  List<Map<String, Object>> list = baseService.queryList("comle.monthschedule.monthscheduleData", param);
-		return list;
+		  List<Map<String, Object>> list2 = new ArrayList<Map<String,Object>>();
+		  List<String> codeList=new ArrayList<String>();
+		  for(int i=0; i< list.size() ;i++) {
+			  Map<String, Object> monthSchedule=list.get(i);
+			  if(monthSchedule.get("fid")!=null) {
+				  if((monthSchedule.get("fid")+"").equals(monthSchedule.get("authortyMId")+"")) {
+					  String mincode="";
+					  String codeno= monthSchedule.get("code")+"";
+					  String[] a=codeno.split("");
+					  long grade=((Long) monthSchedule.get("grade"))*3;
+					  for(int j=0;j<a.length;j++) {
+						  mincode+=a[j];
+						  if(grade-1 == j) {
+							  codeList.add(mincode);
+							  mincode="";
+							  break;
+						  }
+					  }
+				  }
+			  }
+		  }
+		  int aa=1;
+		  for(int i=0; i< list.size() ;i++) {
+			  Map<String, Object> monthSchedule=list.get(i);
+			 
+					  String codeno= monthSchedule.get("code")+"";
+					  String[] a=codeno.split("");
+					  for(int z=0;z<codeList.size();z++) {
+						  String mincode="";
+						  for(int j=0;j<a.length;j++) {
+							  mincode+=a[j];
+							  if(j==codeList.get(z).length()-1) {
+								  break;
+							  }
+						  }
+						  if(mincode.equals(codeList.get(z))) {
+							  if("0".equals(monthSchedule.get("authority"))) {
+									 aa=0;
+							  }
+							  if("1".equals(monthSchedule.get("authority"))){
+									  aa=1;
+							  }
+							  if(aa==0) {
+								  monthSchedule.put("authority", "0");
+							  }
+							  list2.add(monthSchedule);
+						  }
+					  }
+		  }
+		return list2;
 	}
-	
 	
 	//进度反馈对比保存
 	//工程投资完成汇总补录数据保存
@@ -76,5 +128,4 @@ public class MonthScheduleController {
 		obj.put("msgType", a);
 		return obj.toString();
 	}
-	
 }
