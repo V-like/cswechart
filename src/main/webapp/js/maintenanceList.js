@@ -90,7 +90,7 @@ var TableInit = function () {
 	};
 	return oTableInit;
 };
-
+var authority="";
 function reloadtable(){
 	$.ajax({
 		url: $("#fule").val()+'project/maintenanceGetDBData.json',
@@ -184,7 +184,7 @@ function maintenanceAdd2(_id){
 			_html = _html + '				<select name="uid" id="uid" style="width:300px;height:30px;" onchange="changeAuthority(value)">';
 			_html = _html + '					<option value ="0">请选择用户</option>';
 												for(var i=0;i<data.length;i++){
-			_html = _html + '					<option value ="'+data[i]+'">'+data[i].realname+" : "+data[i].username+'</option>';
+			_html = _html + '					<option value ="'+data[i].authority+'-'+data[i].uid+'">'+data[i].realname+" : "+data[i].username+'</option>';
 												}
 			_html = _html + '				</select>';
 			_html = _html + '			</div>';
@@ -192,9 +192,9 @@ function maintenanceAdd2(_id){
 			_html = _html + '		<div class="form-group">';
 			_html = _html + '			<label for="subofficename" class="col-sm-3 control-label">权限</label>';
 			_html = _html + '			<div class="col-sm-7">';
-			_html = _html + '				可查看：<input type="radio" value="1" name="authority" id="authority1"/>&nbsp;&nbsp;&nbsp;';
-			_html = _html + '				可修改：<input type="radio" value="0" name="authority" id="authority0"/>&nbsp;&nbsp;&nbsp;';
-			_html = _html + '				无权限：<input type="radio" value="2" name="authority" id="authority2" checked="checked"/>';
+			_html = _html + '				可修改：<input type="radio" value="0" name="authority" class="authority"  id="authority0" onclick="authorityclick(0)"/>&nbsp;&nbsp;&nbsp;';
+			_html = _html + '				可查看：<input type="radio" value="1" name="authority" class="authority"  id="authority1" onclick="authorityclick(1)"/>&nbsp;&nbsp;&nbsp;';
+			_html = _html + '				无权限：<input type="radio" value="2" name="authority" class="authority" id="authority2"  onclick="authorityclick(2)""/>';
 			_html = _html + '			</div>';
 			_html = _html + '		</div><br/><br/>';
 			_html = _html + '	</div>';
@@ -209,20 +209,23 @@ function maintenanceAdd2(_id){
 	
 
 }
+
+function authorityclick(data){
+	authority=data;
+}
 function changeAuthority(data) {
-	console.log(data)
-	var authority=data.authority;
-	if(authority==0){
+	var authority=data.split("-")[0];
+	if(authority=="undefined"){
+		$("#authority2").prop("checked","checked");
+	}else if(authority==0){
 		$("#authority0").prop("checked","checked");
 		console.log(0)
 		
-	}
-	if(authority==1){
+	}else if(authority==1){
 		$("#authority1").prop("checked","checked");
 			
 		console.log(1)
-	}
-	if(authority==2 || authority==null){
+	}else if(authority==2 || authority==null || authority==""){
 		$("#authority2").prop("checked","checked");
 		console.log(2)
 		
@@ -238,8 +241,6 @@ function saveFun(){
 	var begindate = $("#begindate").val();
 	var planfinishdate = $("#planfinishdate").val();
 	var workload = $("#workload").val();
-	
-	var authority = $("#authority").val();	
 	var uid = $("#uid").val();
 	var mid = $("#mid").val();
 	if(uid!=null && uid !=""&& uid!=undefined){

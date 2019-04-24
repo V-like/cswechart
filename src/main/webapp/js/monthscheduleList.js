@@ -14,13 +14,6 @@ $(document).ready(function(){
 	}
 	$("#belongTimeStr").val(year+"-"+month);
 	
-	$('#belongTime').datetimepicker({
-		minView: 3,
-		startView: 3,
-		language:'zh-CN',
-		autoclose: true,
-		format: 'yyyy-mm' 
-	}).on('changeDate',reloadtable);
 	var oTable = new TableInit();
 	oTable.Init();
 	$("#contentTablediv").height(window.innerHeight-$("#head").height()-$("#searchdiv").height()-40);

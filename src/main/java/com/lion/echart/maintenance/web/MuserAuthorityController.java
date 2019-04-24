@@ -46,11 +46,7 @@ public class MuserAuthorityController {
 					param.put("subofficeid", user.getSubofficeid());
 				}
 				param.put("mid", id.split("=")[1]);
-				
 				List<Map<String, Object>> list = baseService.queryList("comle.muserauthority.getMuserauthorityData", param);
-				if(list.size()==0) {
-					list = baseService.queryList("comle.muserauthority.getMuserauthorityData2", param);
-				}
 				return list;
 			}
 			
@@ -80,36 +76,34 @@ public class MuserAuthorityController {
 				JSONObject obj = new JSONObject();
 				String[] datas= data.split("&");
 				MuserAuthorityEntity muserAuthority=new MuserAuthorityEntity();
+				HashMap<String, Object> param = new HashMap<String, Object>();
 				for(int i=0;i<datas.length;i++) {
 					if("authority".equals(datas[i].split("=")[0])){
+						System.out.println(datas[i].split("=")[1]);
 						muserAuthority.setAuthority(datas[i].split("=")[1]);
+						param.put("authority", datas[i].split("=")[1]);
 					}
 					if("mid".equals(datas[i].split("=")[0])){
 						muserAuthority.setMid(datas[i].split("=")[1]);
+						param.put("mid", datas[i].split("=")[1]);
 					}
 					if("uid".equals(datas[i].split("=")[0])){
-						muserAuthority.setUid(datas[i].split("=")[1]);
+						muserAuthority.setUid(datas[i].split("=")[1].split("-")[1]);
+						param.put("uid", datas[i].split("=")[1].split("-")[1]);
 					}
 				}
 				try {
-					baseService.insertObject("comle.muserauthority.muserauthoritySave", muserAuthority);
+					List<Map<String, Object>> list =baseService.queryList("comle.muserauthority.getmuserauthoritySelectById", param);
+					if(list.size()==0) {
+						baseService.insertObject("comle.muserauthority.muserauthoritySave", muserAuthority);
+					}else {
+						baseService.updateObject("comle.muserauthority.updateMuserauthority", muserAuthority);
+					}
 					obj.put("msgType", 1);
 				} catch (Exception e) {
 					e.printStackTrace();
 					obj.put("msgType", 0);
 				}
-				return obj.toString();
-			}
-	
-			//删除权限
-			@RequestMapping(value = "/muserauthority/deleteMuserauthority.json",method=RequestMethod.POST)
-			public  @ResponseBody String deleteMuserauthority(@RequestBody String id,HttpServletRequest req,HttpServletResponse resp, 
-					HttpSession session, String subofficeid) throws IOException { 
-				JSONObject obj = new JSONObject();
-				MuserAuthorityEntity muserAuthority=new MuserAuthorityEntity();
-				muserAuthority.setId(Integer.parseInt(id.split("=")[1]));
-				baseService.delete("comle.muserauthority.deleteMuserauthority", muserAuthority);
-				obj.put("msgType", 1);
 				return obj.toString();
 			}
 }
