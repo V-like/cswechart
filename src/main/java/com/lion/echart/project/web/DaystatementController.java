@@ -52,8 +52,6 @@ public class DaystatementController {
 			Integer year = Integer.parseInt(belongTimeStr.substring(0,4));
 			Integer month = Integer.parseInt(belongTimeStr.substring(5,7));
 			Integer day = Integer.parseInt(belongTimeStr.substring(8,10));
-																//2019-04-10
-																//0123456789
 			if(day>25) {
 				if(month==12) {
 					month=1;

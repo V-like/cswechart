@@ -148,9 +148,10 @@ function maintenanceAdd2(_id){
 			_html = _html + '		<div class="form-group">';
 			_html = _html + '			<label for="subofficename" class="col-sm-3 control-label">分局/姓名</label>';
 			_html = _html + '			<div class="col-sm-7">';
-			_html = _html + '				<select name="uid" id="uid" style="width:300px;height:30px;">';
+			_html = _html + '				<select name="uid" id="uid" style="width:300px;height:30px;" onchange="changeAuthority(value)">';
+			_html = _html + '					<option value ="0">请选择用户</option>';
 												for(var i=0;i<data.length;i++){
-			_html = _html + '					<option value ="'+data[i].uid+'">'+data[i].realname+" : "+data[i].username+'</option>';
+			_html = _html + '					<option value ="'+data[i]+'">'+data[i].realname+" : "+data[i].username+'</option>';
 												}
 			_html = _html + '				</select>';
 			_html = _html + '			</div>';
@@ -158,9 +159,9 @@ function maintenanceAdd2(_id){
 			_html = _html + '		<div class="form-group">';
 			_html = _html + '			<label for="subofficename" class="col-sm-3 control-label">权限</label>';
 			_html = _html + '			<div class="col-sm-7">';
-			_html = _html + '				可查看：<input type="radio" value="1" name="authority" id="authority"/>&nbsp;&nbsp;&nbsp;';
-			_html = _html + '				可修改：<input type="radio" value="0" name="authority" id="authority"/>&nbsp;&nbsp;&nbsp;';
-			_html = _html + '				无权限：<input type="radio" value="2" name="authority" id="authority" checked="checked"/>';
+			_html = _html + '				可查看：<input type="radio" value="1" name="authority" id="authority1"/>&nbsp;&nbsp;&nbsp;';
+			_html = _html + '				可修改：<input type="radio" value="0" name="authority" id="authority0"/>&nbsp;&nbsp;&nbsp;';
+			_html = _html + '				无权限：<input type="radio" value="2" name="authority" id="authority2" checked="checked"/>';
 			_html = _html + '			</div>';
 			_html = _html + '		</div><br/><br/>';
 			_html = _html + '	</div>';
@@ -175,6 +176,12 @@ function maintenanceAdd2(_id){
 	
 
 }
+function changeAuthority(data) {
+	console.log(data)
+	$("#authority").val()
+	
+}
+
 
 function saveFun(){
 	var entnyname = $("#entnyname").val();//项目名称
