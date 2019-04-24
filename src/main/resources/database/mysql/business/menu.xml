@@ -48,13 +48,14 @@
    <!-- 通过用户查询权限下的菜单 -->
    <select id="getMenuListDataByUserId" parameterType="java.util.Map" resultType="java.util.Map" >
 		select a.id,a.menuname,a.url,a.priority,a.ismenu,a.pid,b.menuname pmenuname from t_sys_menu a left join t_sys_menu b on a.pid=b.id
-            where a.id in(select menuid from t_sys_role_menu where roleid in 
-            (select roleid from t_sys_user_role 
-            where 1=1 
-            	<if test="userid != null and userid != ''">
-					and userid = #{userid} 
-				</if>
-            )) and a.isdisabled=0
+            where 
+            <if test="userid != null and userid != ''">
+            a.id in 
+            (select menuid from t_sys_role_menu
+             	where roleid in 
+            		(select roleid from t_sys_user_role where 1=1 and userid = #{userid} )
+            ) and 
+			</if> a.isdisabled=0
 			order by a.priority 
 	</select>
    <!-- 删除菜单 -->
