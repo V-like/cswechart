@@ -40,8 +40,8 @@ var TableInit = function () {
 				 ,{field: 'priority',title: '序号'}
 				 ,{field: 'entnyname',title: '项目名称'}
 				 ,{field: 'unit',title: '单位' }
-				 ,{field: 'begindate',title: '开工时间' }
-				 ,{field: 'planfinishdate',title: '计划完工时间' }
+				 ,{field: 'begindatestr',align: 'center',title: '开工时间' }
+				 ,{field: 'planfinishdatestr',align: 'center',title: '计划完工时间' }
 				 ,{field: 'workload',title: '工作量' }
 				 ,{field: 'perentid',align: 'center',title: '同级添加' ,width:100,
 					 formatter:function (value, row, index, field) {
@@ -114,8 +114,8 @@ function reloadtable(){
 function maintenanceAdd(_id){
 	var _html = '';
 	_html = _html + '<input type="hidden" id="maintenanceid" value="'+_id+'" />';
-	_html = _html + '<div style="width:600px;height:100px;">';
-	_html = _html + '	<div class="panel-body" style="padding-bottom:0px;width:600px;height:100px;">';
+	_html = _html + '<div style="width:600px;height:300px;">';
+	_html = _html + '	<div class="panel-body" style="padding-bottom:0px;width:600px;height:300px;">';
 	_html = _html + '		<div class="form-group">';
 	_html = _html + '			<label for="subofficename" class="col-sm-3 control-label">项目名称</label>';
 	_html = _html + '			<div class="col-sm-7">';
@@ -129,11 +129,44 @@ function maintenanceAdd(_id){
 	_html = _html + '				<input type="text" class="form-control" id="unit" ';
 	_html = _html + '					placeholder="请输入单位"  style="margin-top:-10px;">';
 	_html = _html + '			</div>';
-	_html = _html + '		</div>';
+	_html = _html + '		</div><br/><br/>';
+	_html = _html + '		<div class="form-group">';
+	_html = _html + '			<label for="subofficename" class="col-sm-3 control-label">计划开始时间</label>';
+	_html = _html + '			<div class="col-sm-7">';
+	_html = _html + '				<input type="text" class="datetimepicker" id="begindate" ';
+	_html = _html + '					placeholder="计划开始时间"  style="margin-top:-10px;width:300px;" readonly="true" data-date-format="yyyy-mm-dd" data-pure-clear-button >';
+	_html = _html + '			</div>';
+	_html = _html + '		</div><br/><br/>';
+	_html = _html + '		<div class="form-group">';
+	_html = _html + '			<label for="subofficename" class="col-sm-3 control-label">计划结束时间</label>';
+	_html = _html + '			<div class="col-sm-7">';
+	_html = _html + '				<input type="text" class="datetimepicker" id="planfinishdate" ';
+	_html = _html + '					placeholder="计划结束时间"  style="margin-top:-10px;width:300px;" readonly="true" data-date-format="yyyy-mm-dd" data-pure-clear-button >';
+	_html = _html + '			</div>';
+	_html = _html + '		</div><br/><br/>';
+	_html = _html + '		<div class="form-group">';
+	_html = _html + '			<label for="subofficename" class="col-sm-3 control-label">工作量</label>';
+	_html = _html + '			<div class="col-sm-7">';
+	_html = _html + '				<input type="text" class="form-control" id="workload" ';
+	_html = _html + '					placeholder="工作量"  style="margin-top:-10px;">';
+	_html = _html + '			</div>';
+	_html = _html + '		</div><br/><br/>';
 	_html = _html + '	</div>';
 	_html = _html + '</div>';
-		
+
 	modalTitle(_html,2);
+	$("#planfinishdate").datetimepicker({
+		autoclose:true,
+		minView:2,
+		startView:2,
+		language:'zh-CN'
+	});
+	$("#begindate").datetimepicker({
+		autoclose:true,
+		minView:2,
+		startView:2,
+		language:'zh-CN'
+	});
 }
 
 
@@ -256,9 +289,11 @@ function deleteAuthority(id){
 				id : id,
 	        },
 			success:function(data){
-				 alert("操作成功");
+				$('#t_datagrid').bootstrapTable('refresh');
+				modalTitle("操作成功",1);
 			},
 			error:function(){
+				modalTitle("操作失败",1);
 				console.log("失败");
 			}
 		});
@@ -272,7 +307,6 @@ function deleteAuthority(id){
 }
 function saveFun(){
 	var entnyname = $("#entnyname").val();//项目名称
-	var priority = $("#priority").val();//序号
 	var unit = $("#unit").val();	//单位
 	var maintenanceid = $("#maintenanceid").val();//id
 	var begindate = $("#begindate").val();
@@ -295,9 +329,11 @@ function saveFun(){
 				
 	        },
 			success:function(data){
-				 alert("操作成功");
+				$('#t_datagrid').bootstrapTable('refresh');
+				modalTitle("操作成功",1);
 			},
 			error:function(){
+				modalTitle("操作失败",1);
 				console.log("失败");
 			}
 		});
@@ -308,29 +344,24 @@ function saveFun(){
 	        return false;
 	    }
 		
-		if(unit == ""){
-	    	alert('请输入单位');
-	        return false;
-	    }
-		
 		$.ajax({
 			url:$("#fule").val()+"project/maintenanceSave.json",
 			type:"POST",
 			dataType:"json",
 			data: {
 				entnyname : entnyname,
-				priority : priority,
 				unit : unit,
 				maintenanceid : maintenanceid,
-				begindate:begindate,
-				planfinishdate:planfinishdate,
+				begindatestr:begindate,
+				planfinishdatestr:planfinishdate,
 				workload:workload
-				
 	        },
 			success:function(data){
-				 alert("操作成功");
+				$('#t_datagrid').bootstrapTable('refresh');
+				modalTitle("操作成功",1);
 			},
 			error:function(){
+				modalTitle("操作失败",1);
 				console.log("失败");
 			}
 		});

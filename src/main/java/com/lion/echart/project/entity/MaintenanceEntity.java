@@ -1,30 +1,34 @@
 package com.lion.echart.project.entity;
 
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class MaintenanceEntity implements Serializable{
 	
 	
-	private long maintenanceid;
+	private Long maintenanceid;
 	private String priority;//序号
 	private String entnyname;//项目名称
-	private String grade;//层级
-	private long perentid;//父ID
-	private long index;//自己所在位置
+	private Long grade;//层级
+	private Long perentid;//父ID
+	private Long index;//自己所在位置
 	private String codeno;//coed码
 	private String unit; //单位
 	private Date begindate;//开工时间
+	private String begindatestr;
 	private Date planfinishdate;//计划完工时间
-	private int workload;//工作量
+	private String planfinishdatestr;
+	private Double workload;//工作量
 	
 	
 	public MaintenanceEntity() {
 		super();
 	}
 	
-	public MaintenanceEntity(String priority, String entnyname, String grade, long perentid, long index, String codeno,
-			String unit, Date begindate, Date planfinishdate, int workload) {
+	public MaintenanceEntity(String priority, String entnyname, Long grade, Long perentid, Long index, String codeno,
+			String unit, Date begindate, Date planfinishdate, Double workload) {
 		super();
 		this.priority = priority;
 		this.entnyname = entnyname;
@@ -38,10 +42,10 @@ public class MaintenanceEntity implements Serializable{
 		this.workload = workload;
 	}
 
-	public long getMaintenanceid() {
+	public Long getMaintenanceid() {
 		return maintenanceid;
 	}
-	public void setMaintenanceid(long maintenanceid) {
+	public void setMaintenanceid(Long maintenanceid) {
 		this.maintenanceid = maintenanceid;
 	}
 	public String getPriority() {
@@ -56,22 +60,22 @@ public class MaintenanceEntity implements Serializable{
 	public void setEntnyname(String entnyname) {
 		this.entnyname = entnyname;
 	}
-	public String getGrade() {
+	public Long getGrade() {
 		return grade;
 	}
-	public void setGrade(String grade) {
+	public void setGrade(Long grade) {
 		this.grade = grade;
 	}
 	public long getPerentid() {
 		return perentid;
 	}
-	public void setPerentid(long perentid) {
+	public void setPerentid(Long perentid) {
 		this.perentid = perentid;
 	}
-	public long getIndex() {
+	public Long getIndex() {
 		return index;
 	}
-	public void setIndex(long index) {
+	public void setIndex(Long index) {
 		this.index = index;
 	}
 	public String getCodeno() {
@@ -99,12 +103,49 @@ public class MaintenanceEntity implements Serializable{
 		this.planfinishdate = planfinishdate;
 	}
 	
-	public int getWorkload() {
+	public Double getWorkload() {
 		return workload;
 	}
-	public void setWorkload(int workload) {
+	public void setWorkload(Double workload) {
 		this.workload = workload;
 	}
+	
+	public String getBegindatestr() {
+		if(begindate != null) {
+			this.begindatestr = new SimpleDateFormat("yyyy-MM-dd").format(begindate);  
+		}
+		return begindatestr;
+	}
+
+	public void setBegindatestr(String begindatestr) {
+		this.begindatestr = begindatestr;
+		if(begindatestr != null && !begindatestr.isEmpty()) {
+			try {
+				this.begindate = new SimpleDateFormat("yyyy-MM-dd").parse(begindatestr);
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}  
+		}
+	}
+
+	public String getPlanfinishdatestr() {
+		if(planfinishdate != null) {
+			this.planfinishdatestr = new SimpleDateFormat("yyyy-MM-dd").format(planfinishdate);  
+		}
+		return planfinishdatestr;
+	}
+
+	public void setPlanfinishdatestr(String planfinishdatestr) {
+		this.planfinishdatestr = planfinishdatestr;
+		if(planfinishdatestr != null && !planfinishdatestr.isEmpty()) {
+			try {
+				this.planfinishdate = new SimpleDateFormat("yyyy-MM-dd").parse(planfinishdatestr);
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}  
+		}
+	}
+
 	@Override
 	public String toString() {
 		return "MaintenanceEntity [priority=" + priority + ", entnyname=" + entnyname + ", grade=" + grade
@@ -112,9 +153,4 @@ public class MaintenanceEntity implements Serializable{
 				+ ", begindate=" + begindate + ", planfinishdate=" + planfinishdate + ", workload=" + workload + "]";
 	}
 	
-	
-
-
-	
-
 }

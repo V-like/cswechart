@@ -22,7 +22,10 @@
 	<select id="getMaintenanceListData"
 		parameterType="java.util.Map" resultType="java.util.Map">
 		SELECT
-		maintenanceid,priority,entnyname,grade,perentid,`index`,codeno,unit,begindate,planfinishdate,workload
+			maintenanceid,priority,entnyname,grade,perentid,`index`,codeno,unit,workload
+			,begindate,planfinishdate
+			,DATE_FORMAT(begindate,'%Y-%m-%d') as begindatestr
+			,DATE_FORMAT(planfinishdate,'%Y-%m-%d') as planfinishdatestr
 		FROM
 		t_f_maintenance where 1 = 1
 		<if test="maintenanceid != null">
@@ -57,7 +60,7 @@
     	SELECT 
     	ifnull(MAX(t.index),0)+1 
     	FROM t_f_maintenance t 
-    	WHERE t.maintenanceid = #{maintenanceid}
+    	WHERE t.perentid = #{maintenanceid}
    	</select>
    	
    	<!-- 查询最大层级 -->

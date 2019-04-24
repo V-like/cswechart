@@ -14,11 +14,14 @@ String fule = base + "" + contextPath + "/";
 <link rel="stylesheet" href="<%=contextPath%>/css/main.css?ts=<%=request.getAttribute("ts") %>" type="text/css" />
 <link rel="stylesheet" href="<%=contextPath%>/css/bootstrap.min.css">
 <link rel="stylesheet" href="<%=contextPath%>/css/bootstrap-table.min.css">
+<link rel="stylesheet" href="<%=contextPath%>/css/bootstrap-datetimepicker.min.css">
 <link rel="stylesheet" href="<%=contextPath%>/css/the-modal.css">
 <script type="text/javascript" src="<%=contextPath%>/js/jquery-2.1.3.min.js"></script>
 <script type="text/javascript" src="<%=contextPath%>/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="<%=contextPath%>/js/bootstrap-table.min.js"></script>
 <script type="text/javascript" src="<%=contextPath%>/js/jquery.the-modal.js"></script>
+<script type="text/javascript" src="<%=contextPath%>/js/bootstrap-datetimepicker.min.js" charset="UTF-8" ></script>
+<script type="text/javascript" src="<%=contextPath%>/js/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8" ></script>
 <script type="text/javascript" src="<%=contextPath%>/js/base.js?ts=<%=request.getAttribute("ts") %>"></script>
 <script type="text/javascript" src="<%=contextPath%>/js/maintenanceList.js?ts=<%=request.getAttribute("ts") %>"></script>
 

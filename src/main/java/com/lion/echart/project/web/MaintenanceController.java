@@ -74,34 +74,36 @@ public class MaintenanceController {
 			return "/page/project/maintenanceAdd";
 		}
 		
-		
 		//部门添加保存
 		@RequestMapping(value = "/project/maintenanceSave.json",method=RequestMethod.POST)
 		public @ResponseBody String maintenanceSave(MaintenanceEntity maintenance,HttpServletRequest req,HttpServletResponse resp, HttpSession session) throws IOException { 			
+			maintenance.setPerentid(maintenance.getMaintenanceid());
+			maintenance.setMaintenanceid(null);
 			JSONObject obj = new JSONObject();
 			HashMap<String, Object> param = new HashMap<String, Object>();
-			param.put("maintenanceid", maintenance.getMaintenanceid()); //获取上一级id，也就是当前选中
+			param.put("maintenanceid", maintenance.getPerentid()); //获取上一级id，也就是当前选中
 			Object tempobj = baseService.queryObject("comle.Maintenance.getMaintenanceListData", param); //获取上一级id下的对象
 			
 			Map<String, Object> parentobj = null; 
 			if(tempobj != null) {
-				
 				parentobj = (Map<String, Object> )tempobj;
 			}
 			
 			//SELECT MAX(t.index)+1 FROM t_f_maintenance t WHERE t.perentid = ?		
-			long selfIndex = 0;
-			if(baseService.queryObject("comle.Maintenance.getSubMaxInxdexAo", param).toString()==null) {
-				selfIndex = 1;
-			}else {	
-				selfIndex = new Integer( baseService.queryObject("comle.Maintenance.getSubMaxInxdexAo", param).toString()); //上一级的index位置	
+			long selfIndex = 1;
+			tempobj = baseService.queryObject("comle.Maintenance.getSubMaxInxdexAo", param);
+			if(tempobj != null) {
+				selfIndex = new Integer(tempobj.toString()); //上一级的index位置	
 			}
 			//同级添加		
-			String leftcode = "000000000000000000";
+			String leftcode = "";
+			long grade = 1;
 			if(parentobj!=null) {
 				leftcode = parentobj.get("codeno").toString();//最终code码
+				grade = new Integer(parentobj.get("grade").toString())+1;
 			}				
-			while("000".equals(leftcode.substring(leftcode.length()-3, leftcode.length()))) {
+			while(leftcode.length() > 0 && 
+					"000".equals(leftcode.substring(leftcode.length()-3, leftcode.length()))) {
 				leftcode = leftcode.substring(0,leftcode.length()-3);
 			}
 			
@@ -127,20 +129,15 @@ public class MaintenanceController {
 				}
 			}				
 			leftpriority = leftpriority.substring(0,leftpriority.length()-1);
-			//层级
-			String selfGrade = null;
-			if(baseService.queryObject("comle.Maintenance.getSubMaxGradeAo", param).toString()==null) {
-				selfGrade = "1";
-			}else {
-				selfGrade = baseService.queryObject("comle.Maintenance.getSubMaxGradeAo", param).toString(); //上一级的index位置	
-			}
 			
-			MaintenanceEntity maintenances = new MaintenanceEntity(leftpriority,"",selfGrade,maintenance.getMaintenanceid(),selfIndex,leftcode,"",new Date(),new Date(),0);//增加	
+			maintenance.setPriority(leftpriority);
+			maintenance.setGrade(grade);
+			maintenance.setIndex(selfIndex);
+			maintenance.setCodeno(leftcode);
 			
-			System.out.println(maintenances.toString());
 	         //放入对象存入数据库			
 			try {				
-				baseService.insertObject("comle.Maintenance.insertMaintenance",maintenances);
+				baseService.insertObject("comle.Maintenance.insertMaintenance",maintenance);
 				obj.put("msgType", 1);
 			} catch (Exception e) {
 				e.printStackTrace();
