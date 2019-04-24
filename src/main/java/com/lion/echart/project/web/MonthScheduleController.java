@@ -115,10 +115,10 @@ public class MonthScheduleController {
 		List<MonthScheduleEntity> list=new ArrayList<MonthScheduleEntity>();
 		for(int i=0;i<jlist.size();i++) {
 			MonthScheduleEntity entity = (MonthScheduleEntity) JSONObject.toBean((JSONObject) jlist.get(i), MonthScheduleEntity.class);
-			if("".equals(entity.getDesignquantity())|| entity.getDesignquantity() ==null || "".equals(entity.getPlannedvolume())|| entity.getPlannedvolume() ==null) {
-			}else {
+//			if("".equals(entity.getDesignquantity())|| entity.getDesignquantity() ==null || "".equals(entity.getPlannedvolume())|| entity.getPlannedvolume() ==null) {
+//			}else {
 				list.add(entity);
-			}
+//			}
 		}
 		baseService.insertOupdates("comle.monthschedule.monthschedule", list);
 		} catch (Exception e) {

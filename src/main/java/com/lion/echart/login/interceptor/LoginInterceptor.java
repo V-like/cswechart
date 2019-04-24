@@ -30,7 +30,7 @@ public class LoginInterceptor implements HandlerInterceptor {
         }
         //不符合条件的给出提示信息，并转发到登录页面
         request.setAttribute("msg", "您还没有登录，请先登录！");
-        request.getRequestDispatcher("/login.jsp").forward(request, response);
+        request.getRequestDispatcher("/loginerror.jsp").forward(request, response);
         return false;
     }
 
