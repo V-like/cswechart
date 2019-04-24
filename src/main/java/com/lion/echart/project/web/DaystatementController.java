@@ -70,6 +70,7 @@ public class DaystatementController {
 			param.put("date", ""+year+"-"+m);
 			param.put("day", day+"");	
 		}
+		param.put("uid", user.getId());
 		List<Map<String, Object>> list = list = baseService.queryList("comle.daystatement.getdaystatementListData", param);
 		return list;
 	}
