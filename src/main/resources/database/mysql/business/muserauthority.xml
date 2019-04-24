@@ -16,20 +16,18 @@
 	<!-- 仅供权限添加查询列表使用 -->
 	<select id="getMuserauthorityData"
 		parameterType="java.util.Map" resultType="java.util.Map">
-		SELECT t.id AS "uid",t.username,t.realname FROM t_sys_user t WHERE t.id NOT IN
-			(SELECT  tsu.id FROM t_m_user_authority tmua LEFT JOIN t_sys_user tsu 
-				ON tmua.mid=#{mid} AND tmua.uid =tsu.id)
-	</select>
-	<select id="getMuserauthorityData2"
-		parameterType="java.util.Map" resultType="java.util.Map">
-		SELECT 
-		id as uid,username,realname FROM t_sys_user 
+		SELECT  tsu.username,tsu.realname,tsu.id AS "uid",tmua.authority FROM t_sys_user tsu  LEFT JOIN  t_m_user_authority tmua
+				ON tmua.mid=#{mid} AND tmua.uid =tsu.id
 	</select>
 	<select id="getMuserauthorityData3"
 		parameterType="java.util.Map" resultType="java.util.Map">
 			SELECT 
 			tsu.id AS 'uid',tsu.username,tsu.realname,tmua.authority,tmua.id FROM t_m_user_authority tmua,t_sys_user tsu 
 			WHERE tmua.mid=#{mid} AND tmua.uid =tsu.id
+	</select>
+	<select id="getmuserauthoritySelectById"
+		parameterType="java.util.Map" resultType="java.util.Map">
+			SELECT * FROM t_m_user_authority WHERE 1=1 and uid=#{uid} and mid=#{mid}
 	</select>
 	
 	<insert id="muserauthoritySave" parameterType="com.lion.echart.maintenance.entity.MuserAuthorityEntity">
@@ -40,5 +38,8 @@
    	<delete  id="deleteMuserauthority" parameterType="com.lion.echart.maintenance.entity.MuserAuthorityEntity"> 
    		DELETE FROM t_m_user_authority WHERE id=#{id}
    	</delete>
+   	<update  id="updateMuserauthority" parameterType="com.lion.echart.maintenance.entity.MuserAuthorityEntity">
+		UPDATE t_m_user_authority SET authority=#{authority} WHERE MID=#{mid} AND uid=#{uid}
+   	</update>
 
 </mapper>
