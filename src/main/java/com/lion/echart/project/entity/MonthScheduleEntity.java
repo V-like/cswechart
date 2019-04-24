@@ -24,6 +24,9 @@ public class MonthScheduleEntity  extends BaseEntity{
 	private String number;						//序号
 	private String entnyname;					//项目名称
 	private long codeno;						//coed码
+	private String authortyMId;					//权限管理ID
+	private String authorty;					//权限
+	private Integer grade;						//位置
 	
 	public MonthScheduleEntity() {
 		super();
@@ -147,6 +150,46 @@ public class MonthScheduleEntity  extends BaseEntity{
 
 	public void setUnit(String unit) {
 		this.unit = unit;
+	}
+
+	public String getNumber() {
+		return number;
+	}
+
+	public void setNumber(String number) {
+		this.number = number;
+	}
+
+	public String getEntnyname() {
+		return entnyname;
+	}
+
+	public void setEntnyname(String entnyname) {
+		this.entnyname = entnyname;
+	}
+
+	public long getCodeno() {
+		return codeno;
+	}
+
+	public void setCodeno(long codeno) {
+		this.codeno = codeno;
+	}
+
+	public String getAuthortyMId() {
+		return authortyMId;
+	}
+
+	public void setAuthortyMId(String authortyMId) {
+		this.authortyMId = authortyMId;
+	}
+
+	public int getGrade() {
+		return grade;
+	}
+
+	public void setGrade(int grade) {
+		this.grade = grade;
 	}
 
 	@Override
