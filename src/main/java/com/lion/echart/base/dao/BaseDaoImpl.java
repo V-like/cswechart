@@ -1,6 +1,7 @@
 package com.lion.echart.base.dao;
 
 
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 
@@ -53,15 +54,27 @@ public class BaseDaoImpl implements BaseDao{
 	}
 
 	public int delete(String sqlid, Object param) {
-		return getSqlMapClient().delete(sqlid, param);
+		return getSqlMapClient().delete(sqlid, param); 
 	}
 
 	public List queryList(String sqlid, Object param) {
-		return getSqlMapClient().selectList(sqlid, param);
+		List result = getSqlMapClient().selectList(sqlid, param); 
+		closeCon();
+		return result;
 	}
 
 	public List queryListByPage(String sqlid, Object param) {
-		return getSqlMapClient().selectList(sqlid, param);
+		List result = getSqlMapClient().selectList(sqlid, param); 
+		closeCon();
+		return result;
+	}
+	
+	public void closeCon() {
+		try {
+			getSqlMapClient().getConnection().close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public Object queryObject(String sqlid, Object param) {
@@ -70,6 +83,7 @@ public class BaseDaoImpl implements BaseDao{
 		if(list != null && list.size() == 1) {
 			obj = list.get(0);
 		}
+		closeCon();
 		return obj;
 	}
 
@@ -98,6 +112,7 @@ public class BaseDaoImpl implements BaseDao{
 		RowBounds rowBounds = new RowBounds(start,pagintable.getPageSize());
 		
 		pagintable.setRows(getSqlMapClient().selectList(sqlid, param, rowBounds));
+		closeCon();
 	}
 
 	public void insertOupdates(String sqlID, List<BaseEntity> object) throws Exception {
