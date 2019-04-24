@@ -3,7 +3,7 @@
 <mapper namespace="comle.Maintenance">
 
 	<resultMap
-		type="com.lion.echart.maintenance.entity.MaintenanceEntity"
+		type="com.lion.echart.project.entity.MaintenanceEntity"
 		id="maintenance">
 		<id property="maintenanceId" column="maintenanceid" />
 		<result property="priority" column="priority" />
@@ -12,6 +12,9 @@
 		<result property="perentId" column="perentid" />
 		<result property="codeno" column="codeno" />
 		<result property="unit" column="unit" />
+		<result property="begindate" column="begindate" />
+		<result property="planfinishdate" column="planfinishdate" />
+		<result property="workload" column="workload" />
 
 
 	</resultMap>
@@ -27,7 +30,7 @@
 		</if>
 		order by codeno
 	</select>
-	<insert id="insertMaintenance" parameterType="com.lion.echart.maintenance.entity.MaintenanceEntity">
+	<insert id="insertMaintenance" parameterType="com.lion.echart.project.entity.MaintenanceEntity">
            insert into t_f_maintenance(priority,entnyname,grade,perentid,`index`,codeno,unit)  
                values(#{priority}, #{entnyname},#{grade},  #{perentid},  #{index},  #{codeno}, #{unit})
    	</insert>
@@ -46,7 +49,7 @@
    	</select>
    	
    	<!-- 查找一级 -->
-	<select id="getstairsubofficeGet" parameterType="java.util.Map" resultType="java.util.Map">
+	 <select id="getstairsubofficeGet" parameterType="java.util.Map" resultType="java.util.Map">
 		SELECT
 		maintenanceid,priority,entnyname,grade,perentid,`index`,codeno,unit
 		FROM
@@ -58,9 +61,9 @@
 		<if test="perentid != null">
 		 and perentid = #{perentid} 
 		</if>
-		<!-- <if test="maintenanceid != null">
+		<if test="maintenanceid != null">
 		 and maintenanceid = #{maintenanceid} 
-		</if> -->
+		</if>
 		order by codeno
-	</select>
+	</select> 
 </mapper>
