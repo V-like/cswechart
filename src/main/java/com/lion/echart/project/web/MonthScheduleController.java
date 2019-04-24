@@ -50,9 +50,11 @@ public class MonthScheduleController {
 		  Map<String, Object> param = new HashMap<String, Object>();
 		  param.put("date", date);
 		  param.put("uid", user.getId());
+		  //param.put("编辑权限",1);
 		  List<Map<String, Object>> list = baseService.queryList("comle.monthschedule.monthscheduleData", param);
-		  List<Map<String, Object>> list2 = new ArrayList<Map<String,Object>>();
+		  /*
 		  List<String> codeList=new ArrayList<String>();
+		  List<Map<String, Object>> list2 = new ArrayList<Map<String,Object>>();
 		  for(int i=0; i< list.size() ;i++) {
 			  Map<String, Object> monthSchedule=list.get(i);
 			  if(monthSchedule.get("fid")!=null) {
@@ -100,7 +102,8 @@ public class MonthScheduleController {
 						  }
 					  }
 		  }
-		return list2;
+		  */
+		  return list;
 	}
 	
 	//进度反馈对比保存

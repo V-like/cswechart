@@ -57,6 +57,7 @@ public class DaystatementController {
 			param.put("date", belongTimeStr.substring(0,7));
 			param.put("day", belongTimeStr.substring(8,10));	
 		}
+		param.put("uid", user.getId());
 		List<Map<String, Object>> list = list = baseService.queryList("comle.daystatement.getdaystatementListData", param);
 		return list;
 	}

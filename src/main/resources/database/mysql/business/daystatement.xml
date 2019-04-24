@@ -14,6 +14,11 @@
 		FROM (SELECT 
 		fm.priority priority,fm.entnyname entnyname,fm.unit unit,fm.codeno codeno,ms.plannedvolume plannedvolume,ms.mid MID,ms.date DATE
 		FROM t_f_maintenance fm
+		JOIN
+		 (SELECT tmua.mid AS 'authortyMId' ,tmua.authority,tfm.priority  FROM t_m_user_authority tmua 
+				join t_f_maintenance tfm on tmua.mid = tfm.maintenanceid
+				WHERE tmua.uid=#{uid}) b 
+		on fm.maintenanceid=b.authortyMId or fm.priority like CONCAT(b.priority,'.%')
 		LEFT JOIN t_month_schedule ms
 		ON fm.maintenanceid = ms.fid
 		WHERE ms.date = #{date}) fms
