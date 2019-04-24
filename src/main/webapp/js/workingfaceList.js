@@ -144,7 +144,7 @@ var TableInit = function () {
                         	if(grade == 4){
                         		return "";
                         	}else{
-                        		return (value*100)+"%";
+                        		return value.toFixed(2)+"%";
                         	}
                         }
 					}

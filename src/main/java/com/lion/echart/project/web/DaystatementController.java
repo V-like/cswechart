@@ -75,25 +75,6 @@ public class DaystatementController {
 		return list;
 	}
 	
-	//保存工程日报
-//	@RequestMapping(value = "/project/getdaystatementListData.json",method=RequestMethod.POST)
-//	public @ResponseBody String insertSubofficewriteTenDay(
-//			/* @RequestParam("daystatementlist")List<Object> daystatementlist, */
-//			@RequestParam("name")String name,HttpServletRequest req,HttpServletResponse resp, HttpSession session) throws IOException { 
-//		UserEntity user = (UserEntity)session.getAttribute("USER_SESSION");
-////		JSONObject obj = new JSONObject();
-//		try {
-//			System.out.println(name);
-////			for(int i = 0;i < daystatementlist.size();i++){
-////				System.out.println(daystatementlist.get(i));
-////			}
-//			
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//
-//		}
-//		return null;
-//	}
 	//日报的新增与修改
 	@RequestMapping(value = "/project/savedaystatementList.json",method=RequestMethod.POST )
 	public @ResponseBody String insertSubofficewriteTenDay(String daystatementliststr,HttpServletRequest req,HttpServletResponse resp, HttpSession session) {
@@ -114,7 +95,10 @@ public class DaystatementController {
 			}
 			
 			baseService.insertOupdates("comle.daystatement.daystatement", dlist);
-			//baseService.updateObject("comle.monthschedule.accumulationcumulantUpdate", dlist);
+			for(int i = 0;i < dlist.size();i++) {
+				baseService.updateObject("comle.monthschedule.accumulationcumulantUpdate", dlist.get(i));
+			}
+			//baseService.updateBatchBySQL("comle.monthschedule.accumulationcumulantUpdate", dlist);
 			obj.put("msgType", 1);
 		} catch (Exception e) {
 			e.printStackTrace();

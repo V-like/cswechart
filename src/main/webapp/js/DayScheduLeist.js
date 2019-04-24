@@ -7,6 +7,15 @@ $(document).ready(function(){
 		Boolean : true,
 		//format : 'yyyy-mm-dd'
 	}).on('changeDate', reloadtable);
+	//$("#belongTimeStr").val("2019-04-24");
+	var nowdate = new Date();
+	var year = nowdate.getFullYear();
+	var month= nowdate.getMonth()+1;
+	if(month<10){
+		month="0"+month;
+	}
+	var day = nowdate.getDate();
+	$("#belongTimeStr").val(year+"-"+month+"-"+day);
 	
 	var oTable = new TableInit();
 	oTable.Init();
@@ -31,7 +40,7 @@ var TableInit = function () {
 			pageSize: 10,                       //每页的记录行数（*）
 			pageList: [10, 25, 50, 100],        //可供选择的每页的行数（*）
 			search: false,                       //是否显示表格搜索，此搜索是客户端搜索，不会进服务端，所以，个人感觉意义不大
-			contentType: "json",
+			contentType :'application/x-www-form-urlencoded; charset=UTF-8',
 			strictSearch: false,
 			showColumns: false,                  //是否显示所有的列
 			showRefresh: false,                  //是否显示刷新按钮
@@ -108,8 +117,10 @@ var TableInit = function () {
 						formatter : function(value,row,index,field){
 							if(value == undefined){
 								value = '0%';
+							}else{
+								return (value).toFixed(2)+"%";
 							}
-							return (value).toFixed(2)+"%";
+							
 						}
 				  },
 				  {
@@ -157,7 +168,6 @@ var TableInit = function () {
  */
 function saveRow() {
 	
-	
 	modalTitle("是否确定提交", 2);
 }
 
@@ -176,11 +186,7 @@ function saveFun(){
 		obj.todayaccomplish = $("#todayaccomplish_"+i).html();
 		obj.day = $("#belongTimeStr").val().substring(8,10);
 		obj.describe = $("#describe_"+i).html();
-		console.info("d_===");
-		console.info($("#todayaccomplish_"+i).html());
-		console.info("do===");
-		console.info( $("#todayaccomplish"+i).val());
-		obj.monthmodifiedvalue = $("#todayaccomplish_"+i).html() - $("#todayaccomplish"+i).val();	
+		obj.date = ($("#belongTimeStr").val().substring(0,7))
 		var d = "daySchedu"+i;
 		list.push(d = obj);
 //		console.info(obj);	

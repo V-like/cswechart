@@ -120,10 +120,7 @@ var TableInit = function () {
 						title: '设计工程量',
 						width : 90,
 						formatter:function (value, row, index, field) {
-							var authority = row["authority"];
-							if(authority!=0){
-								return value;
-							}
+							
 							return '<div id="designquantity_'+index+'" contenteditable="true" >' + (value || "") + '</div>' +
 							'<input type="hidden" value="'+(value || "")+'" id="designquantity'+index+'" name="list['+index+'].designquantity" />';
 					    }
@@ -133,10 +130,7 @@ var TableInit = function () {
 						title: '变更工程量',
 						width : 90,
 						formatter:function (value, row, index, field) {
-							var authority = row["authority"];
-							if(authority!=0){
-								return value;
-							}
+							
 							return '<div id="changequantity_'+index+'" contenteditable="true" >' + (value || "")+ '</div>' +
 							'<input type="hidden" value="'+(value || "")+'" id="changequantity'+index+'" name="list['+index+'].changequantity" />';
 					    }
@@ -146,10 +140,7 @@ var TableInit = function () {
 						title: '本月计划完成量',
 						width : 90,
 						formatter:function (value, row, index, field) {
-							var authority = row["authority"];
-							if(authority!=0){
-								return value;
-							}
+							
 							return '<div id="plannedvolume_'+index+'" contenteditable="true" >' +  (value || "")+ '</div>' +
 							'<input type="hidden" value="'+(value || "")+'" id="plannedvolume'+index+'" name="list['+index+'].plannedvolume" />';
 					    }
@@ -159,10 +150,7 @@ var TableInit = function () {
 						title: '本月累计完成量',
 						width : 90,
 						formatter:function (value, row, index, field) {
-							var authority = row["authority"];
-							if(authority!=0){
-								return value;
-							}
+							
 							return '<div id="accumulationcumulant_'+index+'" contenteditable="true" >' +  (value ||"")  + '</div>' +
 							'<input type="hidden" value="'+(value || "")+'" id="accumulationcumulant'+index+'" name="list['+index+'].accumulationcumulant" />';
 					    }
@@ -172,36 +160,30 @@ var TableInit = function () {
 						title: '本月完成率 ',
 						width : 90,
 						formatter:function (value, row, index, field) {
-							var authority = row["authority"];
-							if(authority!=0){
-								return value;
-							}
+							
+							value = value.toFixed(2)+"%";
 							return '<div id="completionrate_'+index+'" contenteditable="true" >' +  (value || "")  + '</div>' +
 							'<input type="hidden" value="'+(value || "")+'" id="completionrate'+index+'" name="list['+index+'].completionrate" />';
 					    }
 				  },
-				  {
-						field: 'accumulationcompletionrate',
-						title: '积累完成率',
-						width : 90,
-						formatter:function (value, row, index, field) {
-							var authority = row["authority"];
-							if(authority!=0){
-								return value;
-							}
-							return '<div id="accumulationcompletionrate_'+index+'" contenteditable="true" >' + (value || "")   + '</div>' +
-							'<input type="hidden" value="'+(value || "")+'" id="accumulationcompletionrate'+index+'" name="list['+index+'].accumulationcompletionrate" />';
-					    }
-				  },
+//				{
+//						field: 'accumulationcompletionrate',
+//						title: '积累完成率',
+//						width : 90,
+//						formatter:function (value, row, index, field) {
+//							
+//							value = value.toFixed(2)+"%";
+//							return '<div id="accumulationcompletionrate_'+index+'" contenteditable="true" >' + (value || "")   + '</div>' +
+//							'<input type="hidden" value="'+(value || "")+'" id="accumulationcompletionrate'+index+'" name="list['+index+'].accumulationcompletionrate" />';
+//					    }
+//				  },
 				  {
 						field: 'backups',
 						title: '备注',
 						width : 300,
 						formatter:function (value, row, index, field) {
-							var authority = row["authority"];
-							if(authority!=0){
-								return value;
-							}
+							
+							
 					        return '<div id="backups_'+index+'" contenteditable="true">' + (value || "") + '</div>' + 
 							'<input type="hidden" value="'+(value || "")+'" id="backups'+index+'" name="list['+index+'].backups" />';
 					    },

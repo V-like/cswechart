@@ -18,28 +18,16 @@
 		<result property="entnyname" column="entnyname" />
 		<result property="codeno" column="code" /> 
 		<result property="fid" column="fid" /> 
-		<result property="authortyMId" column="authortyMId" /> 
-		<result property="grade" column="grade" /> 
 
 	</resultMap>
 	<!-- 仅供月进度分期对比分期功能页面查询列表使用 -->
 	<select id="monthscheduleData"  parameterType="java.util.Map"
 		resultType="java.util.Map">
-		SELECT  a.*,b.authortyMId,b.authority FROM
-					(SELECT  f.maintenanceid AS "fid",f.priority AS "number",f.entnyname AS "entnyname",
-						f.codeno AS "code" ,f.grade,s.mid AS "mid", f.unit AS "unit", 
-						s.designquantity AS "designquantity", s.changequantity AS "changequantity", 
-						s.plannedvolume AS "plannedvolume", s.accumulationcumulant AS "accumulationcumulant", 
-						s.completionrate AS "completionrate",s.accumulationcompletionrate AS "accumulationcompletionrate", 
-						s.DATE AS "DATE", s.backups AS "backups"
-			 		FROM t_f_maintenance AS f 
-			 		LEFT JOIN t_month_schedule AS s 
-			 			ON s.fid = f.maintenanceid AND s.date=#{date}  ORDER BY f.codeno ASC) a 
-			 JOIN
-			 (SELECT tmua.mid AS 'authortyMId' ,tmua.authority,tfm.priority  FROM t_m_user_authority tmua 
-					join t_f_maintenance tfm on tmua.mid = tfm.maintenanceid
-					WHERE tmua.uid=#{uid}) b 
-			 on a.fid=b.authortyMId or a.number like CONCAT(b.priority,'.%')
+	SELECT
+		 f.maintenanceid AS "fid",f.priority AS "number",f.entnyname AS "entnyname",f.codeno AS "code" ,
+		s.mid AS "mid", s.unit AS "unit", s.designquantity AS "designquantity", s.changequantity AS "changequantity", s.plannedvolume AS "plannedvolume", s.accumulationcumulant AS "accumulationcumulant", s.completionrate AS "completionrate", 
+		s.accumulationcompletionrate AS "accumulationcompletionrate", s.DATE AS "DATE", s.backups AS "backups"
+		 FROM t_f_maintenance AS f LEFT JOIN t_month_schedule AS s ON s.fid = f.maintenanceid AND s.date=#{date}  ORDER BY f.codeno ASC
 	</select>
 	
 	
@@ -67,8 +55,7 @@
 	    WHERE MID = #{mid} 
 	</update>
 	
-	
-		<!-- 三级联动，根据三级查询工作面 -->
+	<!-- 三级联动，根据三级查询工作面 -->
 	<select id="findByperentidon3on4"  parameterType="java.util.Map" resultType="java.util.Map">
 		SELECT
 		fm.maintenanceid maintenanceid,
@@ -103,9 +90,22 @@
 	
 	<!-- 修改本月累计完成量 -->
 	<update id="accumulationcumulantUpdate"  parameterType="com.lion.echart.project.entity.DaystatementEntity">
-		UPDATE 
-		t_month_schedule 
-		SET accumulationcumulant = accumulationcumulant+#{monthmodifiedvalue} 
-		WHERE `mid` = #{monthscheduleid}
+		
+		UPDATE t_month_schedule
+		SET accumulationcumulant =
+		(
+		SELECT
+		SUM(todayaccomplish) 
+		FROM t_s_daystatement
+		WHERE  monthscheduleid = #{monthscheduleid}
+		),
+		completionrate = 
+		(SELECT
+		SUM(todayaccomplish) 
+		FROM t_s_daystatement
+		WHERE  monthscheduleid = #{monthscheduleid}
+		) / plannedvolume * 100
+		WHERE `mid` = #{monthscheduleid} AND `date` = #{date}
+
 	</update>	
 </mapper>

@@ -9,6 +9,8 @@ public class DaystatementEntity extends BaseEntity{
 	private Integer todayaccomplish;	//本日完成量
 	private Integer day;				//日
 	private String describe;			//施工形象描述
+	private String date;
+	
 	public Long getDayScheduid() {
 		return dayScheduid;
 	}
@@ -39,10 +41,18 @@ public class DaystatementEntity extends BaseEntity{
 	public void setDay(Integer day) {
 		this.day = day;
 	}
+	public String getDate() {
+		return date;
+	}
+	public void setDate(String date) {
+		this.date = date;
+	}
+	
 	@Override
 	public String toString() {
 		return "DaystatementEntity [dayScheduid=" + dayScheduid + ", monthscheduleid=" + monthscheduleid
-				+ ", todayaccomplish=" + todayaccomplish + ", describe=" + describe + "]";
+				+ ", todayaccomplish=" + todayaccomplish + ", day=" + day + ", describe=" + describe + ", date=" + date
+				+ "]";
 	}
 	@Override
 	public Long getId() {
