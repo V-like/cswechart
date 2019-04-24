@@ -48,7 +48,16 @@ var TableInit = function () {
 						valign:"middle",
                         align:"center",
                         colspan: 1,
-                        rowspan: 2
+                        rowspan: 2,
+                        formatter:function (value, row, index, field) {
+                        	var grade = row["grade"];
+                        	console.info("grade=="+grade);
+                        	if(grade == 4){
+                        		return "<div style='font-size:20px'><b>"+value+"</b></div>";
+                        	}else{
+                        		return value;
+                        	}
+                        }
 					},
 					{
 						title: "累计进尺（m）",
@@ -64,15 +73,33 @@ var TableInit = function () {
                         colspan: 1,
                         rowspan: 2,
                         formatter:function (value, row, index, field) {
-//                        	var begindate = row['begindate'];
-//                        	var planfinishdate = row['planfinishdate'];
-//                        	var workload = row['workload'];
-//                        	var ts = dateDiff(begindate,planfinishdate)+1;
-//                        	console.info("ts====="+ts);
-//                        	//累计完成率
-//                        	var accumulationcompletionrate = row["accumulationcompletionrate"];
-//                        	//计划完成百分比
-//                        	var jh = ts
+                        	var begindate = row['begindate'];
+                        	var planfinishdate = row['planfinishdate'];
+                        	var workload = row['workload'];
+                        	if(begindate != null && planfinishdate != null){
+                        		
+	                        	//工期天数
+	                        	var Conperiod = dateDiff(begindate,planfinishdate)+1;
+	                        	//当前是第几天工期
+	                        	var date = new Date();
+	                        	console.info(date.toLocaleDateString());
+	                        	var presentdConperiod = dateDiff(begindate,date.toLocaleDateString())+2;
+	                        	console.info("ts====="+Conperiod);
+	                        	console.info("dqts==="+presentdConperiod);
+	                        	//累计完成率
+	                        	var acrate = row["accumulationcompletionrate"];
+	                        	console.info("acrate=="+acrate);
+	                        	//计划完成百分比
+	                        	var planfinishingrate = presentdConperiod / Conperiod;		//当前施工天数/工期
+	                        	console.info(planfinishingrate);
+	                        	if(acrate < planfinishingrate){
+	                        		return '<div style="font-size:16px; color:#F00">滞后</div>';
+	                        	}else{
+	                        		return "";
+	                        	}
+                        	}else{
+                        		return "";
+                        	}
                         	
                         	
 //                        	console.info("begindate====="+begindate);
@@ -85,7 +112,7 @@ var TableInit = function () {
 //							}
 //							console.info("workload====="+workload);
                         	
-                        	return "滞后";
+                        	
 						}
                         
 					}
@@ -96,47 +123,34 @@ var TableInit = function () {
 						title: '本月累计完成量',
 						valign:"middle",
                         align:"center",
+                        formatter:function (value, row, index, field) {
+                        	var grade = row["grade"];
+                        	console.info("grade=="+grade);
+                        	if(grade == 4){
+                        		return "";
+                        	}else{
+                        		return value;
+                        	}
+                        }
 					},
 					{
 						field: 'completionrate',
 						title: '本月累计完成率',
 						valign:"middle",
                         align:"center",
+                        formatter:function (value, row, index, field) {
+                        	var grade = row["grade"];
+                        	console.info("grade=="+grade);
+                        	if(grade == 4){
+                        		return "";
+                        	}else{
+                        		return (value*100)+"%";
+                        	}
+                        }
 					}
 				  
 				]
-//				[
-//				  {                    
-//                    checkbox: true
-//	              }
-//				  ,{
-//						field: 'entnyname',
-//						title: '项目名称'
-//				  }
-//				 ,{
-//						field: 'accumulationcumulant',
-//						title: '本月累计完成量'
-//				  }
-//				 ,{
-//						field: 'completionrate',
-//						title: '本月累计完成率'
-//				  }
-//				 ,{
-//						field: 'unit',
-//						title: '单位',
-//						/*formatter:function (value, row, index, field) {
-//							return fmoney(value,4);
-//						}*/
-//				  }
-//				 ,{
-//						field: 'unit',
-//						title: '进度',
-//						/*formatter:function (value, row, index, field) {
-//							return fmoney(value,4);
-//						}*/
-//				  }
-//				 
-//				]
+
 			],
 			rowStyle: function (row, index) {
 				var classesArr = ['oddn', 'evenn'];
@@ -239,7 +253,6 @@ function loadSubofficeData(grade,perentid,pulldown){
 
 //修改事件
 function updatexpulldown(cs){
-	console.info("cs=="+cs);
 	if(cs == 1){
 		loadSubofficeData(2,$("#suboffice").val(),"minutemark");
 	}else
@@ -247,12 +260,8 @@ function updatexpulldown(cs){
 		loadSubofficeData(3,$("#minutemark").val(),"subsection");
 	}else
 	if(cs == 3){
-		console.info("开心吗？");
 		//loadSubofficeData(3,$("#subsection").val(),"subsection");
 	}
-	console.info($("#suboffice").val());
-		console.info($("#minutemark").val());
-			console.info($("#subsection").val());
 }
 
 function reloadtable(){
@@ -302,11 +311,11 @@ function save(){
 
 //计算两个日期的天数差
 function dateDiff(firstDate,secondDate){
-var firstDate = new Date(firstDate);
-var secondDate = new Date(secondDate);
-var diff = Math.abs(firstDate.getTime() - secondDate.getTime())
-var result = parseInt(diff / (1000 * 60 * 60 * 24));
-return result
+	var firstDate = new Date(firstDate);
+	var secondDate = new Date(secondDate);
+	var diff = Math.abs(firstDate.getTime() - secondDate.getTime())
+	var result = parseInt(diff / (1000 * 60 * 60 * 24));
+	return result
 }
 
 //重写日期转换方法

@@ -107,9 +107,9 @@ var TableInit = function () {
 						width : 200,
 						formatter : function(value,row,index,field){
 							if(value == undefined){
-								value = '0';
+								value = '0%';
 							}
-							return value+"%";
+							return (value).toFixed(2)+"%";
 						}
 				  },
 				  {
@@ -156,6 +156,12 @@ var TableInit = function () {
  * 保存数据
  */
 function saveRow() {
+	
+	
+	modalTitle("是否确定提交", 2);
+}
+
+function saveFun(){
 	var length = 0;
 	if (true) {
 		var rows = $("#t_datagrid").bootstrapTable('getData');
@@ -170,6 +176,11 @@ function saveRow() {
 		obj.todayaccomplish = $("#todayaccomplish_"+i).html();
 		obj.day = $("#belongTimeStr").val().substring(8,10);
 		obj.describe = $("#describe_"+i).html();
+		console.info("d_===");
+		console.info($("#todayaccomplish_"+i).html());
+		console.info("do===");
+		console.info( $("#todayaccomplish"+i).val());
+		obj.monthmodifiedvalue = $("#todayaccomplish_"+i).html() - $("#todayaccomplish"+i).val();	
 		var d = "daySchedu"+i;
 		list.push(d = obj);
 //		console.info(obj);	
@@ -183,14 +194,18 @@ function saveRow() {
 		},
 		type : "post",
 		dataType : "json",
-		success : function() {
-//			$("#t_datagrid").bootstrapTable('load', json);
-			console.info("成功");
+		success : function(data) {
+			closeloding();
+			modalTitle("操作成功", 1);
+			window.location.reload();
+		},
+		error : function(data) {
+			closeloding();
+			modalTitle("操作失败，请重试", 1);
 		}
 	});
-	
-	modalTitle("是否确定提交", 2);
 }
+
 
 function reloadtable(){
 	$.ajax({

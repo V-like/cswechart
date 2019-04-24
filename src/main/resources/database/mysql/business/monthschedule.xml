@@ -59,12 +59,13 @@
 	</update>
 	
 	
-	<!-- 三级联动，根据三级查询工作面 -->
+		<!-- 三级联动，根据三级查询工作面 -->
 	<select id="findByperentidon3on4"  parameterType="java.util.Map" resultType="java.util.Map">
 		SELECT
 		fm.maintenanceid maintenanceid,
 		fm.priority priority,
 		fm.entnyname entnyname,
+		fm.grade grade,
 		fm.codeno codeno,
 		fm.unit unit,
 		fm.begindate begindate,
@@ -80,7 +81,9 @@
 		ms.fid fid
 		FROM t_f_maintenance fm
 		LEFT JOIN t_month_schedule ms
-		ON ms.fid = fm.maintenanceid
+		ON ms.fid = fm.maintenanceid AND ms.date = (SELECT 
+		MAX(`date`)
+		FROM t_month_schedule)
 		WHERE fm.perentid IN (#{perentid},
 		(SELECT 
 		maintenanceid
@@ -88,4 +91,12 @@
 		WHERE perentid = #{perentid}))
 		ORDER BY fm.codeno ASC
 	</select>
+	
+	<!-- 修改本月累计完成量 -->
+	<update id="accumulationcumulantUpdate"  parameterType="com.lion.echart.project.entity.DaystatementEntity">
+		UPDATE 
+		t_month_schedule 
+		SET accumulationcumulant = accumulationcumulant+#{monthmodifiedvalue} 
+		WHERE `mid` = #{monthscheduleid}
+	</update>	
 </mapper>

@@ -2,7 +2,6 @@ package com.lion.echart.project.web;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,15 +14,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.lion.echart.Suboffice.entity.SubofficeWriteEntity;
-import com.lion.echart.Suboffice.entity.SubofficeWriteView;
 import com.lion.echart.base.logic.BaseService;
 import com.lion.echart.project.entity.DaystatementEntity;
 import com.lion.echart.system.entity.UserEntity;
-import com.sun.jdi.Method;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -54,8 +49,28 @@ public class DaystatementController {
 		UserEntity user = (UserEntity)session.getAttribute("USER_SESSION");
 		HashMap<String, Object> param = new HashMap<String, Object>();	
 		if(belongTimeStr!=null&&!belongTimeStr.equals("")){
-			param.put("date", belongTimeStr.substring(0,7));
-			param.put("day", belongTimeStr.substring(8,10));	
+			Integer year = Integer.parseInt(belongTimeStr.substring(0,4));
+			Integer month = Integer.parseInt(belongTimeStr.substring(5,7));
+			Integer day = Integer.parseInt(belongTimeStr.substring(8,10));
+																//2019-04-10
+																//0123456789
+			if(day>25) {
+				if(month==12) {
+					month=1;
+					year+=1;
+				}else {
+					month+=1;
+				}
+			}
+			String m = ""+month;
+			if(m.length()==1) {
+				m= "0"+m;
+			}
+			System.out.println("year==="+year);
+			System.out.println("month==="+month);
+			System.out.println("day==="+day);
+			param.put("date", ""+year+"-"+m);
+			param.put("day", day+"");	
 		}
 		List<Map<String, Object>> list = list = baseService.queryList("comle.daystatement.getdaystatementListData", param);
 		return list;
@@ -80,9 +95,12 @@ public class DaystatementController {
 //		}
 //		return null;
 //	}
-	//
+	//日报的新增与修改
 	@RequestMapping(value = "/project/savedaystatementList.json",method=RequestMethod.POST )
-	public @ResponseBody String insertSubofficewriteTenDay(String daystatementliststr) {
+	public @ResponseBody String insertSubofficewriteTenDay(String daystatementliststr,HttpServletRequest req,HttpServletResponse resp, HttpSession session) {
+		UserEntity user = (UserEntity)session.getAttribute("USER_SESSION");
+		JSONObject obj = new JSONObject();
+		
 		System.out.println(daystatementliststr);
 		JSONArray jlist = JSONArray.fromObject(daystatementliststr);
 		System.out.println(jlist);
@@ -92,15 +110,19 @@ public class DaystatementController {
 			List<DaystatementEntity> dlist = new ArrayList<DaystatementEntity>();
 			for(int i = 0;i < jlist.size();i++){	
 				DaystatementEntity entity = (DaystatementEntity) JSONObject.toBean((JSONObject) jlist.get(i), DaystatementEntity.class);
+				System.out.println(entity);
 				dlist.add(entity);
 			}
+			
 			baseService.insertOupdates("comle.daystatement.daystatement", dlist);
+			//baseService.updateObject("comle.monthschedule.accumulationcumulantUpdate", dlist);
+			obj.put("msgType", 1);
 		} catch (Exception e) {
 			e.printStackTrace();
-
+			obj.put("msgType", 0);
 		}
 		
-		return null;
+		return obj.toString();
 	}
 	
 	

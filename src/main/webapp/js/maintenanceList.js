@@ -64,13 +64,6 @@ var TableInit = function () {
 							      ].join('');
 					    },
 				  }
-				 ,{field: 'maintenanceid',align: 'center',title: '查看权限' ,width:100,
-						formatter:function (value, row, index, field) {
-					        return [
-					        	   '<button type="button" onclick="maintenanceAdd3('+row["maintenanceid"]+')" class="RoleOfedit btn btn-primary  btn-sm" style="margin-right:15px;" >查看权限</button>',
-							      ].join('');
-					    },
-				  }
 				]
 			],
 			rowStyle: function (row, index) {
@@ -165,10 +158,9 @@ function maintenanceAdd2(_id){
 			_html = _html + '		<div class="form-group">';
 			_html = _html + '			<label for="subofficename" class="col-sm-3 control-label">权限</label>';
 			_html = _html + '			<div class="col-sm-7">';
-			_html = _html + '				<select name="authority" id="authority" style="width:300px;height:30px;">';
-			_html = _html + '					<option value ="0">标段负责人</option>';
-			_html = _html + '					<option value ="1">可查看用户</option>';
-			_html = _html + '				</select>';
+			_html = _html + '				可查看：<input type="radio" value="1" name="authority" id="authority"/>&nbsp;&nbsp;&nbsp;';
+			_html = _html + '				可修改：<input type="radio" value="0" name="authority" id="authority"/>&nbsp;&nbsp;&nbsp;';
+			_html = _html + '				无权限：<input type="radio" value="2" name="authority" id="authority" checked="checked"/>';
 			_html = _html + '			</div>';
 			_html = _html + '		</div><br/><br/>';
 			_html = _html + '	</div>';
@@ -184,92 +176,6 @@ function maintenanceAdd2(_id){
 
 }
 
-
-//权限查看
-function maintenanceAdd3(_id){
-	$.ajax({
-		url:$("#fule").val()+"muserauthority/muserauthorityData2.json",
-		type:"POST",
-		dataType:"json",
-		data: {
-			id : _id,
-        },
-		success:function(data){
-			var _html = '';
-			_html = _html + '<input type="hidden" id="maintenanceid" value="'+_id+'" />';
-			_html = _html + '<div style="width:600px;height:150px;">';
-			_html = _html + '	<table border="0">';
-			_html = _html + '		<tr>';
-			_html = _html + '			<th>标段负责人</th>';
-			_html = _html + '			<th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>';
-									var v=0;
-									for(var i=0;i<data.length;i++){
-										if(data[i].authority==0){
-											v++;
-			_html = _html + 				'<th><a style="color:black;" onclick="deleteAuthority('+data[i].id+')">'+data[i].realname+" : "+data[i].username+'</a></th>';
-										}
-										if(v==2){
-											v=0;
-			_html = _html + '		</tr><tr><th></th><th></th>';
-										}
-									}
-			_html = _html + '		</tr>';
-			_html = _html + '		<tr><th>&nbsp;&nbsp;</th></tr>';
-			_html = _html + '		<tr>';
-			_html = _html + '			<th>可查看用户</th>';
-			_html = _html + '			<th></th>';
-									var v2=0;
-									for(var i=0;i<data.length;i++){
-										if(data[i].authority==1){
-											v2++;
-			_html = _html + 				'<th><a style="color:black;" onclick="deleteAuthority('+data[i].id+')">'+data[i].realname+" : "+data[i].username+'</a></th>';
-										}
-										if(v2==2){
-											v2=0;
-			_html = _html + '		</tr><tr><th></th><th></th>';
-										}
-									}
-			_html = _html + '		</tr>';
-			_html = _html + '		<tr><font color="red" size="3px">点击用户名删除此用户<font></tr>';
-			_html = _html + '	</table>';
-			_html = _html + '</div>';
-				
-			modalTitle(_html,2);
-		},
-		error:function(){
-			console.log("失败");
-		}
-	});
-	
-}
-
-
-
-function deleteAuthority(id){
-	var msg = "您真的确定要删除吗？\n\n请确认！";
-	if (confirm(msg)==true){
-		$.ajax({
-			url:$("#fule").val()+"muserauthority/deleteMuserauthority.json",
-			type:"POST",
-			dataType:"json",
-			data: {
-				id : id,
-	        },
-			success:function(data){
-				 alert("操作成功");
-			},
-			error:function(){
-				console.log("失败");
-			}
-		});
-		alert("操作成功")
-		closeloding();
-	return true;
-	}else{
-	return false;
-	}
-//	alert(id)
-}
 function saveFun(){
 	var entnyname = $("#entnyname").val();//项目名称
 	var priority = $("#priority").val();//序号
