@@ -1,66 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="comle.Maintenance">
-
-	<resultMap
-		type="com.lion.echart.maintenance.entity.MaintenanceEntity"
+<mapper namespace="comle.muserauthority">
+<resultMap
+		type="com.lion.echart.maintenance.entity.MuserAuthorityEntity"
 		id="maintenance">
-		<id property="maintenanceId" column="maintenanceid" />
-		<result property="priority" column="priority" />
-		<result property="entnyname" column="entnyname" />
-		<result property="grade" column="grade" />
-		<result property="perentId" column="perentid" />
-		<result property="codeno" column="codeno" />
-		<result property="unit" column="unit" />
-
+		<id property="id" column="id" />
+		<result property="authority" column="authority" />
+		<result property="uid" column="uid"/>
+		<result property="mid" column="mid"/>
+		<result property="username" column="username"/>
+		<result property="realname" column="realname"/>
+		
 
 	</resultMap>
-	<!-- 仅供分局填报查询列表使用 -->
-	<select id="getMaintenanceListData"
+	<!-- 仅供权限添加查询列表使用 -->
+	<select id="getMuserauthorityData"
 		parameterType="java.util.Map" resultType="java.util.Map">
-		SELECT
-		maintenanceid,priority,entnyname,grade,perentid,`index`,codeno,unit
-		FROM
-		t_f_maintenance where 1 = 1
-		<if test="maintenanceid != null">
-		 and maintenanceid = #{maintenanceid} 
-		</if>
-		order by codeno
+		SELECT t.id AS "uid",t.username,t.realname FROM t_sys_user t WHERE t.id NOT IN
+			(SELECT  tsu.id FROM t_m_user_authority tmua LEFT JOIN t_sys_user tsu 
+				ON tmua.mid=#{mid} AND tmua.uid =tsu.id)
 	</select>
-	<insert id="insertMaintenance" parameterType="com.lion.echart.maintenance.entity.MaintenanceEntity">
-           insert into t_f_maintenance(priority,entnyname,grade,perentid,`index`,codeno,unit)  
-               values(#{priority}, #{entnyname},#{grade},  #{perentid},  #{index},  #{codeno}, #{unit})
+	<select id="getMuserauthorityData2"
+		parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT 
+		id as uid,username,realname FROM t_sys_user 
+	</select>
+	<select id="getMuserauthorityData3"
+		parameterType="java.util.Map" resultType="java.util.Map">
+			SELECT 
+			tsu.id AS 'uid',tsu.username,tsu.realname,tmua.authority,tmua.id FROM t_m_user_authority tmua,t_sys_user tsu 
+			WHERE tmua.mid=#{mid} AND tmua.uid =tsu.id
+	</select>
+	
+	<insert id="muserauthoritySave" parameterType="com.lion.echart.maintenance.entity.MuserAuthorityEntity">
+           INSERT INTO t_m_user_authority (authority,uid,mid)  
+               VALUES(#{authority},#{uid},#{mid})
    	</insert>
    	
-   	<select id="getSubMaxInxdexAo" parameterType="java.util.Map" resultType="java.lang.Integer" >
-    	SELECT 
-    	ifnull(MAX(t.index),0)+1 
-    	FROM t_f_maintenance t 
-    	WHERE t.maintenanceid = #{maintenanceid}
-   	</select>
-   		<select id="getSubMaxGradeAo" parameterType="java.util.Map" resultType="java.lang.String" >
-    	SELECT 
-    	ifnull(MAX(t.index),0)+1 
-    	FROM t_f_maintenance t 
-    	WHERE t.grade = #{grade}
-   	</select>
-   	
-   	<!-- 查找一级 -->
-	<select id="getstairsubofficeGet" parameterType="java.util.Map" resultType="java.util.Map">
-		SELECT
-		maintenanceid,priority,entnyname,grade,perentid,`index`,codeno,unit
-		FROM
-		t_f_maintenance where 1 = 1
-		<if test="grade != null">
-		 and grade = #{grade}
-		</if>
-		
-		<if test="perentid != null">
-		 and perentid = #{perentid} 
-		</if>
-		<!-- <if test="maintenanceid != null">
-		 and maintenanceid = #{maintenanceid} 
-		</if> -->
-		order by codeno
-	</select>
+   	<delete  id="deleteMuserauthority" parameterType="com.lion.echart.maintenance.entity.MuserAuthorityEntity"> 
+   		DELETE FROM t_m_user_authority WHERE id=#{id}
+   	</delete>
+
 </mapper>

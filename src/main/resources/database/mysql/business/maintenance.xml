@@ -2,9 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="comle.Maintenance">
 
-    <!-- 让对象类与数据库表属性字段对应 -->
 	<resultMap
-		type="com.lion.echart.project.entity.MaintenanceEntity"
+		type="com.lion.echart.maintenance.entity.MaintenanceEntity"
 		id="maintenance">
 		<id property="maintenanceId" column="maintenanceid" />
 		<result property="priority" column="priority" />
@@ -13,16 +12,14 @@
 		<result property="perentId" column="perentid" />
 		<result property="codeno" column="codeno" />
 		<result property="unit" column="unit" />
-		<result property="begindate" column="begindate" />
-		<result property="planfinishdate" column="planfinishdate" />
-		<result property="workload" column="workload" />
+
+
 	</resultMap>
-	
 	<!-- 仅供分局填报查询列表使用 -->
 	<select id="getMaintenanceListData"
 		parameterType="java.util.Map" resultType="java.util.Map">
 		SELECT
-		maintenanceid,priority,entnyname,grade,perentid,`index`,codeno,unit,begindate,planfinishdate,workload
+		maintenanceid,priority,entnyname,grade,perentid,`index`,codeno,unit
 		FROM
 		t_f_maintenance where 1 = 1
 		<if test="maintenanceid != null">
@@ -30,38 +27,18 @@
 		</if>
 		order by codeno
 	</select>
-	
-	<!-- 添加 -->
-	<insert id="insertMaintenance" parameterType="com.lion.echart.project.entity.MaintenanceEntity">
-           insert into t_f_maintenance(priority,entnyname,grade,perentid,`index`,codeno,unit,begindate,planfinishdate,workload)  
-               values(#{priority}, #{entnyname},#{grade},  #{perentid},  #{index},  #{codeno}, #{unit} , #{begindate} , #{planfinishdate} , #{workload})
+	<insert id="insertMaintenance" parameterType="com.lion.echart.maintenance.entity.MaintenanceEntity">
+           insert into t_f_maintenance(priority,entnyname,grade,perentid,`index`,codeno,unit)  
+               values(#{priority}, #{entnyname},#{grade},  #{perentid},  #{index},  #{codeno}, #{unit})
    	</insert>
    	
-   	<!-- 修改 -->
-   	<update id="updateMaintenance" parameterType="com.lion.echart.project.entity.MaintenanceEntity">
-   		update t_f_maintenance 
-   		set entnyname = #{entnyname},
-   		grade = #{grade},
-   		perentid = #{perentid},
-   		index = #{index},
-   		codeno = #{codeno},
-   		unit = #{unit},
-   		begindate = #{begindate},
-   		planfinishdate = #{planfinishdate},
-   		workload = #{workload}
-   		where maintenanceid=#{maintenanceid}
-   </update>
-   	
-   	<!-- 查询最大index -->
    	<select id="getSubMaxInxdexAo" parameterType="java.util.Map" resultType="java.lang.Integer" >
     	SELECT 
     	ifnull(MAX(t.index),0)+1 
     	FROM t_f_maintenance t 
     	WHERE t.maintenanceid = #{maintenanceid}
    	</select>
-   	
-   	<!-- 查询最大层级 -->
-   	<select id="getSubMaxGradeAo" parameterType="java.util.Map" resultType="java.lang.String" >
+   		<select id="getSubMaxGradeAo" parameterType="java.util.Map" resultType="java.lang.String" >
     	SELECT 
     	ifnull(MAX(t.index),0)+1 
     	FROM t_f_maintenance t 
