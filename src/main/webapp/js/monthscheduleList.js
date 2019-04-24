@@ -153,11 +153,11 @@ var TableInit = function () {
 						title: '本月完成率 ',
 						width : 90,
 						formatter:function (value, row, index, field) {
-//							console.info(value);
-//							if(value != undefined || !"0".equals(value)){
-//								value = fmoney(value,2);
-//							}
-							return '<div id="completionrate_'+index+'" contenteditable="false" >' +  (fmoney(value,2)+"%" || "0%")  + '</div>' +
+							var v = "";
+							if(value != undefined && value != ''){
+								v = fmoney(value,2)+"%";
+							}
+							return '<div id="completionrate_'+index+'" contenteditable="false" >' +  ( v || "")  + '</div>' +
 							'<input type="hidden" value="'+(value || "")+'" id="completionrate'+index+'" name="list['+index+'].completionrate" />';
 					    }
 				  },
