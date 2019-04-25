@@ -42,4 +42,9 @@
 		UPDATE t_m_user_authority SET authority=#{authority} WHERE MID=#{mid} AND uid=#{uid}
    	</update>
 
+<!-- 仅供查询权限使用 -->	
+	<select id="getUserMuserauthority"
+		parameterType="java.util.Map" resultType="java.util.Map">
+			 SELECT * FROM t_m_user_authority WHERE uid=#{uid}
+	</select>
 </mapper>

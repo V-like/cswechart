@@ -39,7 +39,16 @@ public class MonthScheduleController {
 	public String monthScheduleList(HttpServletRequest req, HttpServletResponse resp, HttpSession session) {
 		req.setAttribute("ts", System.currentTimeMillis());
 		req.setAttribute("who", "project");
-		return "/page/project/monthscheduleList";
+		Map<String, Object> param = new HashMap<String, Object>();
+		UserEntity user = (UserEntity)session.getAttribute("USER_SESSION");
+		param.put("uid", user.getId());
+		List<Map<String, Object>> list = baseService.queryList("comle.muserauthority.getUserMuserauthority", param);
+		for(int i =0;i<list.size();i++) {
+			if("0".equals(list.get(i).get("authority"))) {
+				return "/page/project/monthscheduleList";
+			}
+		}
+		return "/page/project/monthscheduleList2";
 	}
 
 	// 获取进度反馈对比情况列表数据
