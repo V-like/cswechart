@@ -95,9 +95,15 @@ public class MuserAuthorityController {
 				try {
 					List<Map<String, Object>> list =baseService.queryList("comle.muserauthority.getmuserauthoritySelectById", param);
 					if(list.size()==0) {
-						baseService.insertObject("comle.muserauthority.muserauthoritySave", muserAuthority);
+						if(!muserAuthority.getAuthority().equals("2")) {
+							baseService.insertObject("comle.muserauthority.muserauthoritySave", muserAuthority);
+						}
 					}else {
-						baseService.updateObject("comle.muserauthority.updateMuserauthority", muserAuthority);
+						if(!muserAuthority.getAuthority().equals("2")) {
+							baseService.updateObject("comle.muserauthority.updateMuserauthority", muserAuthority);
+						}else {
+							baseService.delete("comle.muserauthority.deleteMuserauthority", muserAuthority);
+						}
 					}
 					obj.put("msgType", 1);
 				} catch (Exception e) {
