@@ -15,6 +15,7 @@
 		<result property="begindate" column="begindate" />
 		<result property="planfinishdate" column="planfinishdate" />
 		<result property="workload" column="workload" />
+		<result property="changeworkload" column="changeworkload" />
 
 
 	</resultMap>
@@ -22,7 +23,7 @@
 	<select id="getMaintenanceListData"
 		parameterType="java.util.Map" resultType="java.util.Map">
 		SELECT
-			maintenanceid,priority,entnyname,grade,perentid,`index`,codeno,unit,workload
+			maintenanceid,priority,entnyname,grade,perentid,`index`,codeno,unit,workload,changeworkload
 			,begindate,planfinishdate
 			,DATE_FORMAT(begindate,'%Y-%m-%d') as begindatestr
 			,DATE_FORMAT(planfinishdate,'%Y-%m-%d') as planfinishdatestr
