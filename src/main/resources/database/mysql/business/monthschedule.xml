@@ -58,34 +58,36 @@
 	<!-- 三级联动，根据三级查询工作面 -->
 	<select id="findByperentidon3on4"  parameterType="java.util.Map" resultType="java.util.Map">
 		SELECT
-		fm.maintenanceid maintenanceid,
-		fm.priority priority,
-		fm.entnyname entnyname,
-		fm.grade grade,
-		fm.codeno codeno,
-		fm.unit unit,
-		fm.begindate begindate,
-		fm.planfinishdate planfinishdate,
-		fm.workload workload,
-		ms.mid `mid`,
-		ms.designquantity designquantity,
-		ms.changequantity changequantity,
-		ms.plannedvolume plannedvolume,
-		ms.accumulationcumulant accumulationcumulant,
-		ms.completionrate completionrate,
-		ms.accumulationcompletionrate accumulationcompletionrate,
-		ms.fid fid
-		FROM t_f_maintenance fm
-		LEFT JOIN t_month_schedule ms
-		ON ms.fid = fm.maintenanceid AND ms.date = (SELECT 
-		MAX(`date`)
-		FROM t_month_schedule)
-		WHERE fm.perentid IN (#{perentid},
-		(SELECT 
-		maintenanceid
-		FROM t_f_maintenance
-		WHERE perentid = #{perentid}))
-		ORDER BY fm.codeno ASC
+			fm.maintenanceid maintenanceid,
+			fm.priority priority,
+			fm.entnyname entnyname,
+			fm.grade grade,
+			fm.codeno codeno,
+			fm.unit unit,
+			fm.begindate begindate,
+			fm.planfinishdate planfinishdate,
+			fm.workload workload,
+			ms.mid `mid`,
+			ms.designquantity designquantity,
+			ms.changequantity changequantity,
+			ms.plannedvolume plannedvolume,
+			ms.accumulationcumulant accumulationcumulant,
+			ms.completionrate completionrate,
+			ms.accumulationcompletionrate accumulationcompletionrate,
+			ms.fid fid,
+			ms.accumulatedcompletion accumulatedcompletion,
+			ms.accumulationcompletionrate accumulationcompletionrate
+			FROM t_f_maintenance fm
+			LEFT JOIN t_month_schedule ms
+			ON ms.fid = fm.maintenanceid AND ms.date = (SELECT 
+			MAX(`date`)
+			FROM t_month_schedule)
+			WHERE fm.perentid = #{perentid} or fm.perentid IN 
+				((SELECT 
+				maintenanceid
+				FROM t_f_maintenance
+				WHERE perentid = #{perentid}))
+			ORDER BY fm.codeno ASC
 	</select>
 	
 	<!-- 修改本月累计完成量 -->

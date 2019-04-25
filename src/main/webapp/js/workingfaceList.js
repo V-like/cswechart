@@ -63,7 +63,7 @@ var TableInit = function () {
 						title: "累计进尺（m）",
                         valign:"middle",
                         align:"center",
-                        colspan: 2,
+                        colspan: 4,
                         rowspan: 1
 					},
 					{
@@ -144,11 +144,20 @@ var TableInit = function () {
                         	if(grade == 4){
                         		return "";
                         	}else{
-                        		return value.toFixed(2)+"%";
+                        		return fmoney(value,2)+"%";
                         	}
                         }
+					},
+					{
+						field: 'accumulatedcompletion',
+						title: '累计完成量',
+                        align:"center"
+					},
+					{
+						field: 'accumulationcompletionrate',
+						title: '累计完成率',
+                        align:"center"
 					}
-				  
 				]
 
 			],
