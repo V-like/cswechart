@@ -17,9 +17,11 @@ public class DayScheduleistService{
 		try {
 			baseDao.insertOupdates("comle.daystatement.daystatement", dlist);
 			for(int i = 0;i < dlist.size();i++) {
+				System.out.println("=================================="+dlist.get(i));
 				baseDao.updateObject("comle.monthschedule.accumulationcumulantUpdate", dlist.get(i));
 			}
 			for(int i = 0;i < dlist.size();i++) {
+				
 				baseDao.updateObject("comle.Maintenance.accumulationcumulantUpdate", dlist.get(i));
 			}
 		}finally {

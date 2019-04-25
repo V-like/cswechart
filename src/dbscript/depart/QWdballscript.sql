@@ -134,11 +134,11 @@ CREATE TABLE `t_f_maintenance` (
   `accumulatedcompletion` varchar(50) DEFAULT NULL COMMENT '总累计完成量',
   `accumulationcompletionrate` varchar(50) DEFAULT NULL COMMENT '总累计完成率',
   PRIMARY KEY (`maintenanceid`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 
 /*Data for the table `t_f_maintenance` */
 
-insert  into `t_f_maintenance`(`maintenanceid`,`priority`,`entnyname`,`grade`,`perentid`,`index`,`codeno`,`unit`,`begindate`,`planfinishdate`,`workload`,`changeworkload`,`accumulatedcompletion`,`accumulationcompletionrate`) values (1,'1','大理分局',1,0,1,'001000000000000000','',NULL,NULL,NULL,NULL,NULL,NULL),(2,'1.1','大理1段',2,1,1,'001001000000000000',NULL,NULL,NULL,NULL,NULL,NULL,NULL),(3,'1.2.1','大理1段施工1标',3,2,1,'001002001000000000',NULL,NULL,NULL,NULL,NULL,NULL,NULL),(4,'2','丽江分局',1,0,2,'002000000000000000',NULL,NULL,NULL,NULL,NULL,NULL,NULL),(5,'2.1','丽江1段',2,4,1,'002001000000000000',NULL,NULL,NULL,NULL,NULL,NULL,NULL),(6,'2.1.1','大理1段施工1标',3,5,1,'002001001000000000',NULL,NULL,NULL,NULL,NULL,NULL,NULL),(7,'2.1.1.1','香炉山1#支洞工作面',4,6,1,'002001001001000000',NULL,NULL,NULL,NULL,NULL,NULL,NULL),(8,'2.1.1.1.1','上游主洞段洞挖及支护',5,7,1,'002001001001001000','m','2019-04-21','2019-04-30','10','2','5','0.1'),(9,'2.1.1.1.2','上游主洞段衬砌及灌浆',5,7,2,'002001001001002000','m','2019-04-21','2019-04-30','10','2','5','0.1'),(10,'3','玉溪分局',1,0,3,'003000000000000000','',NULL,NULL,NULL,NULL,NULL,NULL),(11,'4','楚雄分局',1,0,4,'004000000000000000','',NULL,NULL,NULL,NULL,NULL,NULL),(12,'5','昆明分局',1,0,5,'005000000000000000','',NULL,NULL,NULL,NULL,NULL,NULL),(13,'6','红河分局',1,0,6,'006000000000000000','',NULL,NULL,NULL,NULL,NULL,NULL),(14,'5.1','昆明1段',2,12,1,'005001000000000000','',NULL,NULL,NULL,NULL,NULL,NULL);
+insert  into `t_f_maintenance`(`maintenanceid`,`priority`,`entnyname`,`grade`,`perentid`,`index`,`codeno`,`unit`,`begindate`,`planfinishdate`,`workload`,`changeworkload`,`accumulatedcompletion`,`accumulationcompletionrate`) values (1,'1','大理分局',1,0,1,'001000000000000000','',NULL,NULL,NULL,NULL,'0',NULL),(2,'1.1','大理1段',2,1,1,'001001000000000000',NULL,NULL,NULL,NULL,NULL,'0',NULL),(3,'1.2.1','大理1段施工1标',3,2,1,'001002001000000000',NULL,NULL,NULL,NULL,NULL,'0',NULL),(4,'2','丽江分局',1,0,2,'002000000000000000',NULL,NULL,NULL,NULL,NULL,'0',NULL),(5,'2.1','丽江1段',2,4,1,'002001000000000000',NULL,NULL,NULL,NULL,NULL,'0',NULL),(6,'2.1.1','大理1段施工1标',3,5,1,'002001001000000000',NULL,NULL,NULL,NULL,NULL,'0',NULL),(7,'2.1.1.1','香炉山1#支洞工作面',4,6,1,'002001001001000000',NULL,NULL,NULL,NULL,NULL,'0',NULL),(8,'2.1.1.1.1','上游主洞段洞挖及支护',5,7,1,'002001001001001000','m','2019-04-21','2019-04-30','10','3.0','36','3'),(9,'2.1.1.1.2','上游主洞段衬砌及灌浆',5,7,2,'002001001001002000','m','2019-04-21','2019-04-30','10','2.0','36','3'),(10,'3','玉溪分局',1,0,3,'003000000000000000','',NULL,NULL,NULL,NULL,'0',NULL),(11,'4','楚雄分局',1,0,4,'004000000000000000','',NULL,NULL,NULL,NULL,NULL,NULL),(12,'5','昆明分局',1,0,5,'005000000000000000','',NULL,NULL,NULL,NULL,NULL,NULL),(13,'6','红河分局',1,0,6,'006000000000000000','',NULL,NULL,NULL,NULL,NULL,NULL),(14,'5.1','昆明1段',2,12,1,'005001000000000000','',NULL,NULL,NULL,NULL,NULL,NULL),(15,'3.1','sd',2,10,1,'003001000000000000','',NULL,NULL,NULL,NULL,'0',NULL);
 
 /*Table structure for table `t_m_user_authority` */
 
@@ -154,7 +154,7 @@ CREATE TABLE `t_m_user_authority` (
 
 /*Data for the table `t_m_user_authority` */
 
-insert  into `t_m_user_authority`(`id`,`authority`,`uid`,`mid`) values (17,'0','10','1'),(19,'0','1','1'),(20,'0','14','1'),(21,'0','13','1'),(22,'0','15','1'),(23,'0','1','2'),(24,'0','1','4'),(25,'0','1','10');
+insert  into `t_m_user_authority`(`id`,`authority`,`uid`,`mid`) values (17,'0','10','1'),(19,'0','1','1'),(20,'0','14','1'),(21,'0','13','1'),(22,'0','15','1'),(24,'0','1','4'),(25,'0','1','10');
 
 /*Table structure for table `t_month_schedule` */
 
@@ -163,20 +163,17 @@ DROP TABLE IF EXISTS `t_month_schedule`;
 CREATE TABLE `t_month_schedule` (
   `mid` int(10) NOT NULL AUTO_INCREMENT COMMENT 'id',
   `unit` varchar(10) DEFAULT NULL COMMENT '单位',
-  `designquantity` varchar(50) DEFAULT NULL COMMENT '设计工程量',
   `changequantity` varchar(50) DEFAULT NULL COMMENT '变更工程量',
   `plannedvolume` varchar(50) DEFAULT NULL COMMENT '本月计划完成量',
   `accumulationcumulant` varchar(50) DEFAULT NULL COMMENT '本月累计完成量',
-  `completionrate` double DEFAULT NULL COMMENT '本月完成率',
+  `completionrate` varchar(50) DEFAULT NULL COMMENT '本月完成率',
   `date` varchar(10) NOT NULL COMMENT '日期',
   `backups` varchar(100) DEFAULT NULL COMMENT '备注',
   `fid` varchar(50) NOT NULL,
   UNIQUE KEY `mid` (`mid`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=latin1;
 
 /*Data for the table `t_month_schedule` */
-
-insert  into `t_month_schedule`(`mid`,`unit`,`designquantity`,`changequantity`,`plannedvolume`,`accumulationcumulant`,`completionrate`,`date`,`backups`,`fid`) values (1,NULL,'','','','0',NULL,'2019-04',NULL,'1'),(2,NULL,'','','','0',NULL,'2019-04',NULL,'2'),(3,NULL,'','','','0',NULL,'2019-04',NULL,'3'),(4,NULL,'','','','0',NULL,'2019-04',NULL,'4'),(5,NULL,'','','','0',NULL,'2019-04',NULL,'5'),(6,NULL,'','','','0',NULL,'2019-04',NULL,'6'),(7,NULL,'','','','0',NULL,'2019-04',NULL,'7'),(8,NULL,'100','0','33','8',24.242424242424242,'2019-04',NULL,'8'),(9,NULL,'100','0','22','8',36.36363636363637,'2019-04',NULL,'9');
 
 /*Table structure for table `t_p_monthtotal` */
 
@@ -231,11 +228,9 @@ CREATE TABLE `t_s_daystatement` (
   `day` int(2) NOT NULL COMMENT '日',
   `describe` varchar(2000) DEFAULT NULL COMMENT '施工形象描述',
   PRIMARY KEY (`dayScheduid`)
-) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=70 DEFAULT CHARSET=utf8;
 
 /*Data for the table `t_s_daystatement` */
-
-insert  into `t_s_daystatement`(`dayScheduid`,`monthscheduleid`,`todayaccomplish`,`day`,`describe`) values (19,1,0,25,''),(20,2,0,25,''),(21,2,0,25,''),(22,3,0,25,''),(23,4,0,25,''),(24,5,0,25,''),(25,6,0,25,''),(26,7,0,25,''),(27,8,5,25,''),(28,9,5,25,''),(29,1,0,24,''),(30,2,0,24,''),(31,2,0,24,''),(32,3,0,24,''),(33,4,0,24,''),(34,5,0,24,''),(35,6,0,24,''),(36,7,0,24,''),(37,8,3,24,'hh'),(38,9,3,24,'hh');
 
 /*Table structure for table `t_s_dcdysqlid` */
 

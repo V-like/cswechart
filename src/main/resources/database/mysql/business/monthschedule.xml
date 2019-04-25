@@ -119,7 +119,7 @@
 		FROM t_s_daystatement
 		WHERE  monthscheduleid = #{monthscheduleid}
 		) / plannedvolume * 100
-		WHERE `mid` = #{monthscheduleid} AND `date` = #{date}
+		WHERE `mid` = #{monthscheduleid} 
 
 	</update>	
 </mapper>

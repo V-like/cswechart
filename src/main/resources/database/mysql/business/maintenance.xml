@@ -82,20 +82,26 @@
 		SELECT
 		SUM(todayaccomplish) 
 		FROM t_s_daystatement
-		WHERE  monthscheduleid = 
+		WHERE  monthscheduleid IN 
 		(SELECT 
+		`mid`
+		FROM t_month_schedule
+		WHERE fid = (SELECT 
 		fid
 		FROM t_month_schedule
-		WHERE `mid` = #{monthscheduleid})),
+		WHERE `mid` = #{monthscheduleid}))),
 		accumulationcompletionrate =
 		(SELECT
 		SUM(todayaccomplish) 
 		FROM t_s_daystatement
-		WHERE  monthscheduleid = 
+		WHERE  monthscheduleid IN 
 		(SELECT 
+		`mid`
+		FROM t_month_schedule
+		WHERE fid = (SELECT 
 		fid
 		FROM t_month_schedule
-		WHERE `mid` = #{monthscheduleid})) / (workload + changeworkload)
+		WHERE `mid` = #{monthscheduleid}))) / (workload + changeworkload)
 		WHERE `maintenanceid` = 
 		(SELECT 
 		fid

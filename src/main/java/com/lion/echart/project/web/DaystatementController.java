@@ -97,16 +97,18 @@ public class DaystatementController {
 		
 		System.out.println(daystatementliststr);
 		JSONArray jlist = JSONArray.fromObject(daystatementliststr);
-		System.out.println(jlist);
+		
 		//DaystatementEntity entity = JSONObject.toBean(jlist.get(1), DaystatementEntity.class);
 		
 		try {
 			List dlist = new ArrayList();
+			
 			for(int i = 0;i < jlist.size();i++){	
 				DaystatementEntity entity = (DaystatementEntity) JSONObject.toBean((JSONObject) jlist.get(i), DaystatementEntity.class);
 				System.out.println(entity);
 				dlist.add(entity);
 			}
+			System.out.println("===================================================================="+dlist);
 			dayScheduleistService.savedaystatementList(dlist);
 			obj.put("msgType", 1);
 		} catch (Exception e) {
