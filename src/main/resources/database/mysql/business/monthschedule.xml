@@ -23,11 +23,21 @@
 	<!-- 仅供月进度分期对比分期功能页面查询列表使用 -->
 	<select id="monthscheduleData"  parameterType="java.util.Map"
 		resultType="java.util.Map">
-	SELECT
-		 f.maintenanceid AS "fid",f.priority AS "number",f.entnyname AS "entnyname",f.codeno AS "code" ,
-		s.mid AS "mid", s.unit AS "unit", s.designquantity AS "designquantity", s.changequantity AS "changequantity", s.plannedvolume AS "plannedvolume", s.accumulationcumulant AS "accumulationcumulant", s.completionrate AS "completionrate", 
-		f.accumulationcompletionrate AS "accumulationcompletionrate", s.DATE AS "DATE", s.backups AS "backups",f.accumulatedcompletion AS "accumulatedcompletion"
-		 FROM t_f_maintenance AS f LEFT JOIN t_month_schedule AS s ON s.fid = f.maintenanceid AND s.date=#{date}  ORDER BY f.codeno ASC
+	SELECT a.*,b.authortyMId,b.authority FROM
+(SELECT f.maintenanceid AS "fid",f.priority AS "number",f.entnyname AS "entnyname", 
+   f.codeno AS "code" ,f.grade,s.mid AS "mid", f.unit AS "unit",  
+   s.designquantity AS "designquantity", s.changequantity AS "changequantity",  
+   s.plannedvolume AS "plannedvolume", s.accumulationcumulant AS "accumulationcumulant",  
+   s.completionrate AS "completionrate",f.accumulatedcompletion AS "accumulatedcompletion",f.accumulationcompletionrate AS "accumulationcompletionrate",  
+   s.DATE AS "DATE", s.backups AS "backups" 
+   FROM t_f_maintenance AS f  
+   LEFT JOIN t_month_schedule AS s  
+   ON s.fid = f.maintenanceid AND s.date=#{date} ORDER BY f.codeno ASC) a  
+   JOIN 
+   (SELECT tmua.mid AS 'authortyMId' ,tmua.authority,tfm.priority FROM t_m_user_authority tmua  
+   JOIN t_f_maintenance tfm ON tmua.mid = tfm.maintenanceid 
+   WHERE tmua.uid=#{uid}) b  
+   ON a.fid=b.authortyMId OR a.number LIKE CONCAT(b.priority,'.%') 
 	</select>
 	
 	
