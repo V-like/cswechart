@@ -26,7 +26,7 @@
 	SELECT
 		 f.maintenanceid AS "fid",f.priority AS "number",f.entnyname AS "entnyname",f.codeno AS "code" ,
 		s.mid AS "mid", s.unit AS "unit", s.designquantity AS "designquantity", s.changequantity AS "changequantity", s.plannedvolume AS "plannedvolume", s.accumulationcumulant AS "accumulationcumulant", s.completionrate AS "completionrate", 
-		s.accumulationcompletionrate AS "accumulationcompletionrate", s.DATE AS "DATE", s.backups AS "backups"
+		f.accumulationcompletionrate AS "accumulationcompletionrate", s.DATE AS "DATE", s.backups AS "backups",f.accumulatedcompletion AS "accumulatedcompletion"
 		 FROM t_f_maintenance AS f LEFT JOIN t_month_schedule AS s ON s.fid = f.maintenanceid AND s.date=#{date}  ORDER BY f.codeno ASC
 	</select>
 	

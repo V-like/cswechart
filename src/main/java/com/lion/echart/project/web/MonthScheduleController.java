@@ -61,57 +61,56 @@ public class MonthScheduleController {
 		  param.put("uid", user.getId());
 		  //param.put("编辑权限",1);
 		  List<Map<String, Object>> list = baseService.queryList("comle.monthschedule.monthscheduleData", param);
-		  /*
-		  List<String> codeList=new ArrayList<String>();
-		  List<Map<String, Object>> list2 = new ArrayList<Map<String,Object>>();
-		  for(int i=0; i< list.size() ;i++) {
-			  Map<String, Object> monthSchedule=list.get(i);
-			  if(monthSchedule.get("fid")!=null) {
-				  if((monthSchedule.get("fid")+"").equals(monthSchedule.get("authortyMId")+"")) {
-					  String mincode="";
-					  String codeno= monthSchedule.get("code")+"";
-					  String[] a=codeno.split("");
-					  long grade=((Long) monthSchedule.get("grade"))*3;
-					  for(int j=0;j<a.length;j++) {
-						  mincode+=a[j];
-						  if(grade-1 == j) {
-							  codeList.add(mincode);
-							  mincode="";
-							  break;
-						  }
-					  }
-				  }
-			  }
-		  }
-		  int aa=1;
-		  for(int i=0; i< list.size() ;i++) {
-			  Map<String, Object> monthSchedule=list.get(i);
-			 
-					  String codeno= monthSchedule.get("code")+"";
-					  String[] a=codeno.split("");
-					  for(int z=0;z<codeList.size();z++) {
-						  String mincode="";
-						  for(int j=0;j<a.length;j++) {
-							  mincode+=a[j];
-							  if(j==codeList.get(z).length()-1) {
-								  break;
-							  }
-						  }
-						  if(mincode.equals(codeList.get(z))) {
-							  if("0".equals(monthSchedule.get("authority"))) {
-									 aa=0;
-							  }
-							  if("1".equals(monthSchedule.get("authority"))){
-									  aa=1;
-							  }
-							  if(aa==0) {
-								  monthSchedule.put("authority", "0");
-							  }
-							  list2.add(monthSchedule);
-						  }
-					  }
-		  }
-		  */
+//		  List<String> codeList=new ArrayList<String>();
+//		  List<Map<String, Object>> list2 = new ArrayList<Map<String,Object>>();
+//		  for(int i=0; i< list.size() ;i++) {
+//			  Map<String, Object> monthSchedule=list.get(i);
+//			  if(monthSchedule.get("fid")!=null) {
+//				  if((monthSchedule.get("fid")+"").equals(monthSchedule.get("authortyMId")+"")) {
+//					  String mincode="";
+//					  String codeno= monthSchedule.get("code")+"";
+//					  String[] a=codeno.split("");
+//					  long grade=((Long) monthSchedule.get("grade"))*3;
+//					  for(int j=0;j<a.length;j++) {
+//						  mincode+=a[j];
+//						  if(grade-1 == j) {
+//							  codeList.add(mincode);
+//							  mincode="";
+//							  break;
+//						  }
+//					  }
+//				  }
+//			  }
+//		  }
+//		  int aa=1;
+//		  for(int i=0; i< list.size() ;i++) {
+//			  Map<String, Object> monthSchedule=list.get(i);
+//			 
+//					  String codeno= monthSchedule.get("code")+"";
+//					  String[] a=codeno.split("");
+//					  for(int z=0;z<codeList.size();z++) {
+//						  String mincode="";
+//						  for(int j=0;j<a.length;j++) {
+//							  mincode+=a[j];
+//							  if(j==codeList.get(z).length()-1) {
+//								  break;
+//							  }
+//						  }
+//						  if(mincode.equals(codeList.get(z))) {
+//							  if("0".equals(monthSchedule.get("authority"))) {
+//									 aa=0;
+//							  }
+//							  if("1".equals(monthSchedule.get("authority"))){
+//									  aa=1;
+//							  }
+//							  if(aa==0) {
+//								  monthSchedule.put("authority", "0");
+//							  }
+//							  list2.add(monthSchedule);
+//						  }
+//					  }
+//		  }
+
 		  return list;
 	}
 	
