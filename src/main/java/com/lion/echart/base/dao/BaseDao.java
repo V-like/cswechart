@@ -13,6 +13,7 @@ import com.lion.echart.base.entity.Pagintable;
  * 20161008 17:26
  */
 public interface BaseDao {
+	public abstract void closeCon();
 	/**
 	 * 各自dao层的ibaitis namespace
 	 * @return

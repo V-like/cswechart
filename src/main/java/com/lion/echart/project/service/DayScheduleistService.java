@@ -1,19 +1,16 @@
 package com.lion.echart.project.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import java.util.List;
 
 import com.lion.echart.base.logic.BaseService;
 
-@Service
-public class DayScheduleistService {
-	
-	@Autowired
-	private BaseService baseService;
-	
-	public void aa() {
-		
-		//baseService.updateObject(sqlID, object);
-	}
+public interface DayScheduleistService extends BaseService {
+
+	/**
+	 *   特殊批量
+	 * @param sqlID
+	 * @param object
+	 */
+	public void savedaystatementList(List object) throws Exception;
 	
 }

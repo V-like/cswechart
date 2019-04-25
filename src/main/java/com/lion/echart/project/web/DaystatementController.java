@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.lion.echart.base.logic.BaseService;
 import com.lion.echart.project.entity.DaystatementEntity;
+import com.lion.echart.project.service.DayScheduleistService;
 import com.lion.echart.system.entity.UserEntity;
 
 import net.sf.json.JSONArray;
@@ -31,7 +31,7 @@ import net.sf.json.JSONObject;
 @Controller
 public class DaystatementController {
 	@Autowired
-	private BaseService baseService;
+	private DayScheduleistService dayScheduleistService;
 	
 	//工程日进度报表表页
 	@RequestMapping(value = "/project/DayScheduLeist.web",method=RequestMethod.GET)
@@ -41,7 +41,7 @@ public class DaystatementController {
 		Map<String, Object> param = new HashMap<String, Object>();
 		UserEntity user = (UserEntity)session.getAttribute("USER_SESSION");
 		param.put("uid", user.getId());
-		List<Map<String, Object>> list = baseService.queryList("comle.muserauthority.getUserMuserauthority", param);
+		List<Map<String, Object>> list = dayScheduleistService.queryList("comle.muserauthority.getUserMuserauthority", param);
 		for(int i =0;i<list.size();i++) {
 			if("0".equals(list.get(i).get("authority"))) {
 				return "/page/project/DayScheduList";
@@ -80,7 +80,7 @@ public class DaystatementController {
 			param.put("day", day+"");	
 		}
 		param.put("uid", user.getId());
-		List<Map<String, Object>> list = list = baseService.queryList("comle.daystatement.getdaystatementListData", param);
+		List<Map<String, Object>> list = list = dayScheduleistService.queryList("comle.daystatement.getdaystatementListData", param);
 		return list;
 	}
 	
@@ -96,18 +96,13 @@ public class DaystatementController {
 		//DaystatementEntity entity = JSONObject.toBean(jlist.get(1), DaystatementEntity.class);
 		
 		try {
-			List<DaystatementEntity> dlist = new ArrayList<DaystatementEntity>();
+			List dlist = new ArrayList();
 			for(int i = 0;i < jlist.size();i++){	
 				DaystatementEntity entity = (DaystatementEntity) JSONObject.toBean((JSONObject) jlist.get(i), DaystatementEntity.class);
 				System.out.println(entity);
 				dlist.add(entity);
 			}
-			
-			baseService.insertOupdates("comle.daystatement.daystatement", dlist);
-			for(int i = 0;i < dlist.size();i++) {
-				baseService.updateObject("comle.monthschedule.accumulationcumulantUpdate", dlist.get(i));
-			}
-			//baseService.updateBatchBySQL("comle.monthschedule.accumulationcumulantUpdate", dlist);
+			dayScheduleistService.savedaystatementList(dlist);
 			obj.put("msgType", 1);
 		} catch (Exception e) {
 			e.printStackTrace();
