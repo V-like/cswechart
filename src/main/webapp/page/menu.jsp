@@ -1,6 +1,7 @@
 <%@page import="com.lion.echart.system.entity.UserEntity"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ page isELIgnored="false"%>
 <input type="hidden" name="userid" id="userid"
 	value="${USER_SESSION.id}">
 <script>
