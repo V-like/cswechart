@@ -6,7 +6,7 @@ public class DaystatementEntity extends BaseEntity{
 	
 	private Long dayScheduid;		//id
 	private Integer monthscheduleid;	//工程月计划id
-	private Integer todayaccomplish;	//本日完成量
+	private Double todayaccomplish;	//本日完成量
 	private Integer day;				//日
 	private String describe;			//施工形象描述
 	private String date;
@@ -23,10 +23,10 @@ public class DaystatementEntity extends BaseEntity{
 	public void setMonthscheduleid(Integer monthscheduleid) {
 		this.monthscheduleid = monthscheduleid;
 	}
-	public Integer getTodayaccomplish() {
+	public Double getTodayaccomplish() {
 		return todayaccomplish;
 	}
-	public void setTodayaccomplish(Integer todayaccomplish) {
+	public void setTodayaccomplish(Double todayaccomplish) {
 		this.todayaccomplish = todayaccomplish;
 	}
 	public String getDescribe() {
