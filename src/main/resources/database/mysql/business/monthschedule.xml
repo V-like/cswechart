@@ -18,6 +18,7 @@
 		<result property="entnyname" column="entnyname" />
 		<result property="codeno" column="code" /> 
 		<result property="fid" column="fid" /> 
+		<result property="changequantity" column="changequantity" />
 
 	</resultMap>
 	<!-- 仅供月进度分期对比分期功能页面查询列表使用 -->
@@ -40,6 +41,10 @@
    ON a.fid=b.authortyMId OR a.number LIKE CONCAT(b.priority,'.%') 
 	</select>
 	
+	<select id="monthscheduleById"  parameterType="java.util.Map"
+		resultType="java.util.Map">
+		SELECT * FROM  t_month_schedule WHERE MID=#{mid}
+	</select>
 	
 	<!-- 仅供月进度分期对比分期功能页面添加列表使用 -->
 	<insert id="monthscheduleInsert" parameterType="com.lion.echart.project.entity.MonthScheduleEntity">
