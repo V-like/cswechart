@@ -161,17 +161,30 @@ var TableInit = function () {
 							'<input type="hidden" value="'+(value || "")+'" id="completionrate'+index+'" name="list['+index+'].completionrate" />';
 					    }
 				  },
-//				{
-//						field: 'accumulationcompletionrate',
-//						title: '积累完成率',
-//						width : 90,
-//						formatter:function (value, row, index, field) {
-//							
-//							value = value.toFixed(2)+"%";
-//							return '<div id="accumulationcompletionrate_'+index+'" contenteditable="true" >' + (value || "")   + '</div>' +
-//							'<input type="hidden" value="'+(value || "")+'" id="accumulationcompletionrate'+index+'" name="list['+index+'].accumulationcompletionrate" />';
-//					    }
-//				  },
+				{
+						field: 'accumulatedcompletion',
+						title: '积累完成总量',
+						width : 90,
+						formatter:function (value, row, index, field) {
+							
+							return '<div id="accumulatedcompletion_'+index+'" contenteditable="true" >' + (value || "")   + '</div>' +
+							'<input type="hidden" value="'+(value || "")+'" id="accumulatedcompletion'+index+'" name="list['+index+'].accumulatedcompletion" />';
+					    }
+				  },
+				  {
+					  field: 'accumulationcompletionrate',
+					  title: '积累完成率',
+					  width : 90,
+					  formatter:function (value, row, index, field) {
+						  
+						  var v = "";
+							if(value != undefined && value != ''){
+								v = fmoney(value,2)+"%";
+							}
+						  return '<div id="accumulationcompletionrate_'+index+'" contenteditable="true" >' + (v || "")   + '</div>' +
+						  '<input type="hidden" value="'+(value || "")+'" id="accumulationcompletionrate'+index+'" name="list['+index+'].accumulationcompletionrate" />';
+					  }
+				  },
 				  {
 						field: 'backups',
 						title: '备注',
@@ -321,6 +334,7 @@ function saveRow() {
 		obj.plannedvolume = $("#plannedvolume_"+i).html();
 		obj.accumulationcumulant = $("#accumulationcumulant_"+i).html();
 		obj.completionrate = $("#completionrate_"+i).html();
+		obj.backups = $("#accumulatedcompletion_"+i).html();
 		obj.accumulationcompletionrate = $("#accumulationcompletionrate_"+i).html();
 		obj.backups = $("#backups_"+i).html();
 		list[i]=obj;

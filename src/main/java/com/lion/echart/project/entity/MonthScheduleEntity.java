@@ -14,6 +14,7 @@ public class MonthScheduleEntity  extends BaseEntity{
 	private String plannedvolume;   			// 本月计划完成量
 	private String accumulationcumulant;    	// 本月累计完成量
 	private String completionrate;         		// 本月完成率      
+	private String accumulatedcompletion;         		// 本月完成率      
 	private String accumulationcompletionrate;  // 积累完成率      
 	private String date;     					// 日期               
 	private String backups;                		// 备注           
@@ -190,6 +191,14 @@ public class MonthScheduleEntity  extends BaseEntity{
 
 	public void setGrade(int grade) {
 		this.grade = grade;
+	}
+
+	public String getAccumulatedcompletion() {
+		return accumulatedcompletion;
+	}
+
+	public void setAccumulatedcompletion(String accumulatedcompletion) {
+		this.accumulatedcompletion = accumulatedcompletion;
 	}
 
 	@Override
