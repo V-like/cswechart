@@ -44,8 +44,8 @@
         <property name="removeAbandoned" value="true" /> 
         <property name="removeAbandonedTimeout" value="10" /> 
         <property name="logAbandoned" value="true" />
-        <property name="timeBetweenEvictionRunsMillis" value="1200" />
-        <property name="minEvictableIdleTimeMillis" value="1200" />
+        <property name="timeBetweenEvictionRunsMillis" value="60000" />
+        <property name="minEvictableIdleTimeMillis" value="300000" />
         <property name="validationQuery" value="SELECT 'x' FROM DUAL" />
         <property name="poolPingEnabled" value="true"/>
         <property name="poolPingQuery" value="select 1"/>
