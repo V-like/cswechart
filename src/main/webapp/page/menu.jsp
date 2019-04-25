@@ -77,7 +77,7 @@
 	        <a class="navbar-brand" href="#">系统菜单</a>
 	    </div>
 	     -->
-		<div>
+		<%-- <div>
 			<ul class="nav navbar-nav" id="menuUl">
 				<li id="mainpli"><a
 					href="http://127.0.0.1:8080/echart/login.json">首页</a></li>
@@ -149,7 +149,7 @@
 					</ul>
 			  </li>
 			</ul>
-		</div>
+		</div> --%>
 	</div>
 </nav>
 

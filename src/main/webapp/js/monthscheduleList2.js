@@ -143,8 +143,12 @@ var TableInit = function () {
 						title: '本月累计完成量',
 						width : 90,
 						formatter:function (value, row, index, field) {
-							
-							return '<div id="accumulationcumulant_'+index+'" contenteditable="false" >' +  (value ||"")  + '</div>' +
+							var v = value;
+							console.info(row['plannedvolume']);
+							if(row['plannedvolume'] == undefined || row['plannedvolume'] == ''){
+								v = '';
+							}
+							return '<div id="accumulationcumulant_'+index+'" contenteditable="false" >' +  (v ||"")  + '</div>' +
 							'<input type="hidden" value="'+(value || "")+'" id="accumulationcumulant'+index+'" name="list['+index+'].accumulationcumulant" />';
 					    }
 				  },
