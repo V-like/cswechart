@@ -109,7 +109,7 @@ var TableInit = function () {
 						width : 60
 				  },
 				  {
-						field: 'designquantity',
+						field: 'workload',
 						title: '总设计工程量',
 						width : 90,
 						formatter:function (value, row, index, field) {

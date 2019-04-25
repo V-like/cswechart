@@ -26,7 +26,7 @@
 	SELECT a.*,b.authortyMId,b.authority FROM
 (SELECT f.maintenanceid AS "fid",f.priority AS "number",f.entnyname AS "entnyname", 
    f.codeno AS "code" ,f.grade,s.mid AS "mid", f.unit AS "unit",  
-   s.designquantity AS "designquantity", s.changequantity AS "changequantity",  
+   s.changequantity AS "changequantity", f.workload AS "workload",
    s.plannedvolume AS "plannedvolume", s.accumulationcumulant AS "accumulationcumulant",  
    s.completionrate AS "completionrate",f.accumulatedcompletion AS "accumulatedcompletion",f.accumulationcompletionrate AS "accumulationcompletionrate",  
    s.DATE AS "DATE", s.backups AS "backups" 
@@ -45,24 +45,22 @@
 	<insert id="monthscheduleInsert" parameterType="com.lion.echart.project.entity.MonthScheduleEntity">
 		INSERT 
 		INTO t_month_schedule 
-		(`unit`,`designquantity`,`changequantity`,`plannedvolume`,`accumulationcumulant`,`completionrate`,`accumulationcompletionrate`,`date`,`backups`,`fid`)
+		(`changequantity`,`plannedvolume`,`accumulationcumulant`,`completionrate`,`date`,`backups`,`fid`)
 		VALUES 
-		(#{unit},#{designquantity},#{changequantity},#{plannedvolume},#{accumulationcumulant},#{completionrate},#{accumulationcompletionrate},#{date},#{backups},#{fid});
+		(#{changequantity},#{plannedvolume},#{accumulationcumulant},#{completionrate},#{date},#{backups},#{fid});
 	</insert>
 	<!-- 仅供月进度分期对比分期功能页面添加列表使用 -->
 	<update id="monthscheduleUpdate"  parameterType="com.lion.echart.project.entity.MonthScheduleEntity">
 		UPDATE
-			 t_month_schedule
-	    	SET unit = #{unit},
-		    designquantity =#{designquantity}, 
-		    changequantity = #{changequantity},
+			t_month_schedule
+	    	SET	
+	    	changequantity = #{changequantity},
 		    plannedvolume = #{plannedvolume},
 		    accumulationcumulant = #{accumulationcumulant},
 		    completionrate = #{completionrate},
-    	    accumulationcompletionrate = #{accumulationcompletionrate},
-    	    DATE = #{date},
-    	    backups = #{backups}
-	    WHERE MID = #{mid} 
+		    `date` = #{date},
+		    backups = #{backups}
+		 WHERE `mid` = #{mid} 
 	</update>
 	
 	<!-- 三级联动，根据三级查询工作面 -->
