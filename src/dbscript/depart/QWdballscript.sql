@@ -154,7 +154,7 @@ CREATE TABLE `t_m_user_authority` (
 
 /*Data for the table `t_m_user_authority` */
 
-insert  into `t_m_user_authority`(`id`,`authority`,`uid`,`mid`) values (17,'0','10','1'),(19,'1','1','1'),(20,'0','14','1'),(21,'0','13','1'),(22,'1','15','1'),(23,'0','1','2'),(24,'0','1','4'),(25,'0','1','10');
+insert  into `t_m_user_authority`(`id`,`authority`,`uid`,`mid`) values (17,'0','10','1'),(19,'0','1','1'),(20,'0','14','1'),(21,'0','13','1'),(22,'0','15','1'),(23,'0','1','2'),(24,'0','1','4'),(25,'0','1','10');
 
 /*Table structure for table `t_month_schedule` */
 
