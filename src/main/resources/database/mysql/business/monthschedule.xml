@@ -45,20 +45,20 @@
 	<insert id="monthscheduleInsert" parameterType="com.lion.echart.project.entity.MonthScheduleEntity">
 		INSERT 
 		INTO t_month_schedule 
-		(`changequantity`,`plannedvolume`,`accumulationcumulant`,`completionrate`,`date`,`backups`,`fid`)
+		(`unit`,`changequantity`,`plannedvolume`,`accumulationcumulant`,`completionrate`,`date`,`backups`,`fid`)
 		VALUES 
-		(#{changequantity},#{plannedvolume},#{accumulationcumulant},#{completionrate},#{date},#{backups},#{fid});
+		(#{unit},#{changequantity},#{plannedvolume},#{accumulationcumulant},#{completionrate},#{date},#{backups},#{fid});
 	</insert>
 	<!-- 仅供月进度分期对比分期功能页面添加列表使用 -->
 	<update id="monthscheduleUpdate"  parameterType="com.lion.echart.project.entity.MonthScheduleEntity">
 		UPDATE
 			t_month_schedule
-	    	SET	
-	    	changequantity = #{changequantity},
+	    	SET unit = #{unit},
+		    changequantity = #{changequantity},
 		    plannedvolume = #{plannedvolume},
 		    accumulationcumulant = #{accumulationcumulant},
 		    completionrate = #{completionrate},
-		    `date` = #{date},
+		    DATE = #{date},
 		    backups = #{backups}
 		 WHERE `mid` = #{mid} 
 	</update>
