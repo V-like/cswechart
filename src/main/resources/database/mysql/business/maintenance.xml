@@ -45,7 +45,10 @@
     	FROM t_f_maintenance t 
     	WHERE t.perentid = #{maintenanceid}
    	</select>
-   		<select id="getSubMaxGradeAo" parameterType="java.util.Map" resultType="java.lang.String" >
+   	<select id="getMaintenanceById" parameterType="java.util.Map" resultType="java.util.Map" >
+    	SELECT * FROM  t_f_maintenance WHERE maintenanceid=#{maintenanceid}
+   	</select>
+   	<select id="getSubMaxGradeAo" parameterType="java.util.Map" resultType="java.lang.String" >
     	SELECT 
     	ifnull(MAX(t.index),0)+1 
     	FROM t_f_maintenance t 
@@ -99,5 +102,11 @@
 		FROM t_month_schedule
 		WHERE `mid` = #{monthscheduleid} )
 
+	</update>	
+	<!-- 修改日报完成量，联动修改维护表(总累计完成量,总累计完成率) -->
+	<update id="changeworkloadUpdate"  parameterType="java.util.Map">
+		UPDATE t_f_maintenance
+		SET changeworkload =#{changeworkload}
+		WHERE maintenanceid = #{maintenanceid} 
 	</update>	
 </mapper>

@@ -131,6 +131,59 @@ public class MonthScheduleController {
 				list.add(entity);
 //			}
 		}
+		for(int i=0;i<list.size();i++) {
+			Map<String, Object> param = new HashMap<String, Object>();
+			System.out.println("mid:"+list.get(i).getMid()+"aaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+			param.put("mid", list.get(i).getMid());
+			param.put("maintenanceid", list.get(i).getFid());
+			Map<String, Object> change = new HashMap<String, Object>();
+			List<Map<String, Object>> list2 = baseService.queryList("comle.monthschedule.monthscheduleById", param);
+			List<Map<String, Object>> list3 = baseService.queryList("comle.Maintenance.getMaintenanceById", param);
+			if(list3.size()!=0) {
+				change.put("maintenanceid",list3.get(0).get("maintenanceid"));
+				if(list2.size()!=0) {
+					
+					String changeworkload=list3.get(0).get("changeworkload")+"";
+					if("".equals(changeworkload)|| null==changeworkload||"0".equals(changeworkload)) {
+						change.put("changeworkload",list.get(i).getChangequantity());
+						continue;
+					}else {
+						double changeworkload2=0;
+						double changeworkload3=0;
+						System.out.println(list2.size()+"size-==============="+list2.get(0).toString());
+						if(list2.get(0).get("changequantity")!=null &&!"".equals(list2.get(0).get("changequantity"))) {
+							changeworkload2=Double.parseDouble(list2.get(0).get("changequantity")+"");
+							System.out.println(changeworkload2+"------++++++++++++++++++++changeworkload2");
+						}
+						if(list3.get(0).get("changeworkload")!=null) {
+							changeworkload3=Double.parseDouble(list3.get(0).get("changeworkload")+"");
+						}
+						if("".equals(list.get(i).getChangequantity())) {
+							continue;
+						}
+						System.out.println(changeworkload2+"-------"+changeworkload3);
+						change.put("changeworkload",Double.parseDouble(list.get(i).getChangequantity())-changeworkload2+changeworkload3);
+					}
+				}else {
+					String changeworkload=list3.get(0).get("changeworkload")+"";
+					if("".equals(changeworkload)|| null==changeworkload||"0".equals(changeworkload)) {
+						change.put("changeworkload",list.get(i).getChangequantity());
+					}else {
+						double changeworkload3=0;
+						if(list3.get(0).get("changeworkload")!=null) {
+							changeworkload3=Double.parseDouble(list3.get(0).get("changeworkload")+"");
+						}
+						if("".equals(list.get(i).getChangequantity())) {
+							continue;
+						}
+						change.put("changeworkload",changeworkload3+Double.parseDouble(list.get(i).getChangequantity()));
+					}
+				}
+			}
+			baseService.updateObject("comle.Maintenance.changeworkloadUpdate", change);
+			change.remove("changeworkload");
+			change.remove("maintenanceid");
+		}
 		baseService.insertOupdates("comle.monthschedule.monthschedule", list);
 		} catch (Exception e) {
 			e.printStackTrace();
