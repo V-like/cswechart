@@ -58,19 +58,28 @@ public class BaseDaoImpl implements BaseDao{
 	}
 
 	public List queryList(String sqlid, Object param) {
-		List result = getSqlMapClient().selectList(sqlid, param); 
-		closeCon();
+		List result = null;
+		try {
+			result = getSqlMapClient().selectList(sqlid, param);
+		}finally {
+			closeCon();
+		}
 		return result;
 	}
 
 	public List queryListByPage(String sqlid, Object param) {
-		List result = getSqlMapClient().selectList(sqlid, param); 
-		closeCon();
+		List result = null;
+		try {
+			result = getSqlMapClient().selectList(sqlid, param); 
+		}finally {
+			closeCon();
+		}
 		return result;
 	}
 	
 	public void closeCon() {
 		try {
+			sqlMapClient.close();
 			getSqlMapClient().getConnection().close();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -78,41 +87,49 @@ public class BaseDaoImpl implements BaseDao{
 	}
 	
 	public Object queryObject(String sqlid, Object param) {
-		List list = getSqlMapClient().selectList(sqlid, param);
+		List list = null;
 		Object obj = null;
-		if(list != null && list.size() == 1) {
-			obj = list.get(0);
+		try {
+			list = getSqlMapClient().selectList(sqlid, param);
+			if(list != null && list.size() == 1) {
+				obj = list.get(0);
+			}
+		}finally {
+			closeCon();
 		}
-		closeCon();
+		
 		return obj;
 	}
 
 	public void queryListPaging(String sqlid, HashMap<String, Object> param, Pagintable pagintable) {
-		String sql = sqlSessionFactory.getConfiguration()
-				.getMappedStatement(sqlid).getBoundSql(param).getSql();
-		HashMap<String, String> paramt = new HashMap<String, String>();
-		paramt.put("sql", sql);
-		Object obj = getSqlMapClient().selectOne("com.system.login.getPageCount", paramt);
-		int totle = 0;
-		if(obj != null) {
-			if(obj instanceof Integer) {
-				totle = new Integer(obj.toString()).intValue();
+		try {
+			String sql = sqlSessionFactory.getConfiguration()
+					.getMappedStatement(sqlid).getBoundSql(param).getSql();
+			HashMap<String, String> paramt = new HashMap<String, String>();
+			paramt.put("sql", sql);
+			Object obj = getSqlMapClient().selectOne("com.system.login.getPageCount", paramt);
+			int totle = 0;
+			if(obj != null) {
+				if(obj instanceof Integer) {
+					totle = new Integer(obj.toString()).intValue();
+				}
 			}
-		}
-		pagintable.setTotal(totle);
-		
-		int pageNum = 0;
-		if(param.get("pageNum")!=null) {
-			if(param.get("pageNum") instanceof Integer) {
-				pageNum = new Integer(param.get("pageNum").toString()).intValue();
+			pagintable.setTotal(totle);
+			
+			int pageNum = 0;
+			if(param.get("pageNum")!=null) {
+				if(param.get("pageNum") instanceof Integer) {
+					pageNum = new Integer(param.get("pageNum").toString()).intValue();
+				}
 			}
+			
+			int start = pageNum*pagintable.getPageSize()-1;
+			RowBounds rowBounds = new RowBounds(start,pagintable.getPageSize());
+			
+			pagintable.setRows(getSqlMapClient().selectList(sqlid, param, rowBounds));
+		}finally {
+			closeCon();
 		}
-		
-		int start = pageNum*pagintable.getPageSize()-1;
-		RowBounds rowBounds = new RowBounds(start,pagintable.getPageSize());
-		
-		pagintable.setRows(getSqlMapClient().selectList(sqlid, param, rowBounds));
-		closeCon();
 	}
 
 	public void insertOupdates(String sqlID, List<BaseEntity> object) throws Exception {
