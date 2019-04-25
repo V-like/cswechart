@@ -70,4 +70,34 @@
 		</if>
 		order by codeno
 	</select> 
+	<!-- 修改日报完成量，联动修改维护表(总累计完成量,总累计完成率) -->
+	<update id="accumulationcumulantUpdate"  parameterType="com.lion.echart.project.entity.DaystatementEntity">
+		
+		UPDATE t_f_maintenance
+		SET accumulatedcompletion =
+		(
+		SELECT
+		SUM(todayaccomplish) 
+		FROM t_s_daystatement
+		WHERE  monthscheduleid = 
+		(SELECT 
+		fid
+		FROM t_month_schedule
+		WHERE `mid` = #{monthscheduleid})),
+		accumulationcompletionrate =
+		(SELECT
+		SUM(todayaccomplish) 
+		FROM t_s_daystatement
+		WHERE  monthscheduleid = 
+		(SELECT 
+		fid
+		FROM t_month_schedule
+		WHERE `mid` = #{monthscheduleid})) / (workload + changeworkload)
+		WHERE `maintenanceid` = 
+		(SELECT 
+		fid
+		FROM t_month_schedule
+		WHERE `mid` = #{monthscheduleid} )
+
+	</update>	
 </mapper>
