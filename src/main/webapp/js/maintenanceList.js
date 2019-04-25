@@ -42,7 +42,7 @@ var TableInit = function () {
 				 ,{field: 'unit',title: '单位' }
 				 ,{field: 'begindatestr',align: 'center',title: '开工时间' }
 				 ,{field: 'planfinishdatestr',align: 'center',title: '计划完工时间' }
-				 ,{field: 'workload',title: '工程量' }
+				 ,{field: 'workload',title: '累计总工程量' }
 				 ,{field: 'changeworkload',title: '总变更工程量' }
 				 ,{field: 'perentid',align: 'center',title: '同级添加' ,width:100,
 					 formatter:function (value, row, index, field) {
