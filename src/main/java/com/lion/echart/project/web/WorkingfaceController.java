@@ -69,7 +69,7 @@ public class WorkingfaceController {
 		
 		param.put("perentid",perentid);
 		
-		List<Map<String, Object>> list = baseService.queryList("findByperentidon3on4",param);
+		List<Map<String, Object>> list = baseService.queryList("comle.monthschedule.findByperentidon3on4",param);
 		System.out.println(list);
 		return list;
 	}

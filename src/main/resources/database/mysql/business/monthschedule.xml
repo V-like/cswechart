@@ -83,7 +83,6 @@
 			fm.accumulatedcompletion accumulatedcompletion,
 			fm.accumulationcompletionrate accumulationcompletionrate,
 			ms.mid `mid`,
-			ms.designquantity designquantity,
 			ms.changequantity changequantity,
 			ms.plannedvolume plannedvolume,
 			ms.accumulationcumulant accumulationcumulant,
@@ -95,7 +94,7 @@
 			ON ms.fid = fm.maintenanceid AND ms.date = (SELECT 
 			MAX(`date`)
 			FROM t_month_schedule)
-			WHERE fm.perentid = #{perentid} or fm.perentid IN 
+			WHERE fm.perentid = #{perentid} OR fm.perentid IN 
 				((SELECT 
 				maintenanceid
 				FROM t_f_maintenance
