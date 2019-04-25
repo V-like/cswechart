@@ -11,7 +11,7 @@ function loadMenuData(){
 		dataType:"json",
 		success:function(data){
 			var strHtml= "";
-			$.each(data, function(key,value){
+			$.each(data.rows, function(key,value){
 				strHtml+='<label class="checkbox-inline">';
 				if(IsInArray(menuListArr,value.id)){
 					strHtml+='<input type="checkbox" id="'+value.id+'" value="'+value.id+'" name="menuid" checked="checked">'+value.menuname;

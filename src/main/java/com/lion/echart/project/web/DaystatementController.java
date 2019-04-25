@@ -44,10 +44,10 @@ public class DaystatementController {
 		List<Map<String, Object>> list = baseService.queryList("comle.muserauthority.getUserMuserauthority", param);
 		for(int i =0;i<list.size();i++) {
 			if("0".equals(list.get(i).get("authority"))) {
-				return "/page/project/DayScheduleist";
+				return "/page/project/DayScheduLeist";
 			}
 		}
-		return "/page/project/DayScheduleist2";
+		return "/page/project/DayScheduLeist2";
 	}
 	
 	//获取工进度报表
