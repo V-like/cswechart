@@ -21,9 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.lion.echart.base.logic.BaseService;
 import com.lion.echart.contract.entity.ContractEntity;
 import com.lion.echart.contract.entity.ContractExecuteEntity;
-import com.lion.echart.contract.logic.ContractService;
 import com.lion.echart.global.GlobalThings;
-import com.lion.echart.project.entity.PayforEntity;
 import com.lion.echart.system.entity.UserEntity;
 
 import net.sf.json.JSONObject;
@@ -38,7 +36,6 @@ public class ContractController {
 	@Autowired
 	private BaseService baseService;
 	
-	protected ContractService contractService;
 	//合同签订管理列表页 
 	@RequestMapping(value = "/contract/contractSignedList.web",method=RequestMethod.GET)
 	public String contractSignedList(HttpServletRequest req,HttpServletResponse resp, HttpSession session) throws IOException { 
