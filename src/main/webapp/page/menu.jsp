@@ -73,6 +73,7 @@
 </div>
 <nav class="navbar navbar-default navbar-static-top" role="navigation">
 	<div class="container-fluid">
+		<ul class="nav navbar-nav" id="menuUl"></ul>
 		<!-- 
 	    <div class="navbar-header">
 	        <a class="navbar-brand" href="#">系统菜单</a>
