@@ -67,16 +67,16 @@
 			fm.begindate begindate,
 			fm.planfinishdate planfinishdate,
 			fm.workload workload,
+			fm.accumulatedcompletion accumulatedcompletion,
+			fm.accumulationcompletionrate accumulationcompletionrate,
 			ms.mid `mid`,
 			ms.designquantity designquantity,
 			ms.changequantity changequantity,
 			ms.plannedvolume plannedvolume,
 			ms.accumulationcumulant accumulationcumulant,
 			ms.completionrate completionrate,
-			ms.accumulationcompletionrate accumulationcompletionrate,
-			ms.fid fid,
-			ms.accumulatedcompletion accumulatedcompletion,
-			ms.accumulationcompletionrate accumulationcompletionrate
+			ms.fid fid
+			
 			FROM t_f_maintenance fm
 			LEFT JOIN t_month_schedule ms
 			ON ms.fid = fm.maintenanceid AND ms.date = (SELECT 

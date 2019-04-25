@@ -156,7 +156,16 @@ var TableInit = function () {
 					{
 						field: 'accumulationcompletionrate',
 						title: '累计完成率',
-                        align:"center"
+                        align:"center",
+                    	formatter:function (value, row, index, field) {
+                        	var grade = row["grade"];
+                        	console.info("grade=="+grade);
+                        	if(grade == 4){
+                        		return "";
+                        	}else{
+                        		return fmoney(value*100,2)+"%";
+                        	}
+                        }
 					}
 				]
 
