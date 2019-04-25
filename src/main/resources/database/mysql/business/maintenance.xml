@@ -24,7 +24,7 @@
 		parameterType="java.util.Map" resultType="java.util.Map">
 		SELECT
 			maintenanceid,priority,entnyname,grade,perentid,`index`,codeno,unit,workload,changeworkload
-			,begindate,planfinishdate
+			,begindate,planfinishdate,accumulatedcompletion,accumulationcompletionrate
 			,DATE_FORMAT(begindate,'%Y-%m-%d') as begindatestr
 			,DATE_FORMAT(planfinishdate,'%Y-%m-%d') as planfinishdatestr
 		FROM

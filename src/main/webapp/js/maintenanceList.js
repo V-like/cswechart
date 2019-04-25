@@ -42,8 +42,20 @@ var TableInit = function () {
 				 ,{field: 'unit',title: '单位' }
 				 ,{field: 'begindatestr',align: 'center',title: '开工时间' }
 				 ,{field: 'planfinishdatestr',align: 'center',title: '计划完工时间' }
-				 ,{field: 'workload',title: '累计总工程量' }
+				 ,{field: 'workload',title: '设计工程总量' }
 				 ,{field: 'changeworkload',title: '总变更工程量' }
+				 ,{field: 'accumulatedcompletion',title: '总累计完成量' }
+				 ,{field: 'accumulationcompletionrate',title: '总累计完成率',
+					 formatter:function (value, row, index, field) {
+							
+							if(value != undefined && value != ''){
+								return fmoney(value*100,2)+"%";
+							}else{
+								return value;
+							}
+							
+					    }
+				 }
 				 ,{field: 'perentid',align: 'center',title: '同级添加' ,width:100,
 					 formatter:function (value, row, index, field) {
 				        return [
