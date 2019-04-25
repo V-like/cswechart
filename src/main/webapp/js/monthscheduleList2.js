@@ -166,7 +166,12 @@ var TableInit = function () {
 						title: '积累完成总量',
 						width : 90,
 						formatter:function (value, row, index, field) {
-							return '<div id="accumulatedcompletion_'+index+'" contenteditable="false" >' + (value || "")   + '</div>' +
+							var v = value;
+							console.info(row['plannedvolume']);
+							if(row['plannedvolume'] == undefined || row['plannedvolume'] == ''){
+								v = '';
+							}
+							return '<div id="accumulatedcompletion_'+index+'" contenteditable="false" >' + (v || "")   + '</div>' +
 							'<input type="hidden" value="'+(value || "")+'" id="accumulatedcompletion'+index+'" name="list['+index+'].accumulatedcompletion" />';
 					    }
 				  },
