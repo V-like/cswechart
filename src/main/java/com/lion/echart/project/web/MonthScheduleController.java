@@ -58,6 +58,7 @@ public class MonthScheduleController {
 		  UserEntity user = (UserEntity)session.getAttribute("USER_SESSION");
 		  Map<String, Object> param = new HashMap<String, Object>();
 		  param.put("date", date);
+		  param.put("year", date.split("-")[0]+"-%");
 		  param.put("uid", user.getId());
 		  //param.put("编辑权限",1);
 		  List<Map<String, Object>> list = baseService.queryList("comle.monthschedule.monthscheduleData", param);

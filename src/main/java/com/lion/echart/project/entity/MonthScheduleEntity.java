@@ -7,15 +7,17 @@ import com.lion.echart.base.entity.BaseEntity;
 public class MonthScheduleEntity  extends BaseEntity{
 
  
-	private Long mid;     					// id                   
+	private Long mid;     						// id                   
 	private String unit; 						// 单位    
 	private String designquantity; 				// 设计工程量      
 	private String changequantity;   			// 变更工程量      
 	private String plannedvolume;   			// 本月计划完成量
 	private String accumulationcumulant;    	// 本月累计完成量
 	private String completionrate;         		// 本月完成率      
-	private String accumulatedcompletion;         		// 本月完成率      
-	private String accumulationcompletionrate;  // 积累完成率      
+	private String accumulatedcompletion;       // 本月完成率      
+	private String accumulationcompletionrate;  // 积累完成率    
+	private String annualcompletion; 			// 年度完成量      
+	private String annualcompletionrate ;		//  年度完成率  
 	private String date;     					// 日期               
 	private String backups;                		// 备注           
 	private String fid;							// 外键
@@ -63,6 +65,22 @@ public class MonthScheduleEntity  extends BaseEntity{
 		this.date = date;
 		this.backups = backups;
 		this.fid = fid;
+	}
+
+	public String getAnnualcompletion() {
+		return annualcompletion;
+	}
+
+	public void setAnnualcompletion(String annualcompletion) {
+		this.annualcompletion = annualcompletion;
+	}
+
+	public String getAnnualcompletionrate() {
+		return annualcompletionrate;
+	}
+
+	public void setAnnualcompletionrate(String annualcompletionrate) {
+		this.annualcompletionrate = annualcompletionrate;
 	}
 
 	public Long getMid() {

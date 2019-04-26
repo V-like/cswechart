@@ -19,12 +19,14 @@
 		<result property="codeno" column="code" /> 
 		<result property="fid" column="fid" /> 
 		<result property="changequantity" column="changequantity" />
+		<result property="annualcompletionrate" column="annualcompletionrate" />
+		<result property="annualcompletion" column="annualcompletion" />
 
 	</resultMap>
 	<!-- 仅供月进度分期对比分期功能页面查询列表使用 -->
 	<select id="monthscheduleData"  parameterType="java.util.Map"
 		resultType="java.util.Map">
-	SELECT a.*,b.authortyMId,b.authority FROM
+SELECT a.*,b.authortyMId,b.authority ,ff.annualcompletionrate,ff.annualcompletion FROM
 (SELECT f.maintenanceid AS "fid",f.priority AS "number",f.entnyname AS "entnyname", 
    f.codeno AS "code" ,f.grade,s.mid AS "mid", f.unit AS "unit",  
    s.changequantity AS "changequantity", f.workload AS "workload",
@@ -38,7 +40,9 @@
    (SELECT tmua.mid AS 'authortyMId' ,tmua.authority,tfm.priority FROM t_m_user_authority tmua  
    JOIN t_f_maintenance tfm ON tmua.mid = tfm.maintenanceid 
    WHERE tmua.uid=#{uid}) b  
-   ON a.fid=b.authortyMId OR a.number LIKE CONCAT(b.priority,'.%') 
+   ON a.fid=b.authortyMId OR a.number LIKE CONCAT(b.priority,'.%')
+    LEFT JOIN  (SELECT fid AS fid ,SUM(completionrate) AS annualcompletionrate , SUM(accumulationcumulant) AS annualcompletion FROM t_month_schedule WHERE plannedvolume !="" OR accumulationcumulant!="" AND  DATE LIKE #{year} GROUP BY fid ) ff
+    ON ff.fid=a.fid 
 	</select>
 	
 	<select id="monthscheduleById"  parameterType="java.util.Map"
@@ -70,7 +74,14 @@
 	
 	<!-- 三级联动，根据三级查询工作面 -->
 	<select id="findByperentidon3on4"  parameterType="java.util.Map" resultType="java.util.Map">
-		SELECT
+		    SELECT
+     aa.maintenanceid,aa.priority,aa.entnyname,aa.grade,
+     aa.codeno,aa.unit,aa.begindate,aa.planfinishdate,
+     aa.workload,aa.accumulatedcompletion,aa.accumulationcompletionrate,
+     aa.mid,aa.changequantity,aa.plannedvolume,aa.accumulationcumulant,
+     aa.completionrate,aa.fid
+    ,ff.annualcompletionrate,ff.annualcompletion FROM
+    (SELECT
 			fm.maintenanceid maintenanceid,
 			fm.priority priority,
 			fm.entnyname entnyname,
@@ -82,7 +93,7 @@
 			fm.workload workload,
 			fm.accumulatedcompletion accumulatedcompletion,
 			fm.accumulationcompletionrate accumulationcompletionrate,
-			ms.mid `mid`,
+			ms.mid MID,
 			ms.changequantity changequantity,
 			ms.plannedvolume plannedvolume,
 			ms.accumulationcumulant accumulationcumulant,
@@ -94,12 +105,14 @@
 			ON ms.fid = fm.maintenanceid AND ms.date = (SELECT 
 			MAX(`date`)
 			FROM t_month_schedule)
-			WHERE fm.perentid = #{perentid} OR fm.perentid IN 
+			WHERE fm.perentid = 6 OR fm.perentid IN 
 				((SELECT 
 				maintenanceid
 				FROM t_f_maintenance
-				WHERE perentid = #{perentid}))
-			ORDER BY fm.codeno ASC
+				WHERE perentid =6 ))
+			) aa
+			LEFT JOIN  (SELECT fid AS fid ,SUM(completionrate) AS annualcompletionrate , SUM(accumulationcumulant) AS annualcompletion FROM t_month_schedule WHERE plannedvolume !="" OR accumulationcumulant!="" AND  DATE LIKE "2019-%" GROUP BY fid ) ff
+    ON ff.fid=aa.fid ORDER BY aa.codeno ASC
 	</select>
 	
 	<!-- 修改本月累计完成量 -->

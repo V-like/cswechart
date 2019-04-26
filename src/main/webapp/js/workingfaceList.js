@@ -63,7 +63,7 @@ var TableInit = function () {
 						title: "累计进尺（m）",
                         valign:"middle",
                         align:"center",
-                        colspan: 4,
+                        colspan: 6,
                         rowspan: 1
 					},
 					{
@@ -175,6 +175,38 @@ var TableInit = function () {
                         		return fmoney(value*100,2)+"%";
                         	}
                         }
+					},
+					{
+						field: 'annualcompletion',
+						title: '年度完成量 ',
+						align:"center",
+						formatter:function (value, row, index, field) {
+							var grade = row["grade"];
+                        	console.info("grade=="+grade);
+                        	if(grade == 4){
+                        		return "";
+                        	}else{
+                        		return value;
+                        	}
+						}
+					},
+					{
+						field: 'annualcompletionrate',
+						title: '年度完成率 ',
+						align:"center",
+						formatter:function (value, row, index, field) {
+							var grade = row["grade"];
+                        	console.info("grade=="+grade);
+                        	if(grade == 4){
+                        		return "";
+                        	}else{
+                        		if(value == "" || value==undefined){
+                        			return "";
+                        		}else{
+                        			return value+"%";
+                        		}
+                        	}
+						}
 					}
 				]
 

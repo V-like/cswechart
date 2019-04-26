@@ -190,6 +190,29 @@ var TableInit = function () {
 					  }
 				  },
 				  {
+					  field: 'annualcompletion',
+					  title: '年度完成量 ',
+					  width : 90,
+					  formatter:function (value, row, index, field) {
+						  return '<div id="annualcompletion_'+index+'" contenteditable="false" >' + (value || "")   + '</div>' +
+						  '<input type="hidden" value="'+(value || "")+'" id="annualcompletion'+index+'" name="list['+index+'].annualcompletion" />';
+					  }
+				  },
+				  {
+					  field: 'annualcompletionrate',
+					  title: '年度完成率',
+					  width : 90,
+					  formatter:function (value, row, index, field) {
+						  
+						  var v = "";
+						  if(value != undefined && value != ''){
+							  v = fmoney(value,2)+"%";
+						  }
+						  return '<div id="annualcompletionrate_'+index+'" contenteditable="false" >' + (v || "")   + '</div>' +
+						  '<input type="hidden" value="'+(value || "")+'" id="annualcompletionrate'+index+'" name="list['+index+'].annualcompletionrate" />';
+					  }
+				  },
+				  {
 						field: 'backups',
 						title: '备注',
 						width : 300,

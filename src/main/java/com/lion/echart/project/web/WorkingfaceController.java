@@ -1,6 +1,7 @@
 package com.lion.echart.project.web;
 
 import java.io.IOException;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.lion.echart.base.logic.BaseService;
-import com.lion.echart.global.GlobalThings;
 
 /**
  * 工作面展示
@@ -50,6 +50,10 @@ public class WorkingfaceController {
 		if(perentid != null) {
 			param.put("perentid",perentid);
 		}
+		Calendar date = Calendar.getInstance();
+
+		String year = String.valueOf(date.get(Calendar.YEAR));
+		param.put("year",year);
 		List<Map<String, Object>> list = baseService.queryList("getstairsubofficeGet",param);
 		return list;
 	}
