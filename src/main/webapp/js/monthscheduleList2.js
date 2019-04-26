@@ -109,8 +109,8 @@ var TableInit = function () {
 						width : 60
 				  },
 				  {
-						field: 'designquantity',
-						title: '设计工程量',
+						field: 'workload',
+						title: '总设计工程量',
 						width : 90,
 						formatter:function (value, row, index, field) {
 							
@@ -167,7 +167,7 @@ var TableInit = function () {
 				  },
 				  {
 						field: 'accumulatedcompletion',
-						title: '积累完成总量',
+						title: '累计完成总量',
 						width : 90,
 						formatter:function (value, row, index, field) {
 							return '<div id="accumulatedcompletion_'+index+'" contenteditable="false" >' + (value || "")   + '</div>' +

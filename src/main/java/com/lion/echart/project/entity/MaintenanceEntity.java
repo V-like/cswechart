@@ -21,6 +21,7 @@ public class MaintenanceEntity implements Serializable{
 	private Date planfinishdate;//计划完工时间
 	private String planfinishdatestr;
 	private Double workload;//工作量
+	private Double changeworkload;//工作量
 	
 	
 	public MaintenanceEntity() {
@@ -40,6 +41,14 @@ public class MaintenanceEntity implements Serializable{
 		this.begindate = begindate;
 		this.planfinishdate = planfinishdate;
 		this.workload = workload;
+	}
+
+	public Double getChangeworkload() {
+		return changeworkload;
+	}
+
+	public void setChangeworkload(Double changeworkload) {
+		this.changeworkload = changeworkload;
 	}
 
 	public Long getMaintenanceid() {

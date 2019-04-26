@@ -109,12 +109,12 @@ var TableInit = function () {
 						width : 60
 				  },
 				  {
-						field: 'designquantity',
-						title: '设计工程量',
+						field: 'workload',
+						title: '总设计工程量',
 						width : 90,
 						formatter:function (value, row, index, field) {
 							
-							return '<div id="designquantity_'+index+'" contenteditable="true" >' + (value || "") + '</div>' +
+							return '<div id="designquantity_'+index+'" contenteditable="false" >' + (value || "") + '</div>' +
 							'<input type="hidden" value="'+(value || "")+'" id="designquantity'+index+'" name="list['+index+'].designquantity" />';
 					    }
 				  },
@@ -148,7 +148,7 @@ var TableInit = function () {
 							if(row['plannedvolume'] == undefined || row['plannedvolume'] == ''){
 								v = '';
 							}
-							return '<div id="accumulationcumulant_'+index+'" contenteditable="true" >' +  (v ||"")  + '</div>' +
+							return '<div id="accumulationcumulant_'+index+'" contenteditable="false" >' +  (v ||"")  + '</div>' +
 							'<input type="hidden" value="'+(value || "")+'" id="accumulationcumulant'+index+'" name="list['+index+'].accumulationcumulant" />';
 					    }
 				  },
@@ -167,11 +167,11 @@ var TableInit = function () {
 				  },
 				{
 						field: 'accumulatedcompletion',
-						title: '积累完成总量',
+						title: '累计完成总量',
 						width : 90,
 						formatter:function (value, row, index, field) {
 							
-							return '<div id="accumulatedcompletion_'+index+'" contenteditable="true" >' + (value || "")   + '</div>' +
+							return '<div id="accumulatedcompletion_'+index+'" contenteditable="false" >' + (value || "")   + '</div>' +
 							'<input type="hidden" value="'+(value || "")+'" id="accumulatedcompletion'+index+'" name="list['+index+'].accumulatedcompletion" />';
 					    }
 				  },
@@ -185,7 +185,7 @@ var TableInit = function () {
 							if(value != undefined && value != ''){
 								v = fmoney(value,2)+"%";
 							}
-						  return '<div id="accumulationcompletionrate_'+index+'" contenteditable="true" >' + (v || "")   + '</div>' +
+						  return '<div id="accumulationcompletionrate_'+index+'" contenteditable="false" >' + (v || "")   + '</div>' +
 						  '<input type="hidden" value="'+(value || "")+'" id="accumulationcompletionrate'+index+'" name="list['+index+'].accumulationcompletionrate" />';
 					  }
 				  },
@@ -194,8 +194,6 @@ var TableInit = function () {
 						title: '备注',
 						width : 300,
 						formatter:function (value, row, index, field) {
-							
-							
 					        return '<div id="backups_'+index+'" contenteditable="true">' + (value || "") + '</div>' + 
 							'<input type="hidden" value="'+(value || "")+'" id="backups'+index+'" name="list['+index+'].backups" />';
 					    },

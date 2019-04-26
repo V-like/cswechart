@@ -15,6 +15,7 @@
 		<result property="begindate" column="begindate" />
 		<result property="planfinishdate" column="planfinishdate" />
 		<result property="workload" column="workload" />
+		<result property="changeworkload" column="changeworkload" />
 
 
 	</resultMap>
@@ -22,8 +23,8 @@
 	<select id="getMaintenanceListData"
 		parameterType="java.util.Map" resultType="java.util.Map">
 		SELECT
-			maintenanceid,priority,entnyname,grade,perentid,`index`,codeno,unit,workload
-			,begindate,planfinishdate
+			maintenanceid,priority,entnyname,grade,perentid,`index`,codeno,unit,workload,changeworkload
+			,begindate,planfinishdate,accumulatedcompletion,accumulationcompletionrate
 			,DATE_FORMAT(begindate,'%Y-%m-%d') as begindatestr
 			,DATE_FORMAT(planfinishdate,'%Y-%m-%d') as planfinishdatestr
 		FROM
@@ -44,7 +45,10 @@
     	FROM t_f_maintenance t 
     	WHERE t.perentid = #{maintenanceid}
    	</select>
-   		<select id="getSubMaxGradeAo" parameterType="java.util.Map" resultType="java.lang.String" >
+   	<select id="getMaintenanceById" parameterType="java.util.Map" resultType="java.util.Map" >
+    	SELECT * FROM  t_f_maintenance WHERE maintenanceid=#{maintenanceid}
+   	</select>
+   	<select id="getSubMaxGradeAo" parameterType="java.util.Map" resultType="java.lang.String" >
     	SELECT 
     	ifnull(MAX(t.index),0)+1 
     	FROM t_f_maintenance t 
@@ -69,4 +73,46 @@
 		</if>
 		order by codeno
 	</select> 
+	<!-- 修改日报完成量，联动修改维护表(总累计完成量,总累计完成率) -->
+	<update id="accumulationcumulantUpdate"  parameterType="com.lion.echart.project.entity.DaystatementEntity">
+		
+		UPDATE t_f_maintenance
+		SET accumulatedcompletion =
+		(
+		SELECT
+		SUM(todayaccomplish) 
+		FROM t_s_daystatement
+		WHERE  monthscheduleid IN 
+		(SELECT 
+		`mid`
+		FROM t_month_schedule
+		WHERE fid = (SELECT 
+		fid
+		FROM t_month_schedule
+		WHERE `mid` = #{monthscheduleid}))),
+		accumulationcompletionrate =
+		(SELECT
+		SUM(todayaccomplish) 
+		FROM t_s_daystatement
+		WHERE  monthscheduleid IN 
+		(SELECT 
+		`mid`
+		FROM t_month_schedule
+		WHERE fid = (SELECT 
+		fid
+		FROM t_month_schedule
+		WHERE `mid` = #{monthscheduleid}))) / (workload + changeworkload)
+		WHERE `maintenanceid` = 
+		(SELECT 
+		fid
+		FROM t_month_schedule
+		WHERE `mid` = #{monthscheduleid} )
+
+	</update>	
+	<!-- 修改日报完成量，联动修改维护表(总累计完成量,总累计完成率) -->
+	<update id="changeworkloadUpdate"  parameterType="java.util.Map">
+		UPDATE t_f_maintenance
+		SET changeworkload =#{changeworkload}
+		WHERE maintenanceid = #{maintenanceid} 
+	</update>	
 </mapper>

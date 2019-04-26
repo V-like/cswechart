@@ -36,7 +36,7 @@
    	</insert>
    	
    	<delete  id="deleteMuserauthority" parameterType="com.lion.echart.maintenance.entity.MuserAuthorityEntity"> 
-   		DELETE FROM t_m_user_authority WHERE id=#{id}
+   		DELETE FROM t_m_user_authority WHERE uid=#{uid} AND mid=#{mid}
    	</delete>
    	<update  id="updateMuserauthority" parameterType="com.lion.echart.maintenance.entity.MuserAuthorityEntity">
 		UPDATE t_m_user_authority SET authority=#{authority} WHERE MID=#{mid} AND uid=#{uid}

@@ -10,7 +10,7 @@
 	<!-- 查询工程日填报 -->
 	<select id="getdaystatementListData" parameterType="java.util.Map" resultType="java.util.Map">
 		SELECT 
-		fms.priority priority,fms.entnyname entnyname,fms.unit unit,fms.mid `mid`,sd.todayaccomplish todayaccomplish,(sd.todayaccomplish/fms.plannedvolume*100+'') finishratio,sd.describe 'describe',sd.dayScheduid dayScheduid
+		fms.priority priority,fms.entnyname entnyname,fms.unit unit,fms.mid `mid`,sd.todayaccomplish todayaccomplish,sd.describe 'describe',sd.dayScheduid dayScheduid
 		FROM (SELECT 
 		fm.priority priority,fm.entnyname entnyname,fm.unit unit,fm.codeno codeno,ms.plannedvolume plannedvolume,ms.mid MID,ms.date DATE
 		FROM t_f_maintenance fm

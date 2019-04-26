@@ -110,7 +110,7 @@ var TableInit = function () {
 								'<input type="hidden" value="'+(value || "")+'" id="todayaccomplish'+index+'" name="list['+index+'].todayaccomplish" />';
 						}
 				  },
-				  {
+				  /*{
 						field: 'finishratio',
 						title: '本日完成率',
 						width : 200,
@@ -122,7 +122,7 @@ var TableInit = function () {
 							}
 							
 						}
-				  },
+				  },*/
 				  {
 						field: 'describe',
 						title: '施工形象描述',
