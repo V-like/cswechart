@@ -22,7 +22,7 @@ String fule = base + "" + contextPath + "/";
 </head>
 <body style="height:100%;">
 	<div class="bgdiv" style="background-image:url('/echart/image/loginbk1.jpg');" >
-		<div class="title" >滇中引水管理局</div>
+		<div class="title" >滇中引水工程建设管理局</div>
 		<div class="row">
 			<form class="form-horizontal"  method="post" action="<%=fule%>login.json"  id="form">
 				<div class="form-group">

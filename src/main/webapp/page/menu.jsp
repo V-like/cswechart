@@ -49,7 +49,7 @@
 <input type="hidden" id="who" value="<%=request.getAttribute("who") %>" />
 <input type="hidden" id="fule" value="<%=fule %>" />
 <div class="title">
-	滇中引水管理局
+	滇中引水工程建设管理局
 	<div class="userinfo">
 		您好：
 		<% 

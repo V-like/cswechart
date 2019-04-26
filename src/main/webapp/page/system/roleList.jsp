@@ -9,7 +9,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>滇中引水管理局</title>
+<title>滇中引水工程建设管理局</title>
 <link rel="stylesheet"
 	href="<%=contextPath%>/css/base.css?ts=<%=request.getAttribute("ts")%>"
 	type="text/css" />

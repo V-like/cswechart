@@ -9,7 +9,7 @@ String fule = base + "" + contextPath + "/";
 <html>
 <head>
 <meta charset="UTF-8">
-<title>滇中引水管理局</title>
+<title>滇中引水工程建设管理局</title>
 <link rel="stylesheet" href="<%=contextPath%>/css/bootstrap.min.css">
 <link rel="stylesheet" href="<%=contextPath%>/css/bootstrap-table.min.css">
 <link rel="stylesheet" href="<%=contextPath%>/css/bootstrap-datetimepicker.min.css">
