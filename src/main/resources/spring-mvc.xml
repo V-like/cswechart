@@ -42,7 +42,7 @@
         <property name="minIdle" value="5" />
         <property name="maxWait" value="30000" />
         <property name="removeAbandoned" value="true" /> 
-        <property name="removeAbandonedTimeout" value="10" /> 
+        <property name="removeAbandonedTimeout" value="60" /> 
         <property name="logAbandoned" value="true" />
         <property name="timeBetweenEvictionRunsMillis" value="60000" />
         <property name="minEvictableIdleTimeMillis" value="300000" />
