@@ -63,9 +63,9 @@ public class WorkingfaceController {
 	public @ResponseBody List<Map<String, Object>> aa(String perentid,HttpServletRequest req,HttpServletResponse resp, HttpSession session) throws IOException { 
 		System.out.println("perentid======="+perentid);
 		System.out.println("");
-		if(perentid == null) {
-			return null;
-		}
+		/*
+		 * if(perentid == null) { return null; }
+		 */
 		HashMap<String, Object> param = new HashMap<String, Object>();
 //		if(grade != null) {
 //			param.put("grade",grade);

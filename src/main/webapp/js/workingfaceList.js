@@ -325,6 +325,7 @@ function updatexpulldown(cs){
 
 function reloadtable(){
 	var perentid = $("#subsection").val();
+	console.info(perentid);
 	if(perentid != null){
 		$.ajax({
 			url: $("#fule").val()+'project/findByperentidon3on4.json',
