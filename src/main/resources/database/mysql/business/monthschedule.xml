@@ -105,13 +105,13 @@ SELECT a.*,b.authortyMId,b.authority ,ff.annualcompletionrate,ff.annualcompletio
 			ON ms.fid = fm.maintenanceid AND ms.date = (SELECT 
 			MAX(`date`)
 			FROM t_month_schedule)
-			WHERE fm.perentid = 6 OR fm.perentid IN 
+			WHERE fm.perentid = #{perentid} OR fm.perentid IN 
 				((SELECT 
 				maintenanceid
 				FROM t_f_maintenance
-				WHERE perentid =6 ))
+				WHERE perentid =#{perentid} ))
 			) aa
-			LEFT JOIN  (SELECT fid AS fid ,SUM(completionrate) AS annualcompletionrate , SUM(accumulationcumulant) AS annualcompletion FROM t_month_schedule WHERE plannedvolume !="" OR accumulationcumulant!="" AND  DATE LIKE "2019-%" GROUP BY fid ) ff
+			LEFT JOIN  (SELECT fid AS fid ,SUM(completionrate) AS annualcompletionrate , SUM(accumulationcumulant) AS annualcompletion FROM t_month_schedule WHERE plannedvolume !="" OR accumulationcumulant!="" AND  DATE LIKE #{year} GROUP BY fid ) ff
     ON ff.fid=aa.fid ORDER BY aa.codeno ASC
 	</select>
 	

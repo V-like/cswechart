@@ -53,7 +53,7 @@ public class WorkingfaceController {
 		Calendar date = Calendar.getInstance();
 
 		String year = String.valueOf(date.get(Calendar.YEAR));
-		param.put("year",year);
+		param.put("year",year+"-%");
 		List<Map<String, Object>> list = baseService.queryList("getstairsubofficeGet",param);
 		return list;
 	}
