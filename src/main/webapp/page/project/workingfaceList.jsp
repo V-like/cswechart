@@ -36,12 +36,6 @@ String fule = base + "" + contextPath + "/";
             <div class="panel-heading">
             	进度反馈 / 工作面查看
             	<div id="toolbar" class="btn-group btn-group-right" >
-		            <button id="btn_add" type="button" class="btn btn-default" onclick="window.location.href='<%=fule %>contract/contractExecuteAdd.web'">
-		                <!-- <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增 -->
-		            </button>
-		            <button id="btn_delete" type="button" class="btn btn-default" onclick="delContractExecute()">
-		                <!-- <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除 -->
-		            </button>
 		        </div>
             </div>
             <div class="panel-body">

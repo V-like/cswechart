@@ -106,11 +106,10 @@ SELECT a.*,b.authortyMId,b.authority ,ff.annualcompletionrate,ff.annualcompletio
 			MAX(`date`)
 			FROM t_month_schedule)
 			WHERE 1 = 1
-			AND fm.grade > 3
-			<if test="perentid == null">
+
 				AND fm.grade > 3
-			</if>
-			<if test="perentid != null">
+
+			<if test="perentid != null and perentid != 0">
 				AND fm.perentid = #{perentid} 
 				OR fm.perentid IN 
 					(SELECT 

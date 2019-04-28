@@ -172,7 +172,11 @@ var TableInit = function () {
                         	if(grade == 4){
                         		return "";
                         	}else{
+                        		if(value == undefined){
+                        			return '0.00%';
+                        		}else{
                         		return fmoney(value*100,2)+"%";
+                        		}
                         	}
                         }
 					},
@@ -284,6 +288,9 @@ function loadSubofficeData(grade,perentid,pulldown){
 				strHtml+='<option value="'+value.maintenanceid+'">'+value.entnyname+'</option>';
 			});
 			$("#"+pulldown).html(strHtml);
+			if(grade == 2){
+				$("#subsection").html("<option value='0'>-请选择-</option>");
+			}
 		},
 		error:function(){
 			
