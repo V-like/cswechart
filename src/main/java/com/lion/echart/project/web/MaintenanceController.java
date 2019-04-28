@@ -138,6 +138,7 @@ public class MaintenanceController {
 			
 	         //放入对象存入数据库			
 			try {				
+				System.out.println(maintenance);
 				baseService.insertObject("comle.Maintenance.insertMaintenance",maintenance);
 				obj.put("msgType", 1);
 			} catch (Exception e) {

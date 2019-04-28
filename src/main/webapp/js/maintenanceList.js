@@ -265,7 +265,8 @@ function saveFun(){
 			data: {
 				uid : uid,
 				authority : authority,
-				mid : mid
+				mid : mid,
+				workload : workloas
 				
 	        },
 			success:function(data){
