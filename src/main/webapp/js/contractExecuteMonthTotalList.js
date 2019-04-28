@@ -56,7 +56,7 @@ function doacrossprint(){
 	LODOP.PREVIEW();
 }
 function setParam(){
-	if($("#year").val() == '' || $("#month").val() == ''){
+	if($("#year").val() == '' || $("#month").val() == '' || $("#month").val() >12|| $("#month").val()<=0){
 		$('#filename').val('');
 		$("#yearmonth").val('');
 		$("#reportDaten").val('');
