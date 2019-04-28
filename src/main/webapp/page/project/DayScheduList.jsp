@@ -40,22 +40,18 @@ String fule = base + "" + contextPath + "/";
 		<div class="panel-body" style="padding-bottom:0px;">
         <div id="searchdiv" class="panel panel-default">
             <div class="panel-heading" style="height: 41px;">
-            	进度反馈 / 工程日进度
+            	进度反馈 / 工程日进度 
             	<div class='input-group date' id='belongTime' style="width: 140px;margin-left:150px;margin-top: -25px;">
 	                <input type='text' class="form-control" name="belongTimeStr" id="belongTimeStr" readonly="readonly"/>
 	                <span class="input-group-addon">
 	                    <span class="glyphicon glyphicon-calendar"></span>
 	                </span>
 	            </div>
-	            <div class="form-group" style="margin-top:-34px;margin-left: 260px;">
-                    <div class="col-sm-2">
-                    	<!-- <select class="form-control" data-width="80px" id="tendaytypeid" name="tendaytypeid" onchange="reloadtable()">
-                    		<option value="1" selected = "selected">上旬</option><option value="2">中旬</option><option value="3">下旬</option>
-                    	</select> -->
-                    </div>
+	            <div class="form-group" style="margin-top:-25px;margin-left: 600px;">
+	            	<div style="color:#F00">请先维护计划月报，再来填写日报</div >
                 </div>
 	           
-            	<div id="toolbar" class="btn-group btn-group-right" style="margin-top: -17px;">
+            	<div id="toolbar" class="btn-group btn-group-right" style="margin-top: -43px;">
 		            
 		            <button id="btn_add" type="button" class="btn btn-default" onclick="saveRow()"
 		            	data-toggle="modal" data-target="#myModal" >
