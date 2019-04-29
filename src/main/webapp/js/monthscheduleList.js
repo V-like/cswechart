@@ -110,7 +110,7 @@ var TableInit = function () {
 				  },
 				  {
 						field: 'workload',
-						title: '总设计工程量',
+						title: '设计工程量',
 						width : 90,
 						formatter:function (value, row, index, field) {
 							
@@ -140,7 +140,7 @@ var TableInit = function () {
 				  },
 				  {
 						field: 'accumulationcumulant',
-						title: '本月累计完成量',
+						title: '本月实际完成量',
 						width : 90,
 						formatter:function (value, row, index, field) {
 							var v = value;
@@ -154,7 +154,7 @@ var TableInit = function () {
 				  },
 				  {
 						field: 'completionrate',
-						title: '本月完成率 ',
+						title: '本月实际完成率 ',
 						width : 90,
 						formatter:function (value, row, index, field) {
 							var v = "";
@@ -167,7 +167,7 @@ var TableInit = function () {
 				  },
 				{
 						field: 'accumulatedcompletion',
-						title: '累计完成总量',
+						title: '累计完成量',
 						width : 90,
 						formatter:function (value, row, index, field) {
 							
@@ -177,7 +177,7 @@ var TableInit = function () {
 				  },
 				  {
 					  field: 'accumulationcompletionrate',
-					  title: '积累完成率',
+					  title: '累计完成率',
 					  width : 90,
 					  formatter:function (value, row, index, field) {
 						  
