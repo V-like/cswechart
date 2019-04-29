@@ -36,16 +36,19 @@ var TableInit = function () {
 			height: window.innerHeight-$("#head").height()-$("#searchdiv").height()-50,
 			columns: [
 				[
-				  {field: 'check',checkbox: true,formatter: function (value, row, index) {
-						  if (row.check == true) {
-							  return {  checked: true };
-						  }
+				  {field: 'priority',width:30
+					  ,formatter: function (value, row, index) {
+						return '<label>'+
+					           '   <input onclick="ckupdown('+value+','+row["subofficeid"]+')" id="ck'+row["subofficeid"]+'" name="btSelectItem" type="checkbox" >'+
+					           '   <span></span>'+
+					           '</label>';
 					  }
 				  }
 				 ,{field: 'subofficename',width:400,title: '部分名称'}
-				 /*
+				 ,{field: '占位'}
+				 ,{field: 'pid',visible:false}
 				 ,{field: 'subofficeid'}
-				 ,{field: 'pid'}
+				 /*
 				 ,{field: 'isonlysubostr',title: '是否分局'}
 				 
 				 ,{field: '',align: 'center',title: '操作' ,width : 250,
@@ -56,7 +59,6 @@ var TableInit = function () {
 					    }
 				  }
 				  */
-				 ,{field: '操作'}
 				]
 			],
 			rowStyle: function (row, index) {

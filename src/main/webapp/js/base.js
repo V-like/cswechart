@@ -96,3 +96,43 @@ function isZsOrXs(s){
 	var re = /^[0-9]+([.]{1}[0-9]+){0,1}$/;
 	return re.test(s)
 }
+/**
+ * 选中父项时，同时选中子项
+ * @param datas 所有的数据
+ * @param row 当前数据
+ * @param id id 字段名
+ * @param pid 父id字段名
+ */
+function ckupdown(priority,id) {
+	var mcheck = $("#ck"+id).prop("checked");
+	var datas = $('#t_datagrid').bootstrapTable('getData');
+	var target = new Array();
+	var shangjitemp = priority;
+	while(priority.indexof(".") > -1){
+		shangjitemp = shangjitemp.substring(0,priority.lastIndexof("."));
+		target.push(shangjitemp);
+	}
+	
+	for(var i in datas){
+		for(var j in target){
+			if(datas[i]["priority"] == target[j]){
+				$("#ck"+datas[i]["id"]).prop("checked",true);
+			}
+		}
+		if(datas[i]["priority"].length > priority.length){
+			if(datas[i]["priority"].substring(0,priority.length)== priority){
+				$("#ck"+datas[i]["id"]).prop("checked",true);
+			}
+		}
+	}
+	
+	/*
+    for(var i in datas){
+    	concole.log(datas[i][pid] + "::" + row[id] + "::" + (datas[i][pid] == row[id]));
+        if(datas[i][pid] == row[id]){
+            $("#ck"+datas[i][id]).prop("checked",true);
+            selectChilds(datas,datas[i],id,pid,checked);
+        };
+    }
+    */
+}
