@@ -9,6 +9,7 @@ import java.util.Date;
  */
 public class SubofficeEntity implements Serializable {
 	private Long subofficeid;
+	private Long pid;
 	private String subofficename;
 	private String remark;
 	private Integer priority;
@@ -36,6 +37,12 @@ public class SubofficeEntity implements Serializable {
 	}
 	public void setSubofficeid(Long subofficeid) {
 		this.subofficeid = subofficeid;
+	}
+	public Long getPid() {
+		return pid;
+	}
+	public void setPid(Long pid) {
+		this.pid = pid;
 	}
 	public String getSubofficename() {
 		return subofficename;

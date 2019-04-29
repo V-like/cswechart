@@ -50,19 +50,19 @@ public class SubofficeController {
 	//获取分局列表数据数据库
 	@RequestMapping(value = "/suboffice/subofficeGetDBData.json",method=RequestMethod.POST)
 	public @ResponseBody Page subofficewriteGetDBData(String currPage, String pageSize,String subofficename,HttpServletRequest req,HttpServletResponse resp, HttpSession session) throws IOException { 
-		currPage=currPage==null?"1":currPage;   //当前页码
-	    pageSize=pageSize==null?"10":pageSize;   //页面大小
+		//currPage=currPage==null?"1":currPage;   //当前页码
+	    //pageSize=pageSize==null?"10":pageSize;   //页面大小
 		HashMap<String, Object> param = new HashMap<String, Object>();
 		param.put("subofficename", subofficename);
-		param.put("currPage", Integer.valueOf(currPage));
-		param.put("pageSize", Integer.valueOf(pageSize));
-		List<Map<String, Object>> list = baseService.queryList("comle.Suboffice.getSubofficeListDBDataByPage", param);
+		//param.put("currPage", Integer.valueOf(currPage));
+		//param.put("pageSize", Integer.valueOf(pageSize));
+		//List<Map<String, Object>> list = baseService.queryList("comle.Suboffice.getSubofficeListDBDataByPage", param);
 		//数据总条数
 		List<Map<String, Object>> listAll = baseService.queryList("comle.Suboffice.getSubofficeListDBData", param);
 		 //封装返回结果
         Page page = new Page();
-        page.setTotal(listAll.size()+"");
-        page.setRows(list);
+        //page.setTotal(listAll.size()+"");
+        page.setRows(listAll);
 		return page;
 	}
 	

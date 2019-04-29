@@ -13,7 +13,7 @@ var TableInit = function () {
 			toolbar: false,                //工具按钮用哪个容器
 			striped: true,                      //是否显示行间隔色
 			cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
-			pagination: true,                   //是否显示分页（*）
+			pagination: false,                   //是否显示分页（*）
 			sortable: false,                     //是否启用排序
 			sortOrder: "asc",                   //排序方式
 			queryParams: oTableInit.queryParams,//传递参数（*）
@@ -27,7 +27,7 @@ var TableInit = function () {
 			showColumns: false,                  //是否显示所有的列
 			showRefresh: false,                  //是否显示刷新按钮
 			minimumCountColumns: 2,             //最少允许的列数
-			clickToSelect: true,                //是否启用点击选中行
+			//clickToSelect: true,                //是否启用点击选中行
 			//height: 700,                        //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
 			uniqueId: "no",                     //每一行的唯一标识，一般为主键列
 			showToggle: false,                    //是否显示详细视图和列表视图的切换按钮
@@ -36,24 +36,27 @@ var TableInit = function () {
 			height: window.innerHeight-$("#head").height()-$("#searchdiv").height()-50,
 			columns: [
 				[
-				  {                    
-                    checkbox: true
-	              }
-				  ,{
-						field: 'subofficename',
-						title: '部分名称'
+				  {field: 'check',checkbox: true,formatter: function (value, row, index) {
+						  if (row.check == true) {
+							  return {  checked: true };
+						  }
+					  }
 				  }
-				 ,{
-						field: 'isonlysubostr',
-						title: '是否分局'
-				  },
-				  {field: '',align: 'center',title: '操作' ,width : 250,
+				 ,{field: 'subofficename',width:400,title: '部分名称'}
+				 /*
+				 ,{field: 'subofficeid'}
+				 ,{field: 'pid'}
+				 ,{field: 'isonlysubostr',title: '是否分局'}
+				 
+				 ,{field: '',align: 'center',title: '操作' ,width : 250,
 						formatter:function (value, row, index, field) {
 					        return [
 					        	  '<button type="button" onclick="subofficeEdit('+row["subofficeid"]+')" class="RoleOfedit btn btn-primary  btn-sm" style="margin-right:15px;">修改</button>',
 							      ].join('');
 					    }
 				  }
+				  */
+				 ,{field: '操作'}
 				]
 			],
 			rowStyle: function (row, index) {
@@ -66,6 +69,20 @@ var TableInit = function () {
 				}
 				return { classes: strclass };
 			},//隔行变色
+			idField:'subofficeid',
+			parentIdField: 'pid',
+			treeShowField: 'subofficename',
+			onResetView: function(data) {
+				$('#t_datagrid').treegrid({
+					treeColumn: 1,//指明第几列数据改为树形
+					initialState: 'collapsed',//收缩
+					expanderExpandedClass: 'glyphicon glyphicon-triangle-bottom',
+					expanderCollapsedClass: 'glyphicon glyphicon-triangle-right',
+					onChange: function() {
+						$('#t_datagrid').bootstrapTable('resetWidth');
+					}
+				});
+			}
 		});
 	};
 	
