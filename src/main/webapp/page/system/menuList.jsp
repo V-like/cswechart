@@ -44,9 +44,9 @@ String fule = base + "" + contextPath + "/";
 		            <button id="btn_add" type="button" class="btn btn-default" onclick="window.location.href='<%=fule %>menu/menuAdd.web'">
 		                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
 		            </button>
-		            <button id="btn_delete" type="button" class="btn btn-default" onclick="delMenu()">
+		            <!-- <button id="btn_delete" type="button" class="btn btn-default" onclick="delMenu()">
 		                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
-		            </button>
+		            </button> -->
 		        </div>
             </div>
             <div class="panel-body">

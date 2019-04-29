@@ -58,14 +58,14 @@ var TableInit = function () {
 				 ,{
 						field: 'priority',
 						title: '排序序号'
-				  },
+				  }/*,
 				  {field: '',align: 'center',title: '操作' ,width : 100,
 						formatter:function (value, row, index, field) {
 					        return [
 					        	'<button type="button" onclick="menuEdit('+row["id"]+')" class="RoleOfedit btn btn-primary  btn-sm" style="margin-right:15px;">修改</button>',
 							      ].join('');
 					    }
-				  }
+				  }*/
 				]
 			],
 			rowStyle: function (row, index) {
