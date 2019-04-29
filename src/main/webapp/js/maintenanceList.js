@@ -40,12 +40,12 @@ var TableInit = function () {
 				 ,{field: 'priority',title: '序号'}
 				 ,{field: 'entnyname',title: '项目名称'}
 				 ,{field: 'unit',title: '单位' }
-				 ,{field: 'begindatestr',align: 'center',title: '开工时间' }
-				 ,{field: 'planfinishdatestr',align: 'center',title: '计划完工时间' }
-				 ,{field: 'workload',title: '设计工程总量' }
-				 ,{field: 'changeworkload',title: '总变更工程量' }
-				 ,{field: 'accumulatedcompletion',title: '总累计完成量' }
-				 ,{field: 'accumulationcompletionrate',title: '总累计完成率',
+				 ,{field: 'begindatestr',title: '计划开工时间' }
+				 ,{field: 'planfinishdatestr',title: '计划完工时间' }			//,align: 'center'
+				 ,{field: 'workload',title: '设计工程量' }
+				 ,{field: 'changeworkload',title: '变更工程量' }
+				 ,{field: 'accumulatedcompletion',title: '累计完成量' }
+				 ,{field: 'accumulationcompletionrate',title: '累计完成率',
 					 formatter:function (value, row, index, field) {
 							
 							if(value != undefined && value != ''){
@@ -123,38 +123,38 @@ function maintenanceAdd(_id){
 	_html = _html + '<div style="width:600px;height:300px;">';
 	_html = _html + '	<div class="panel-body" style="padding-bottom:0px;width:600px;height:300px;">';
 	_html = _html + '		<div class="form-group">';
-	_html = _html + '			<label for="subofficename" class="col-sm-3 control-label">项目名称</label>';
+	_html = _html + '			<label for="subofficename" class="col-sm-3 control-label">项目名称：</label>';
 	_html = _html + '			<div class="col-sm-7">';
 	_html = _html + '				<input type="text" class="form-control" id="entnyname"';
 	_html = _html + '					placeholder="请输入项目名称" style="margin-top:-10px;">';
 	_html = _html + '			</div>';
 	_html = _html + '		</div><br/><br/>';
 	_html = _html + '		<div class="form-group">';
-	_html = _html + '			<label for="subofficename" class="col-sm-3 control-label">单位(CM)</label>';
+	_html = _html + '			<label for="subofficename" class="col-sm-3 control-label">单位：</label>';
 	_html = _html + '			<div class="col-sm-7">';
 	_html = _html + '				<input type="text" class="form-control" id="unit" ';
 	_html = _html + '					placeholder="请输入单位"  style="margin-top:-10px;">';
 	_html = _html + '			</div>';
 	_html = _html + '		</div><br/><br/>';
 	_html = _html + '		<div class="form-group">';
-	_html = _html + '			<label for="subofficename" class="col-sm-3 control-label">计划开始时间</label>';
+	_html = _html + '			<label for="subofficename" class="col-sm-3 control-label">计划开始时间：</label>';
 	_html = _html + '			<div class="col-sm-7">';
 	_html = _html + '				<input type="text" class="datetimepicker" id="begindate" ';
-	_html = _html + '					placeholder="计划开始时间"  style="margin-top:-10px;width:300px;" readonly="true" data-date-format="yyyy-mm-dd" data-pure-clear-button >';
+	_html = _html + '					placeholder="请选择计划开始时间"  style="margin-top:-10px;width:300px;" readonly="true" data-date-format="yyyy-mm-dd" data-pure-clear-button >';
 	_html = _html + '			</div>';
 	_html = _html + '		</div><br/><br/>';
 	_html = _html + '		<div class="form-group">';
-	_html = _html + '			<label for="subofficename" class="col-sm-3 control-label">计划结束时间</label>';
+	_html = _html + '			<label for="subofficename" class="col-sm-3 control-label">计划结束时间：</label>';
 	_html = _html + '			<div class="col-sm-7">';
 	_html = _html + '				<input type="text" class="datetimepicker" id="planfinishdate" ';
-	_html = _html + '					placeholder="计划结束时间"  style="margin-top:-10px;width:300px;" readonly="true" data-date-format="yyyy-mm-dd" data-pure-clear-button >';
+	_html = _html + '					placeholder="请选择计划结束时间"  style="margin-top:-10px;width:300px;" readonly="true" data-date-format="yyyy-mm-dd" data-pure-clear-button >';
 	_html = _html + '			</div>';
 	_html = _html + '		</div><br/><br/>';
 	_html = _html + '		<div class="form-group">';
-	_html = _html + '			<label for="subofficename" class="col-sm-3 control-label">工作量</label>';
+	_html = _html + '			<label for="subofficename" class="col-sm-3 control-label">设计工程量：</label>';
 	_html = _html + '			<div class="col-sm-7">';
 	_html = _html + '				<input type="text" class="form-control" id="workload" ';
-	_html = _html + '					placeholder="工作量"  style="margin-top:-10px;">';
+	_html = _html + '					placeholder="请输出设计工程量"  style="margin-top:-10px;">';
 	_html = _html + '			</div>';
 	_html = _html + '		</div><br/><br/>';
 	_html = _html + '	</div>';
