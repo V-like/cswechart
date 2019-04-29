@@ -34,7 +34,12 @@ String fule = base + "" + contextPath + "/";
 		<div class="panel-body" style="padding-bottom:0px;">
         <div id="searchdiv" class="panel panel-default">
             <div class="panel-heading">
-            	进度反馈 / 工作面查看
+            	<!-- 进度反馈 / 工作面查看 -->
+            	<a href="http://127.0.0.1:8080/echart/login.json"
+						style="color: #000; text-decoration: none;">进度反馈</a> / <a
+						href="http://127.0.0.1:8080/echart/project/workingfaveList.web"
+						style="color: #000; text-decoration: none;">工作面查看</a> 
+            	
             	<div id="toolbar" class="btn-group btn-group-right" >
 		        </div>
             </div>

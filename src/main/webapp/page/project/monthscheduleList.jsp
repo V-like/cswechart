@@ -38,9 +38,9 @@ String fule = base + "" + contextPath + "/";
             <div class="panel-heading">
             	<!-- 反馈管理 / 进度反馈及对比分析 -->
             	<a href="http://127.0.0.1:8080/echart/login.json"
-						style="color: #000; text-decoration: none;">反馈管理</a> / <a
-						href="http://127.0.0.1:8080/echart/feedback/feedbackList.web"
-						style="color: #000; text-decoration: none;">月进度计划编制对比</a> 
+						style="color: #000; text-decoration: none;">进度反馈</a> / <a
+						href="http://127.0.0.1:8080/echart/project/monthscheduleList.web"
+						style="color: #000; text-decoration: none;">工程月进度</a> 
 						
 	            <div class='input-group date' id='belongTime' style="width: 200px;margin-left:250px;margin-top: -25px;">
 	                <input type='text' class="form-control" name="belongTimeStr" id="belongTimeStr"  readonly="readonly"/>

@@ -36,9 +36,9 @@ String fule = base + "" + contextPath + "/";
             <div class="panel-heading">
             	<!-- 进度管理 / 进度反馈及对比分析 -->
             	<a href="http://127.0.0.1:8080/echart/login.json"
-						style="color: #000; text-decoration: none;">进度管理</a> / <a
+						style="color: #000; text-decoration: none;">进度反馈</a> / <a
 						href="http://127.0.0.1:8080/echart/project/maintenanceList.web"
-						style="color: #000; text-decoration: none;">进度反馈及对比分析</a>             	
+						style="color: #000; text-decoration: none;">工程总进度</a>             	
             </div>
         </div>       
 
