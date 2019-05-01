@@ -65,7 +65,7 @@ public class DaystatementController {
 		if(belongTimeStr!=null&&!belongTimeStr.equals("")){
 			Integer year = Integer.parseInt(belongTimeStr.substring(0,4));
 			Integer month = Integer.parseInt(belongTimeStr.substring(5,7));
-			Integer day = Integer.parseInt(belongTimeStr.substring(8,10));
+			Integer day = Integer.parseInt(belongTimeStr.substring(8));
 			if(day>25) {
 				if(month==12) {
 					month=1;

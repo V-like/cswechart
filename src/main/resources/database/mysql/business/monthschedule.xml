@@ -28,7 +28,7 @@
 		resultType="java.util.Map">
 SELECT a.*,b.authortyMId,b.authority ,ff.annualcompletionrate,ff.annualcompletion FROM
 (SELECT f.maintenanceid AS "fid",f.priority AS "number",f.entnyname AS "entnyname", 
-   f.codeno AS "code" ,f.grade,s.mid AS "mid", f.unit AS "unit",  
+   f.codeno AS "code" ,f.grade,s.mid AS "mid", f.unit AS "unit",f.perentid,
    s.changequantity AS "changequantity", f.workload AS "workload",
    s.plannedvolume AS "plannedvolume", s.accumulationcumulant AS "accumulationcumulant",  
    s.completionrate AS "completionrate",f.accumulatedcompletion AS "accumulatedcompletion",f.accumulationcompletionrate AS "accumulationcompletionrate",  
@@ -74,7 +74,7 @@ SELECT a.*,b.authortyMId,b.authority ,ff.annualcompletionrate,ff.annualcompletio
 	
 	<!-- 三级联动，根据三级查询工作面 -->
 	<select id="findByperentidon3on4"  parameterType="java.util.Map" resultType="java.util.Map">
-		    SELECT
+		    SELECT aa.perentid,
      aa.maintenanceid,aa.priority,aa.entnyname,aa.grade,
      aa.codeno,aa.unit,aa.begindate,aa.planfinishdate,
      aa.workload,aa.accumulatedcompletion,aa.accumulationcompletionrate,
@@ -82,6 +82,7 @@ SELECT a.*,b.authortyMId,b.authority ,ff.annualcompletionrate,ff.annualcompletio
      aa.completionrate,aa.fid
     ,ff.annualcompletionrate,ff.annualcompletion FROM
     (SELECT
+			fm.perentid,
 			fm.maintenanceid maintenanceid,
 			fm.priority priority,
 			fm.entnyname entnyname,
@@ -106,9 +107,6 @@ SELECT a.*,b.authortyMId,b.authority ,ff.annualcompletionrate,ff.annualcompletio
 			MAX(`date`)
 			FROM t_month_schedule)
 			WHERE 1 = 1
-
-				AND fm.grade > 3
-
 			<if test="perentid != null and perentid != 0">
 				AND fm.perentid = #{perentid} 
 				OR fm.perentid IN 

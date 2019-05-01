@@ -5,7 +5,7 @@ $(document).ready(function(){
 		language : 'zh-CN',
 		autoclose : true,
 		Boolean : true,
-		//format : 'yyyy-mm-dd'
+		format : 'yyyy-mm-dd'
 	}).on('changeDate', reloadtable);
 	//$("#belongTimeStr").val("2019-04-24");
 	var nowdate = new Date();
@@ -15,6 +15,7 @@ $(document).ready(function(){
 		month="0"+month;
 	}
 	var day = nowdate.getDate();
+	if(day.length == 1) day = "0"+day;
 	$("#belongTimeStr").val(year+"-"+month+"-"+day);
 	
 	var oTable = new TableInit();
@@ -147,6 +148,20 @@ var TableInit = function () {
 				}
 				return { classes: strclass };
 			},//隔行变色
+			idField:'mid',
+			parentIdField: 'perentid',
+			treeShowField: 'priority',
+			onResetView: function(data) {
+				$('#t_datagrid').treegrid({
+					treeColumn: 1,//指明第几列数据改为树形
+					initialState: 'collapsed',//收缩
+					expanderExpandedClass: 'glyphicon glyphicon-triangle-bottom',
+					expanderCollapsedClass: 'glyphicon glyphicon-triangle-right',
+					onChange: function() {
+						$('#t_datagrid').bootstrapTable('resetWidth');
+					}
+				});
+			}
 		});
 	};
 	

@@ -17,6 +17,7 @@ String fule = base + "" + contextPath + "/";
 <link rel="stylesheet" href="<%=contextPath%>/css/bootstrap-editable.css">
 <link rel="stylesheet" href="<%=contextPath%>/css/bootstrap-datetimepicker.min.css">
 <link rel="stylesheet" href="<%=contextPath%>/css/the-modal.css">
+<link rel="stylesheet" href="<%=contextPath%>/css/jquery.treegrid.min.css">
 <link rel="stylesheet" href="<%=contextPath%>/css/financingListDetail.css">
 <script type="text/javascript" src="<%=contextPath%>/js/jquery-2.1.3.min.js"></script>
 <script type="text/javascript" src="<%=contextPath%>/js/bootstrap.min.js"></script>
@@ -25,6 +26,8 @@ String fule = base + "" + contextPath + "/";
 <script type="text/javascript" src="<%=contextPath%>/js/bootstrap-datetimepicker.min.js"></script>
 <script type="text/javascript" src="<%=contextPath%>/js/bootstrap-datetimepicker.zh-CN.js"></script>
 <script type="text/javascript" src="<%=contextPath%>/js/jquery.the-modal.js"></script>
+<script type="text/javascript" src="<%=contextPath%>/js/bootstrap-table-treegrid.js"></script>
+<script type="text/javascript" src="<%=contextPath%>/js/jquery.treegrid.min.js"></script>
 <script type="text/javascript" src="<%=contextPath%>/js/base.js?ts=<%=request.getAttribute("ts") %>"></script>
 <script type="text/javascript" src="<%=contextPath%>/js/monthscheduleList2.js?ts=<%=request.getAttribute("ts") %>"></script>
 </head>

@@ -1,6 +1,6 @@
 $(document).ready(function(){
 	loadSubofficeData(1,0,"suboffice");
-	$("#content").height(window.innerHeight+60);
+	$("#content").height(window.innerHeight-$("#head").height()-1);
 	
 	var oTable = new TableInit();
 	oTable.Init();
@@ -18,7 +18,7 @@ var TableInit = function () {
 			toolbar: false,                //工具按钮用哪个容器
 			striped: true,                      //是否显示行间隔色
 			cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
-			pagination: true,                   //是否显示分页（*）
+			pagination: false,                   //是否显示分页（*）
 			sortable: false,                     //是否启用排序
 			sortOrder: "asc",                   //排序方式
 			queryParams: oTableInit.queryParams,//传递参数（*）
@@ -31,7 +31,7 @@ var TableInit = function () {
 			showColumns: false,                  //是否显示所有的列
 			showRefresh: false,                  //是否显示刷新按钮
 			minimumCountColumns: 2,             //最少允许的列数
-			clickToSelect: true,                //是否启用点击选中行
+			clickToSelect: false,                //是否启用点击选中行
 			//height: 700,                        //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
 			uniqueId: "no",                     //每一行的唯一标识，一般为主键列
 			showToggle: false,                    //是否显示详细视图和列表视图的切换按钮
@@ -43,21 +43,8 @@ var TableInit = function () {
 
 				[
 					{
-						field: 'entnyname',
-						title: '工作面',
-						valign:"middle",
-                        align:"center",
-                        colspan: 1,
-                        rowspan: 2,
-                        formatter:function (value, row, index, field) {
-                        	var grade = row["grade"];
-                        	console.info("grade=="+grade);
-                        	if(grade == 4){
-                        		return "<div style='font-size:20px'><b>"+value+"</b></div>";
-                        	}else{
-                        		return value;
-                        	}
-                        }
+                        field:"nothing",
+                        colspan: 3
 					},
 					{
 						title: "累计进尺（m）",
@@ -100,24 +87,31 @@ var TableInit = function () {
                         	}else{
                         		return "";
                         	}
-                        	
-                        	
-//                        	console.info("begindate====="+begindate);
-//                        	if(begindate != null){
-//                        		console.info((new Date(parseInt(begindate))).toLocaleString());
-//                        	}
-//                        	console.info("begindate====="+begindate);
-//							if(planfinishdate != null){
-//								console.info((new Date(parseInt(planfinishdate))).toLocaleString());              		
-//							}
-//							console.info("workload====="+workload);
-                        	
-                        	
 						}
                         
 					}
 				],
 				[
+					{field: 'nothing',width:5},
+					{
+						field: 'priority',
+						title: '序号'
+					},
+					{
+						field: 'entnyname',
+						title: '工作面',
+						valign:"middle",
+                        align:"left",
+                        formatter:function (value, row, index, field) {
+                        	var grade = row["grade"];
+                        	console.info("grade=="+grade);
+                        	if(grade == 4){
+                        		return "<div style='font-size:20px'><b>"+value+"</b></div>";
+                        	}else{
+                        		return value;
+                        	}
+                        }
+					},
 					{
 						field: 'accumulationcumulant',
 						title: '本月累计完成量',
@@ -225,6 +219,20 @@ var TableInit = function () {
 				}
 				return { classes: strclass };
 			},//隔行变色
+			idField:'maintenanceid',
+			parentIdField: 'perentid',
+			treeShowField: 'priority',
+			onResetView: function(data) {
+				$('#t_datagrid').treegrid({
+					treeColumn: 1,//指明第几列数据改为树形
+					initialState: 'collapsed',//收缩
+					expanderExpandedClass: 'glyphicon glyphicon-triangle-bottom',
+					expanderCollapsedClass: 'glyphicon glyphicon-triangle-right',
+					onChange: function() {
+						$('#t_datagrid').bootstrapTable('resetWidth');
+					}
+				});
+			}
 		});
 	};
 	
@@ -233,9 +241,6 @@ var TableInit = function () {
 		var temp = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
 			limit: params.limit,   //页面大小
 			offset:params.offset,
-//			contractname:$("#contractname").val(),
-//			suboffice:$("#suboffice").val(),
-//			belongTimeStr:$("#belongTimeStr").val()
 			subsection:$("#subsection").val()
 		};
 		return temp;
@@ -298,25 +303,6 @@ function loadSubofficeData(grade,perentid,pulldown){
 	});
 }
 
-/*function loadSubofficeData(){
-	$.ajax({
-		url:$("#fule").val()+"project/stairsubofficeGet.json",
-		type:"POST",
-		data : 1,
-		dataType:"json",
-		success:function(data){
-			var strHtml= '<option value="0">-请选择-</option>';
-			$.each(data, function(key,value){
-				strHtml+='<option value="'+value.maintenanceid+'">'+value.entnyname+'</option>';
-			});
-			$("#suboffice").html(strHtml);
-		},
-		error:function(){
-			
-		}
-	});
-}*/
-
 //修改事件
 function updatexpulldown(cs){
 	if(cs == 1){
@@ -331,23 +317,29 @@ function updatexpulldown(cs){
 }
 
 function reloadtable(){
-	var perentid = $("#subsection").val();
-	console.info(perentid);
-	if(perentid != null){
-		$.ajax({
-			url: $("#fule").val()+'project/findByperentidon3on4.json',
-			data : {
-				"perentid" : perentid,
-			},
-			type : "post",
-			dataType : "json",
-			success : function(json) {
-				$("#t_datagrid").bootstrapTable('load', json);
-			}
-		});
-	}else{
-		alert("请选择所属分标！");
+	var val3 = $("#subsection").val();
+	var val2 = $("#minutemark").val();
+	var val1 = $("#suboffice").val();
+	var perentid = '';
+	if(val3 != undefined && val3 != null && val3 !=''){
+		perentid = val3; 
+	}else if(val2 != undefined && val2 != null && val2 !=''){
+		perentid = val2;
+	}else if(val1 != undefined && val1 != null && val1 !=''){
+		perentid = val1;
 	}
+	
+	$.ajax({
+		url: $("#fule").val()+'project/findByperentidon3on4.json',
+		data : {
+			"perentid" : perentid,
+		},
+		type : "post",
+		dataType : "json",
+		success : function(json) {
+			$("#t_datagrid").bootstrapTable('load', json);
+		}
+	});
 }
 
 function save(){

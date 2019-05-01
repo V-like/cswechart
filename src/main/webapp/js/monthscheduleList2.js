@@ -32,7 +32,7 @@ var TableInit = function () {
 			toolbar: false,                		//工具按钮用哪个容器
 			striped: true,                      //是否显示行间隔色
 			cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
-			pagination: true,                   //是否显示分页（*）
+			pagination: false,                   //是否显示分页（*）
 			sortable: false,                     //是否启用排序
 			sortOrder: "asc",                   //排序方式
 			queryParams: oTableInit.queryParams,//传递参数（*）
@@ -46,7 +46,7 @@ var TableInit = function () {
 			showColumns: false,                  //是否显示所有的列
 			showRefresh: false,                  //是否显示刷新按钮
 			minimumCountColumns: 2,             //最少允许的列数
-			clickToSelect: true,                //是否启用点击选中行
+			clickToSelect: false,                //是否启用点击选中行
 			//height: 700,                        //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
 			uniqueId: "no",                     //每一行的唯一标识，一般为主键列
 			showToggle: false,                    //是否显示详细视图和列表视图的切换按钮
@@ -86,8 +86,7 @@ var TableInit = function () {
 					},
 				  {
 					  field: 'number',
-					  title: '序号',
-					  width : 100
+					  title: '序号'
 				  },
 				  {
 						field: 'entnyname',
@@ -144,7 +143,6 @@ var TableInit = function () {
 						width : 90,
 						formatter:function (value, row, index, field) {
 							var v = value;
-							console.info(row['plannedvolume']);
 							if(row['plannedvolume'] == undefined || row['plannedvolume'] == ''){
 								v = '';
 							}
@@ -200,7 +198,6 @@ var TableInit = function () {
 				  {
 					  field: 'annualcompletionrate',
 					  title: '年度完成率',
-					  width : 90,
 					  formatter:function (value, row, index, field) {
 						  
 						  var v = "";
@@ -214,10 +211,7 @@ var TableInit = function () {
 				  {
 						field: 'backups',
 						title: '备注',
-						width : 300,
 						formatter:function (value, row, index, field) {
-							
-							
 					        return '<div id="backups_'+index+'" contenteditable="false">' + (value || "") + '</div>' + 
 							'<input type="hidden" value="'+(value || "")+'" id="backups'+index+'" name="list['+index+'].backups" />';
 					    },
@@ -238,12 +232,25 @@ var TableInit = function () {
 				}
 				return { classes: strclass };
 			},//隔行变色
+			idField:'fid',
+			parentIdField: 'perentid',
+			treeShowField: 'number',
+			onResetView: function(data) {
+				$('#t_datagrid').treegrid({
+					treeColumn: 1,//指明第几列数据改为树形
+					initialState: 'collapsed',//收缩
+					expanderExpandedClass: 'glyphicon glyphicon-triangle-bottom',
+					expanderCollapsedClass: 'glyphicon glyphicon-triangle-right',
+					onChange: function() {
+						$('#t_datagrid').bootstrapTable('resetWidth');
+					}
+				});
+			}
 		});
 	};
 	
 	//得到查询的参数
 	oTableInit.queryParams = function(params) {
-		console.info($("#belongTimeStr").val());
 		var temp = { // 这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
 //			limit : params.limit, // 页面大小
 //			offset : params.offset,

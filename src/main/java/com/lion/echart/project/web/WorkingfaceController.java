@@ -63,14 +63,8 @@ public class WorkingfaceController {
 	public @ResponseBody List<Map<String, Object>> aa(String perentid,HttpServletRequest req,HttpServletResponse resp, HttpSession session) throws IOException { 
 		System.out.println("perentid======="+perentid);
 		System.out.println("");
-		/*
-		 * if(perentid == null) { return null; }
-		 */
 		HashMap<String, Object> param = new HashMap<String, Object>();
-//		if(grade != null) {
-//			param.put("grade",grade);
-//		}
-		
+
 		param.put("perentid",perentid);
 		
 		List<Map<String, Object>> list = baseService.queryList("comle.monthschedule.findByperentidon3on4",param);
