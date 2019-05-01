@@ -26,28 +26,9 @@
 	<!-- 仅供月进度分期对比分期功能页面查询列表使用 -->
 	<select id="monthscheduleData"  parameterType="java.util.Map"
 		resultType="java.util.Map">
-<<<<<<< HEAD
-SELECT a.*,b.authortyMId,b.authority ,ff.annualcompletionrate,ff.annualcompletion FROM
-(SELECT f.maintenanceid AS "fid",f.priority AS "number",f.entnyname AS "entnyname", 
-   f.codeno AS "code" ,f.grade,s.mid AS "mid", f.unit AS "unit",f.perentid,
-   s.changequantity AS "changequantity", f.workload AS "workload",
-   s.plannedvolume AS "plannedvolume", s.accumulationcumulant AS "accumulationcumulant",  
-   s.completionrate AS "completionrate",f.accumulatedcompletion AS "accumulatedcompletion",f.accumulationcompletionrate AS "accumulationcompletionrate",  
-   s.DATE AS "DATE", s.backups AS "backups" 
-   FROM t_f_maintenance AS f  
-   LEFT JOIN t_month_schedule AS s  
-   ON s.fid = f.maintenanceid AND s.date=#{date} ORDER BY f.codeno ASC) a  
-   JOIN 
-   (SELECT tmua.mid AS 'authortyMId' ,tmua.authority,tfm.priority FROM t_m_user_authority tmua  
-   JOIN t_f_maintenance tfm ON tmua.mid = tfm.maintenanceid 
-   WHERE tmua.uid=#{uid}) b  
-   ON a.fid=b.authortyMId OR a.number LIKE CONCAT(b.priority,'.%')
-    LEFT JOIN  (SELECT fid AS fid ,SUM(completionrate) AS annualcompletionrate , SUM(accumulationcumulant) AS annualcompletion FROM t_month_schedule WHERE plannedvolume !="" OR accumulationcumulant!="" AND  DATE LIKE #{year} GROUP BY fid ) ff
-    ON ff.fid=a.fid 
-=======
 SELECT a.*,b.authortyMId,b.authority ,ff.annualcompletionrate,ff.annualcompletion 
 FROM 	(SELECT f.maintenanceid AS "fid",f.priority AS "number",f.entnyname AS "entnyname", 
-	f.codeno AS "code" ,f.grade,s.mid AS "mid", f.unit AS "unit",  
+	f.codeno AS "code" ,f.grade,s.mid AS "mid", f.unit AS "unit",f.perentid,
 	s.changequantity AS "changequantity", f.workload AS "workload",
 	s.plannedvolume AS "plannedvolume", s.accumulationcumulant AS "accumulationcumulant",  
 	s.completionrate AS "completionrate",f.accumulatedcompletion AS "accumulatedcompletion",f.accumulationcompletionrate AS "accumulationcompletionrate",  
@@ -55,7 +36,7 @@ FROM 	(SELECT f.maintenanceid AS "fid",f.priority AS "number",f.entnyname AS "en
 	FROM t_f_maintenance AS f  
 	LEFT JOIN t_month_schedule AS s  
 	ON s.fid = f.maintenanceid AND s.date=#{date} 
-	WHERE f.begindate &lt; #{date} OR f.begindate IS NULL OR  LEFT(f.begindate,7) = #{date}
+	WHERE f.begindate <![CDATA[<]]> #{date} OR f.begindate IS NULL OR  LEFT(f.begindate,7) = #{date}
 	ORDER BY f.codeno ASC) a  
 JOIN 	(SELECT tmua.mid AS 'authortyMId' ,tmua.authority,tfm.priority FROM t_m_user_authority tmua  
 	JOIN t_f_maintenance tfm ON tmua.mid = tfm.maintenanceid 
@@ -63,7 +44,6 @@ JOIN 	(SELECT tmua.mid AS 'authortyMId' ,tmua.authority,tfm.priority FROM t_m_us
 ON a.fid=b.authortyMId OR a.number LIKE CONCAT(b.priority,'.%')
 LEFT JOIN  (SELECT fid AS fid ,SUM(completionrate) AS annualcompletionrate , SUM(accumulationcumulant) AS annualcompletion FROM t_month_schedule WHERE plannedvolume !="" OR accumulationcumulant!="" AND  DATE LIKE #{year} GROUP BY fid ) ff
 ON ff.fid=a.fid 
->>>>>>> branch 'master' of https://github.com/kwgjpdc/cswechart.git
 	</select>
 	
 	<select id="monthscheduleById"  parameterType="java.util.Map"
