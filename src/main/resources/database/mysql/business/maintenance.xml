@@ -19,6 +19,11 @@
 
 
 	</resultMap>
+	<!-- 总进度权限设置树结构数据 -->
+	<select id="getMaintenanceListData2" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT maintenanceid,priority,entnyname,perentid 
+			FROM t_f_maintenance order by grade desc
+	</select>
 	<!-- 仅供分局填报查询列表使用 -->
 	<select id="getMaintenanceListData"
 		parameterType="java.util.Map" resultType="java.util.Map">

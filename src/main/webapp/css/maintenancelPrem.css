@@ -1,0 +1,12 @@
+#left{
+	float: left;
+	width:19%;
+	height:99%;
+	overflow-y :scroll;
+}
+.contentDiv{
+	float: left;
+	margin:5px;
+	width: 25%;
+	height:97%;
+}

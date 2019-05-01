@@ -1,5 +1,5 @@
 $(document).ready(function(){
-	$("#content").height(window.innerHeight-$("#head").height());
+	$("#content").height(window.innerHeight-$("#head").height()-1);
 	$("#bodydiv").height(window.innerHeight-$("#head").height()-$("#searchdiv").height()-45);
 	
 	$("#navbar").find("li").removeClass("active");

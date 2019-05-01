@@ -8,6 +8,11 @@
 			and subofficeid = #{subofficeid} 
 		</if>
 	</select>
+	
+	<select id="getSubofficeTreeData" parameterType="java.util.Map" resultType="java.util.Map" >
+		select t.subofficeid,t.subofficename,t.pid from t_s_suboffice t where isdisabled = 0
+	</select>
+	
 	<select id="getSubofficeListDBData" parameterType="java.util.Map" resultType="java.util.Map" >
 		select *, 
 		case when isonlysubo = '1' then '是' 

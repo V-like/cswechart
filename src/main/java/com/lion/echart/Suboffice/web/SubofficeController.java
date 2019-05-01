@@ -20,12 +20,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.lion.echart.Suboffice.entity.SubofficeEntity;
-import com.lion.echart.Suboffice.entity.SubofficeWriteEntity;
 import com.lion.echart.base.entity.Page;
 import com.lion.echart.base.logic.BaseService;
 import com.lion.echart.global.GlobalThings;
-import com.lion.echart.project.entity.MonthTotalEntity;
-import com.lion.echart.project.entity.PayforEntity;
 import com.lion.echart.system.entity.UserEntity;
 
 import net.sf.json.JSONObject;
@@ -71,6 +68,17 @@ public class SubofficeController {
 	public @ResponseBody List<Map<String, Object>> subofficewriteGetData(HttpServletRequest req,HttpServletResponse resp, HttpSession session) throws IOException { 
 		List<Map<String, Object>> list = (List<Map<String, Object>>)GlobalThings.getCash("suboffices");
 		return list;
+	}
+	
+	//获取权限设置部门树结构数据
+	@RequestMapping(value = "/suboffice/getDepartTreeData.json",method=RequestMethod.POST)
+	public @ResponseBody List<Map<String, Object>> getDepartTreeData(HttpServletRequest req,
+			HttpServletResponse resp,HttpSession session) throws IOException {
+		List<Map<String, Object>> result = new ArrayList<Map<String,Object>>();
+		if(GlobalThings.getCash("DepartTree")!= null) {
+			result = (List<Map<String, Object>>)GlobalThings.getCash("DepartTree");
+		}
+		return result;
 	}
 	
 	//获取登录用户的分局列表数据

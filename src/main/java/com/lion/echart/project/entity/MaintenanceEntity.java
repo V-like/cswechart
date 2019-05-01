@@ -5,7 +5,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class MaintenanceEntity implements Serializable{
+import com.lion.echart.base.entity.BaseEntity;
+
+public class MaintenanceEntity extends BaseEntity{
 	
 	
 	private Long maintenanceid;
@@ -160,6 +162,11 @@ public class MaintenanceEntity implements Serializable{
 		return "MaintenanceEntity [priority=" + priority + ", entnyname=" + entnyname + ", grade=" + grade
 				+ ", perentid=" + perentid + ", index=" + index + ", codeno=" + codeno + ", unit=" + unit
 				+ ", begindate=" + begindate + ", planfinishdate=" + planfinishdate + ", workload=" + workload + "]";
+	}
+
+	@Override
+	public Long getId() {
+		return maintenanceid;
 	}
 	
 }

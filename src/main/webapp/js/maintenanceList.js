@@ -2,7 +2,11 @@ $(document).ready(function(){
 	var oTable = new TableInit();
 	oTable.Init();
 	$("#contentTablediv").height(window.innerHeight-$("#head").height()-$("#searchdiv").height()-40);
+	$("#prembtn").click(premForward);
 });
+function premForward(){
+	window.location.href = $("#fule").val()+"maintenance/maintenancelPrem.web";
+}
 
 var TableInit = function () {
 	var oTableInit = new Object();
@@ -67,13 +71,6 @@ var TableInit = function () {
 						formatter:function (value, row, index, field) {
 					        return [
 					        	   '<button type="button" onclick="maintenanceAdd('+row["maintenanceid"]+')" class="RoleOfedit btn btn-primary  btn-sm" style="margin-right:15px;" >下级添加</button>',
-							      ].join('');
-					    },
-				  }
-				 ,{field: 'maintenanceid',align: 'center',title: '添加权限' ,width:100, 
-						formatter:function (value, row, index, field) {
-					        return [
-					        	   '<button type="button" onclick="maintenanceAdd2('+row["maintenanceid"]+')" class="RoleOfedit btn btn-primary  btn-sm" style="margin-right:15px;" >添加权限</button>',
 							      ].join('');
 					    },
 				  }

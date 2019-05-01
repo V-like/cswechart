@@ -1,9 +1,7 @@
 package com.lion.echart.project.web;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,9 +18,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.lion.echart.base.logic.BaseService;
+import com.lion.echart.global.GlobalThings;
 import com.lion.echart.project.entity.MaintenanceEntity;
+import com.lion.echart.project.entity.MaintenancesView;
 import com.lion.echart.system.entity.UserEntity;
-
 
 import net.sf.json.JSONObject;
 
@@ -31,8 +30,97 @@ public class MaintenanceController {
 
 	@Autowired
 	private BaseService baseService;
+
+	//工程总进度权限分配
+	@RequestMapping(value = "/maintenance/maintenancelPrem.web",method=RequestMethod.GET)
+	public String maintenancelPrem(HttpServletRequest req,HttpServletResponse resp, HttpSession session , Model model,String maintenanceid) throws IOException { 
+		req.setAttribute("ts", System.currentTimeMillis());
+		req.setAttribute("who", "maintenance");
+		//返回拼装
+		List<Map<String, Object>> result = new ArrayList<Map<String,Object>>();
+		if(GlobalThings.getCash("MTDBTree")== null) {
+			//查询结果
+			List<Map<String, Object>> list = baseService.queryList("comle.Maintenance.getMaintenanceListData2", null);
+			//父id归类
+			Map<String, List<Map<String, Object>>> parents = new HashMap<String, List<Map<String,Object>>>();
+			//临时对象
+			List<Map<String, Object>> temp = null;
+			for (int i = 0; i < list.size(); i++) {
+				if(parents.get(list.get(i).get("maintenanceid").toString()) != null) {
+					list.get(i).put("subs", parents.get(list.get(i).get("maintenanceid").toString()));
+					parents.remove(list.get(i).get("maintenanceid").toString());
+				}
+				
+				if("0".equals(list.get(i).get("perentid").toString())) {
+					result.add(list.get(i));
+				}else {
+					if(parents.get(list.get(i).get("perentid")) != null) {
+						temp = parents.get(list.get(i).get("perentid"));
+					}else {
+						temp = new ArrayList<Map<String,Object>>();
+					}
+					temp.add(list.get(i));
+					parents.put(list.get(i).get("perentid").toString(), temp);
+				}
+			}
+			GlobalThings.putCash("MTDBTree",result);
+		}
+
+		if(GlobalThings.getCash("DepartTree")== null) {
+			result = new ArrayList<Map<String,Object>>();
+			//查询结果
+			List<Map<String, Object>> list = baseService.queryList("comle.Suboffice.getSubofficeTreeData", null);
+			//父id归类
+			Map<String, List<Map<String, Object>>> parents = new HashMap<String, List<Map<String,Object>>>();
+			//临时对象
+			List<Map<String, Object>> temp = null;
+			for (int i = 0; i < list.size(); i++) {
+				if(parents.get(list.get(i).get("subofficeid").toString()) != null) {
+					list.get(i).put("subs", parents.get(list.get(i).get("subofficeid").toString()));
+					parents.remove(list.get(i).get("subofficeid").toString());
+				}
+				
+				if("0".equals(list.get(i).get("pid").toString())) {
+					result.add(list.get(i));
+				}else {
+					if(parents.get(list.get(i).get("pid")) != null) {
+						temp = parents.get(list.get(i).get("pid"));
+					}else {
+						temp = new ArrayList<Map<String,Object>>();
+					}
+					temp.add(list.get(i));
+					parents.put(list.get(i).get("pid").toString(), temp);
+				}
+			}
+			GlobalThings.putCash("DepartTree",result);
+		}
+		
+		return "/page/project/maintenancelPrem";
+	}
+
+	//获取工程总进度权限分配数据
+	@RequestMapping(value = "/maintenance/getMaintenancelPremData.json",method=RequestMethod.POST)
+	public @ResponseBody List<Map<String, Object>> getMaintenancelPremData(HttpServletRequest req,HttpServletResponse resp, HttpSession session , Model model,String maintenanceid) throws IOException { 
+		List<Map<String, Object>> list = baseService.queryList("comle.Maintenance.getMaintenanceListData", null);
+		return list;
+	}
 	
-	//反馈填报列表页 
+	//保持工程总表权限
+	@RequestMapping(value = "/maintenance/insertPremData.json",method=RequestMethod.POST)
+	public @ResponseBody String insertPremData(MaintenancesView list
+			,HttpServletRequest req,HttpServletResponse resp, HttpSession session) throws IOException { 
+		JSONObject obj = new JSONObject();
+		try {
+			baseService.insertOupdates("comle.financing.financingWrite", list.getList());
+			obj.put("msgType", 1);
+		} catch (Exception e) {
+			e.printStackTrace();
+			obj.put("msgType", 0);
+		}
+		return obj.toString();
+	}
+	
+	//工程总进度列表
 	@RequestMapping(value = "/project/maintenanceList.web",method=RequestMethod.GET)
 	public String maintenanceList(HttpServletRequest req,HttpServletResponse resp, HttpSession session) throws IOException { 
 		req.setAttribute("ts", System.currentTimeMillis());
@@ -40,30 +128,41 @@ public class MaintenanceController {
 		return "/page/project/maintenanceList";
 	}
 	
-	//获取填报列表数据
-		@RequestMapping(value = "/project/maintenanceGetDBData.json",method=RequestMethod.POST)
-		public @ResponseBody List<Map<String, Object>> maintenanceGetData(String belongTimeStr,HttpServletRequest req,HttpServletResponse resp, 
-				HttpSession session, String subofficeid) throws IOException { 
-			UserEntity user = (UserEntity)session.getAttribute("USER_SESSION");
-			HashMap<String, Object> param = new HashMap<String, Object>();
-			List<Integer> ststusList = new ArrayList<Integer>();
-			ststusList.add(1);
-			ststusList.add(4);
-			param.put("status", ststusList);
-			param.put("type", 2);
-			if(belongTimeStr!=null&&!belongTimeStr.equals("")){
-				param.put("year", belongTimeStr.substring(0,4));
-				param.put("month", belongTimeStr.substring(5,7));
-			}
-			//系统管理员传入特殊分局条件
-			if("admin".equals(user.getUsername())) {
-				param.put("subofficeid", 0);
-			}else {
-				param.put("subofficeid", user.getSubofficeid());
-			}
-			List<Map<String, Object>> list = baseService.queryList("comle.Maintenance.getMaintenanceListData", param);
-			return list;
+	//获取工程总进度树结构数据
+	@RequestMapping(value = "/project/maintenanceGetDBTreeData.json",method=RequestMethod.POST)
+	public @ResponseBody List<Map<String, Object>> maintenanceGetDBTreeData(String belongTimeStr,HttpServletRequest req,HttpServletResponse resp, 
+			HttpSession session, String subofficeid) throws IOException {
+		List<Map<String, Object>> result = new ArrayList<Map<String,Object>>();
+		if(GlobalThings.getCash("MTDBTree")!= null) {
+			result = (List<Map<String, Object>>)GlobalThings.getCash("MTDBTree");
 		}
+		return result;
+	}
+	
+	//获取工程总进度数据
+	@RequestMapping(value = "/project/maintenanceGetDBData.json",method=RequestMethod.POST)
+	public @ResponseBody List<Map<String, Object>> maintenanceGetData(String belongTimeStr,HttpServletRequest req,HttpServletResponse resp, 
+			HttpSession session, String subofficeid) throws IOException { 
+		UserEntity user = (UserEntity)session.getAttribute("USER_SESSION");
+		HashMap<String, Object> param = new HashMap<String, Object>();
+		List<Integer> ststusList = new ArrayList<Integer>();
+		ststusList.add(1);
+		ststusList.add(4);
+		param.put("status", ststusList);
+		param.put("type", 2);
+		if(belongTimeStr!=null&&!belongTimeStr.equals("")){
+			param.put("year", belongTimeStr.substring(0,4));
+			param.put("month", belongTimeStr.substring(5,7));
+		}
+		//系统管理员传入特殊分局条件
+		if("admin".equals(user.getUsername())) {
+			param.put("subofficeid", 0);
+		}else {
+			param.put("subofficeid", user.getSubofficeid());
+		}
+		List<Map<String, Object>> list = baseService.queryList("comle.Maintenance.getMaintenanceListData", param);
+		return list;
+	}
 		
 		
 		//部门信息添加列表页 
