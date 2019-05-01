@@ -10,8 +10,11 @@ function loadRoleData(){
 		type:"POST",
 		dataType:"json",
 		success:function(data){
+			console.info(data);
 			var strHtml= "";
-			$.each(data, function(key,value){
+			$.each(data.rows, function(key,value){
+				console.info(key);
+				console.info(value);
 				strHtml+='<label class="checkbox-inline">';
 				if(IsInArray(roleListArr,value.id)){
 					strHtml+='<input type="checkbox" id="'+value.id+'" value="'+value.id+'" name="roleid" checked="checked">'+value.rolename;
