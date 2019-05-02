@@ -47,7 +47,7 @@ public class MenuController {
 	@RequestMapping(value = "/menu/menuGetData.json",method=RequestMethod.POST)
 	public @ResponseBody Page menuGetData(String currPage, String pageSize, String menuname,HttpServletRequest req,HttpServletResponse resp, HttpSession session) throws IOException { 
 		currPage=currPage==null?"1":currPage;   //当前页码
-	    pageSize=pageSize==null?"10":pageSize;   //页面大小
+	    pageSize=pageSize==null?"40":pageSize;   //页面大小
 		HashMap<String, Object> param = new HashMap<String, Object>();
 		param.put("menuname", menuname);
 		param.put("currPage", Integer.valueOf(currPage));
