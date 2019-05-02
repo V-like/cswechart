@@ -55,12 +55,17 @@
 						style="color: #000; text-decoration: none;">菜单分配</a>
 				</div>
 				<div class="panel-body">
-					<input type="hidden" name="editroleid" id="editroleid"
-						value="<%=request.getAttribute("roleid")%>"> <input
-						type="hidden" name="menuList" id="menuList"
-						value="<%=request.getAttribute("menuListStr")%>"> <label
-						for="name">菜单选择</label>
-					<div class="form-group" id="roleListDiv"></div>
+						<input type="hidden" name="editroleid" id="editroleid" value="<%=request.getAttribute("roleid")%>"> 
+						<input type="hidden" name="menuList" id="menuList" value="<%=request.getAttribute("menuListStr")%>">
+
+						<input type="hidden" name="userList" id="userList" value="<%=request.getAttribute("userListStr")%>">
+						
+						<label for="name">菜单选择</label>
+						<div class="form-group" id="roleListDiv"></div>
+						
+						<label for="name">用户选择</label>
+						<div class="form-group" id="userListDiv"></div>
+						
 					<button onclick="save()" class="btn btn-primary">提交</button>
 				</div>
 			</div>

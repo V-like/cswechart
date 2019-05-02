@@ -5,11 +5,16 @@ $(document).ready(function(){
 function loadMenuData(){
 	var menuList = $("#menuList").val();
 	var menuListArr = menuList.split(',');
+	
+	var userList = $("#userList").val();
+	var userListArr = userList.split(',');
+	
 	$.ajax({
 		url:$("#fule").val()+"menu/menuGetData.json",
 		type:"POST",
 		dataType:"json",
 		success:function(data){
+			console.info(data);
 			var strHtml= "";
 			$.each(data.rows, function(key,value){
 				strHtml+='<label class="checkbox-inline">';
@@ -21,11 +26,36 @@ function loadMenuData(){
 				strHtml+='</label>';
 			});
 			$("#roleListDiv").html(strHtml);
+			
+			//展示所有的user
+			$.ajax({
+				url:$("#fule").val()+"/user/userGetData.json",
+				type:"POST",
+				dataType:"json",
+				success:function(data){
+					console.info(data);
+					var strHtml= "";
+					$.each(data.rows, function(key,value){
+						strHtml+='<label class="checkbox-inline">';
+						if(IsInArray(userListArr,value.id)){
+							strHtml+='<input type="checkbox" id="'+value.id+'" value="'+value.id+'" name="menuid" checked="checked">'+value.username;
+						}else{
+							strHtml+='<input type="checkbox" id="'+value.id+'" value="'+value.id+'" name="menuid">'+value.username;
+						}
+						strHtml+='</label>';
+					});
+					$("#userListDiv").html(strHtml);
+				},
+				error:function(){
+					
+				}
+			});
 		},
 		error:function(){
 			
 		}
 	});
+	
 }
 //判断字符串是否存在数组中
 function IsInArray(arr,val){ 

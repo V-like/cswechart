@@ -124,18 +124,32 @@ public class RoleController {
 	public String roleMenuAssign(String roleid,HttpServletRequest req,HttpServletResponse resp, HttpSession session) throws IOException { 
 		Map<String, Object> searchmap = new HashMap<String, Object>();
 		searchmap.put("roleid", roleid);
+		
+		//获得菜单
 		List<Map<String, Object>> list = baseService.queryList("comle.role.getRoleMenuListData", searchmap);
 		String menuListStr = "";
 		for(Map<String, Object> map : list){
-			menuListStr+=map.get("menuid")+",";
+			menuListStr+=map.get("menuid")+","; 
 		}
 		if(list.size()>0){
 			menuListStr=menuListStr.substring(0,menuListStr.length()-1);
 		}
+		
+		//获得用户
+		List<Map<String, Object>> list2 = baseService.queryList("comle.user.getUserRoleListData",searchmap);
+		String userListStr = "";
+		for(Map<String, Object> map : list2){
+			userListStr+=map.get("userid")+","; 
+		}
+		if(list2.size()>0){
+			userListStr=userListStr.substring(0,userListStr.length()-1);
+		}
+		
 		req.setAttribute("ts", System.currentTimeMillis());
 		req.setAttribute("who", "contract");
 		req.setAttribute("roleid", roleid);
 		req.setAttribute("menuListStr", menuListStr);
+		req.setAttribute("userListStr", userListStr);
 		return "/page/system/roleMenuAssign";
 	}
 	//用户角色分配添加保存
