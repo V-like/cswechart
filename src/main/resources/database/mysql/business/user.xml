@@ -70,6 +70,11 @@
 		delete from t_sys_user_role
     	where userid = #{userid}
     </delete>
+    <!-- 删除角色角色表数据 -->
+   <delete id="deleteRoleUser" parameterType="java.util.Map" >
+		delete from t_sys_user_role
+    	where roleid = #{roleid}
+    </delete>
     <!-- 用户角色插入 -->
 	<insert id="insertUserRole" parameterType="com.lion.echart.system.entity.UserRoleEntity">
            insert into t_sys_user_role(userid, roleid) 

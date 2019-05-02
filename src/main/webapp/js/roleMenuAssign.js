@@ -38,9 +38,9 @@ function loadMenuData(){
 					$.each(data.rows, function(key,value){
 						strHtml+='<label class="checkbox-inline">';
 						if(IsInArray(userListArr,value.id)){
-							strHtml+='<input type="checkbox" id="'+value.id+'" value="'+value.id+'" name="menuid" checked="checked">'+value.username;
+							strHtml+='<input type="checkbox" id="'+value.id+'" value="'+value.id+'" name="userid" checked="checked">'+value.username;
 						}else{
-							strHtml+='<input type="checkbox" id="'+value.id+'" value="'+value.id+'" name="menuid">'+value.username;
+							strHtml+='<input type="checkbox" id="'+value.id+'" value="'+value.id+'" name="userid">'+value.username;
 						}
 						strHtml+='</label>';
 					});
@@ -82,8 +82,40 @@ function save(){
 			menuidArrStr : menuidArrStr
         },
 		success:function(data){
+			saveUserAndRole();
 			 alert("操作成功");
 			 window.location.href=$("#fule").val()+"role/roleList.web";
+		},
+		error:function(){
+			console.log("失败");
+		}
+	});
+}
+
+function saveUserAndRole(){
+	var roleid = $("#editroleid").val();
+	var useridArr =[]; 
+    $('input[name="userid"]:checked').each(function(){ 
+    	useridArr.push($(this).val()); 
+    }); 
+    if(useridArr.length==0){
+    	alert("你没有选中任何菜单！");
+    	return;
+    }
+    var useridArrStr = useridArr.join(",");
+
+	$.ajax({
+		url: $("#fule").val()+"user/roleUserSave.json",
+		type:"POST",
+		dataType:"json",
+		data: {
+			roleid : roleid,
+			useridArrStr : useridArrStr
+        },
+		success:function(data){
+			 /*alert("操作成功");
+			 window.location.href=$("#fule").val()+"role/roleList.web";*/
+			console.info("成功！！！");
 		},
 		error:function(){
 			console.log("失败");

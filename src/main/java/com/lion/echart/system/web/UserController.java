@@ -161,6 +161,32 @@ public class UserController {
 		}
 		return obj.toString();
 	}
+	
+	//角色分配用户添加保存
+	@RequestMapping(value = "/user/roleUserSave.json",method=RequestMethod.POST)
+	public @ResponseBody String userRoleSave2(String roleid,String useridArrStr,HttpServletRequest req,HttpServletResponse resp, HttpSession session) throws IOException { 
+		SimpleDateFormat si = new SimpleDateFormat("yyyy-MM-dd");
+		JSONObject obj = new JSONObject();
+		try {
+			//先删除用户角色表，然后添加
+			//del
+			Map<String, Object> delmap = new HashMap<String, Object>();
+			delmap.put("roleid", roleid);
+			baseService.delete("comle.user.deleteRoleUser", delmap);
+			//insert
+			String useridArr[] = useridArrStr.split(",");
+			for(String userid : useridArr){
+				UserRoleEntity userRole = new UserRoleEntity(Long.valueOf(userid), Long.valueOf(roleid));
+				baseService.insertObject("comle.user.insertUserRole", userRole);
+			}
+			obj.put("msgType", 1);
+		} catch (Exception e) {
+			e.printStackTrace();
+			obj.put("msgType", 0);
+		}
+		return obj.toString();
+	}
+	
 	//删除用户
 	@RequestMapping(value = "user/userDel.json",method=RequestMethod.POST)
 	public void userDel(String checkIds
