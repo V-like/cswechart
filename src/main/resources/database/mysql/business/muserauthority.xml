@@ -13,6 +13,13 @@
 		
 
 	</resultMap>
+	<select id="getMuserauthorityList"
+		parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT * FROM t_m_user_authority tmua where 1=1 
+		<if test="mid != null">
+		 and mid = #{mid} 
+		</if>
+	</select>
 	<!-- 仅供权限添加查询列表使用 -->
 	<select id="getMuserauthorityData"
 		parameterType="java.util.Map" resultType="java.util.Map">
@@ -31,10 +38,13 @@
 	</select>
 	
 	<insert id="muserauthoritySave" parameterType="com.lion.echart.maintenance.entity.MuserAuthorityEntity">
-           INSERT INTO t_m_user_authority (authority,uid,mid)  
-               VALUES(#{authority},#{uid},#{mid})
+           INSERT INTO t_m_user_authority (authority,uid,mid,depid)  
+               VALUES(#{authority},#{uid},#{mid},#{depid})
    	</insert>
    	
+   	<delete  id="deleteMuseraByLeftif" parameterType="java.lang.Long"> 
+   		DELETE FROM t_m_user_authority WHERE mid=#{mid}
+   	</delete>
    	<delete  id="deleteMuserauthority" parameterType="com.lion.echart.maintenance.entity.MuserAuthorityEntity"> 
    		DELETE FROM t_m_user_authority WHERE uid=#{uid} AND mid=#{mid}
    	</delete>

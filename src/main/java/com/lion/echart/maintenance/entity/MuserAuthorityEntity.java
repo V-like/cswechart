@@ -1,15 +1,14 @@
 package com.lion.echart.maintenance.entity;
 
-import java.io.Serializable;
-
 import com.lion.echart.base.entity.BaseEntity;
 
 
 public class MuserAuthorityEntity  extends BaseEntity{
-	private long id ;                           
+	private Long id ;                           
 	private String authority;// 0为可修改1为可查看
-	private String uid  ; //用户id
-	private String mid;
+	private Long uid  ; //用户id
+	private Long mid;
+	private Long depid;
 	private String username;
 	private String realname;
 	
@@ -17,7 +16,7 @@ public class MuserAuthorityEntity  extends BaseEntity{
 	public Long getId() {
 		return id;
 	}
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	public String getAuthority() {
@@ -26,17 +25,35 @@ public class MuserAuthorityEntity  extends BaseEntity{
 	public void setAuthority(String authority) {
 		this.authority = authority;
 	}
-	public String getUid() {
+	public Long getUid() {
 		return uid;
 	}
-	public void setUid(String uid) {
+	public void setUid(Long uid) {
 		this.uid = uid;
 	}
-	public String getMid() {
+	public Long getMid() {
 		return mid;
 	}
-	public void setMid(String mid) {
+	public void setMid(Long mid) {
 		this.mid = mid;
+	}
+	public Long getDepid() {
+		return depid;
+	}
+	public void setDepid(Long depid) {
+		this.depid = depid;
+	}
+	public String getUsername() {
+		return username;
+	}
+	public void setUsername(String username) {
+		this.username = username;
+	}
+	public String getRealname() {
+		return realname;
+	}
+	public void setRealname(String realname) {
+		this.realname = realname;
 	}
 	@Override
 	public String toString() {
