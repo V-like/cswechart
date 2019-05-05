@@ -39,15 +39,15 @@ var TableInit = function () {
 				  {field: 'priority',width:30
 					  ,formatter: function (value, row, index) {
 						return '<label>'+
-					           '   <input onclick="ckupdown('+value+','+row["subofficeid"]+')" id="ck'+row["subofficeid"]+'" name="btSelectItem" type="checkbox" >'+
+					           '   <input id="ck'+row["subofficeid"]+'" name="btSelectItem" type="checkbox" value="'+row["subofficeid"]+'" >'+		// onclick="ckupdown('+value+','+row["subofficeid"]+')"
 					           '   <span></span>'+
 					           '</label>';
 					  }
 				  }
 				 ,{field: 'subofficename',width:400,title: '部分名称'}
-				 ,{field: '占位'}
+				 /*,{field: '占位'}
 				 ,{field: 'pid',visible:false}
-				 ,{field: 'subofficeid'}
+				 ,{field: 'subofficeid'}*/
 				 /*
 				 ,{field: 'isonlysubostr',title: '是否分局'}
 				 
@@ -99,6 +99,16 @@ var TableInit = function () {
 	};
 	return oTableInit;
 };
+//选中按钮的点击事件
+function ckupdown(value,subofficeid){
+	console.info("sd!!!");
+	console.info(value);
+	console.info(subofficeid);
+	var checkId=$("input[name='btSelectItem']:checked");
+	console.info(checkId);
+}
+
+
 function reloadtable(){
 	$.ajax({
 		url: $("#fule").val()+'suboffice/subofficeGetDBData.json',
@@ -111,18 +121,30 @@ function reloadtable(){
 	});
 }
 //修改部门
-function subofficeEdit(_id){
-	window.location.href = $("#fule").val()+'suboffice/subofficeEdit.web?subofficeid='+_id;
+function subofficeEdit(){
+	var subofficeId=$("input[name='btSelectItem']:checked");
+	
+	console.info(subofficeId.length);
+	if(subofficeId.length==1){
+		console.info(subofficeId[0]);
+		console.info(subofficeId[0].value);
+		window.location.href = $("#fule").val()+'suboffice/subofficeAdd.web?subofficeid='+subofficeId[0].value;		//+"&subofficename"+
+	}else {
+		alert("请选择一条数据！");
+	}
+	//window.location.href = $("#fule").val()+'suboffice/subofficeEdit.web?subofficeid='+_id;
 }
 //角色删除
 function delSuboffice(){
-	var checkRow= $("#t_datagrid").bootstrapTable('getSelections');
+	var checkRow= $("input[name='btSelectItem']:checked");
     if(checkRow.length<=0){
     	modalTitle("请选中一条数据",1);
 	}else{
 		var checkIds = "";
+		console.info(checkRow);
 		$.each(checkRow,function(key,value){
-			checkIds+=value.subofficeid+",";
+			console.info(value.value);
+			checkIds+=value.value+",";
 		});
 		if(checkIds.length>0){
 			checkIds=checkIds.substring(0,checkIds.length-1);

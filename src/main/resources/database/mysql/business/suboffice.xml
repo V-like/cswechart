@@ -8,6 +8,14 @@
 			and subofficeid = #{subofficeid} 
 		</if>
 	</select>
+	<!-- 按照id查找部门 -->
+	<select id="getSubofficeLBysubid" parameterType="java.util.Map" resultType="com.lion.echart.Suboffice.entity.SubofficeEntity" >
+		select * from t_s_suboffice
+		where isdisabled = 0
+		<if test="subofficeid != null and subofficeid != 0">
+			and subofficeid = #{subofficeid} 
+		</if>
+	</select>
 	
 	<select id="getSubofficeTreeData" parameterType="java.util.Map" resultType="java.util.Map" >
 		select t.subofficeid,t.subofficename,t.pid from t_s_suboffice t where isdisabled = 0
@@ -51,14 +59,14 @@
 	</select>
 	<!-- 部门插入 -->
 	<insert id="insertSuboffice" parameterType="com.lion.echart.Suboffice.entity.SubofficeEntity">
-           insert into t_s_suboffice(subofficename, remark, priority, isonlysubo, isdisabled, operuser, operdate) 
-               values(#{subofficename}, #{remark}, #{priority}, #{isonlysubo}, #{isdisabled}, #{operuser}, #{operdate})
+           insert into t_s_suboffice(subofficename, remark, priority, isonlysubo, isdisabled, operuser, operdate, pid) 
+               values(#{subofficename}, #{remark}, #{priority}, #{isonlysubo}, #{isdisabled}, #{operuser}, #{operdate}, #{pid})
    </insert>
    <!-- 部门修改 -->
    <update id="updateSuboffice" parameterType="com.lion.echart.Suboffice.entity.SubofficeEntity">
    		update t_s_suboffice 
    		set subofficename = #{subofficename},
-   		isonlysubo = #{isonlysubo}
+   		pid = #{pid}
    		where subofficeid=#{subofficeid}
    </update>
       <!-- 删除部门 -->

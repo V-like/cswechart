@@ -1,5 +1,12 @@
 $(document).ready(function(){
 	$("#content").height(window.innerHeight+60);
+	loadSubofficeData();
+	var subofficeid = $("#subofficeid").val();
+	var subofficename = $("#subofficename").val();
+	console.info(subofficeid);
+	console.info(subofficename);
+	//sessionStorage.removeItem("suboffice");
+	
 });
 function validatef(){
 	$('#formInsert').bootstrapValidator({
@@ -29,10 +36,36 @@ function validatef(){
 		}
 	});
 }
+
+//获得所有部门
+function loadSubofficeData(){
+	$.ajax({
+		url:$("#fule").val()+"/suboffice/subofficeGetDataAll.json",
+		type:"POST",
+		dataType:"json",
+		success:function(data){
+			console.info('成功!'+data);
+			var strHtml= '<option value="0">-请选择-</option>';
+			$.each(data, function(key,value){
+				if(value.subofficeid+"" == $("#pid").val()+""){
+					strHtml+='<option selected="selected" value="'+value.subofficeid+'">'+value.subofficename+'</option>';		
+				}else{
+					strHtml+='<option value="'+value.subofficeid+'">'+value.subofficename+'</option>';
+				}
+				
+			});
+			$("#suboffice").html(strHtml);
+		},
+		error:function(){
+			console.info('失败！');
+		}
+	});
+}
+
 function save(){
 	
 	var subofficename = $("#subofficename").val();
-	var isonlysubo = $("#isonlysubo").val();
+	var pid = $("#suboffice").val();
 	if(subofficename == ''){
     	alert('请输入部门名称');
         return false;
@@ -42,8 +75,9 @@ function save(){
 		type:"POST",
 		dataType:"json",
 		data: {
+			subofficeid : $("#subofficeid").val(),
 			subofficename : subofficename,
-			isonlysubo : isonlysubo
+			pid : pid
         },
 		success:function(data){
 			 alert("操作成功");

@@ -45,6 +45,9 @@ String fule = base + "" + contextPath + "/";
 		            <button id="btn_add" type="button" class="btn btn-default" onclick="window.location.href='<%=fule %>suboffice/subofficeAdd.web'">
 		                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
 		            </button>
+		            <button id="btn_update" type="button" class="btn btn-default" onclick="subofficeEdit()">
+		                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>修改
+		            </button>
 		            <button id="btn_delete" type="button" class="btn btn-default" onclick="delSuboffice()">
 		                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
 		            </button>

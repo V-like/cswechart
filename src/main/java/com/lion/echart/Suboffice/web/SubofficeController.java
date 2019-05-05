@@ -106,20 +106,37 @@ public class SubofficeController {
 	}
 	//部门信息添加列表页 
 	@RequestMapping(value = "/suboffice/subofficeAdd.web",method=RequestMethod.GET)
-	public String subofficeAdd(HttpServletRequest req,HttpServletResponse resp, HttpSession session) throws IOException { 
+	public String subofficeAdd(String subofficeid,HttpServletRequest req,HttpServletResponse resp, HttpSession session,Model model) throws IOException { 
 		req.setAttribute("ts", System.currentTimeMillis());
 		req.setAttribute("who", "contract");
+		if(subofficeid != null) {
+			Map<String, Object> searchmap = new HashMap<String, Object>();
+			searchmap.put("subofficeid", subofficeid);
+			SubofficeEntity suboffice = (SubofficeEntity)baseService.queryObject("comle.Suboffice.getSubofficeLBysubid", searchmap);
+			//req.getSession().setAttribute("suboffice", suboffice);
+			model.addAttribute("suboffice", suboffice);
+		}
 		return "/page/suboffice/subofficeAdd";
 	}
 	
 	//部门添加保存
 	@RequestMapping(value = "/suboffice/subofficeSave.json",method=RequestMethod.POST)
-	public @ResponseBody String subofficeSave(String subofficename,String isonlysubo,HttpServletRequest req,HttpServletResponse resp, HttpSession session) throws IOException { 
+	public @ResponseBody String subofficeSave(String subofficeid,String subofficename,String pid,HttpServletRequest req,HttpServletResponse resp, HttpSession session) throws IOException { 
 		SimpleDateFormat si = new SimpleDateFormat("yyyy-MM-dd");
 		JSONObject obj = new JSONObject();
 		try {
-			SubofficeEntity suboffice = new SubofficeEntity(null,subofficename, "", 0,isonlysubo,"0", "1", new Date());
-			baseService.insertObject("comle.Suboffice.insertSuboffice", suboffice);
+
+			if(subofficeid!=null && subofficeid!="") {
+
+				SubofficeEntity suboffice = new SubofficeEntity(Long.parseLong(subofficeid),Long.parseLong(pid), subofficename, "", 0, "", "", "", new Date());
+				System.out.println("====================================="+suboffice);
+				baseService.updateObject("comle.Suboffice.updateSuboffice", suboffice);
+			}else {
+				SubofficeEntity suboffice = new SubofficeEntity(0L,Long.parseLong(pid), subofficename, "", 0, "", "", "", new Date());
+				System.out.println("====================================="+suboffice);
+				baseService.insertObject("comle.Suboffice.insertSuboffice", suboffice);
+			}
+		
 			obj.put("msgType", 1);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -177,4 +194,15 @@ public class SubofficeController {
 		resp.getWriter().print(obj.toString());
 		//return obj.toString();
 	}
+	
+	//查询部门所有数据
+	@RequestMapping(value = "/suboffice/subofficeGetDataAll.json",method=RequestMethod.POST)
+	public @ResponseBody List<Map<String, Object>> subofficeGetDataAll(HttpServletRequest req,HttpServletResponse resp, HttpSession session) throws IOException { 
+		List<Map<String, Object>> list = baseService.queryList("comle.Suboffice.getSubofficeTreeData", null);;
+		return list;
+	}
+	
+	
+	
+	
 }

@@ -2,12 +2,15 @@ package com.lion.echart.Suboffice.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+
+import javax.persistence.Id;
 /**
  * 分局表
  * @author TANGXIAN
  *
  */
 public class SubofficeEntity implements Serializable {
+	@Id
 	private Long subofficeid;
 	private Long pid;
 	private String subofficename;
@@ -24,6 +27,19 @@ public class SubofficeEntity implements Serializable {
 			String isdisabled, String operuser, Date operdate) {
 		super();
 		this.subofficeid = subofficeid;
+		this.subofficename = subofficename;
+		this.remark = remark;
+		this.priority = priority;
+		this.isonlysubo = isonlysubo;
+		this.isdisabled = isdisabled;
+		this.operuser = operuser;
+		this.operdate = operdate;
+	}
+	public SubofficeEntity(Long subofficeid, Long pid, String subofficename, String remark, Integer priority,
+			String isonlysubo, String isdisabled, String operuser, Date operdate) {
+		super();
+		this.subofficeid = subofficeid;
+		this.pid = pid;
 		this.subofficename = subofficename;
 		this.remark = remark;
 		this.priority = priority;
@@ -86,4 +102,12 @@ public class SubofficeEntity implements Serializable {
 	public void setOperdate(Date operdate) {
 		this.operdate = operdate;
 	}
+	@Override
+	public String toString() {
+		return "SubofficeEntity [subofficeid=" + subofficeid + ", pid=" + pid + ", subofficename=" + subofficename
+				+ ", remark=" + remark + ", priority=" + priority + ", isonlysubo=" + isonlysubo + ", isdisabled="
+				+ isdisabled + ", operuser=" + operuser + ", operdate=" + operdate + "]";
+	}
+	
+	
 }

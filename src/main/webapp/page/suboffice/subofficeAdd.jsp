@@ -60,23 +60,27 @@
 				<div class="container">
 					<h3></h3>
 					<form class="form-horizontal" role="form">
+						<input type="hidden" id="subofficeid" value="${suboffice.subofficeid}" />
+						<input type="hidden" id="subofficeName" value="${suboffice.subofficename}" />
+						<input type="hidden" id="pid" value="${suboffice.pid}" />
+						<div class="form-group">
+							<label for="isonlysubo" class="col-sm-3 control-label">上级部门</label>
+							<div class="col-sm-6">
+								<select class="form-control" id="suboffice" name="suboffice">
+									<option></option>
+								</select>
+							</div>
+						</div>
+					
 						<div class="form-group">
 							<label for="subofficename" class="col-sm-3 control-label">部门名称</label>
 							<div class="col-sm-6">
-								<input type="text" class="form-control" id="subofficename"
+								<input type="text" class="form-control" id="subofficename" value="${suboffice.subofficename}"
 									placeholder="请输入部门名称">
 							</div>
 						</div>
 
-						<div class="form-group">
-							<label for="isonlysubo" class="col-sm-3 control-label">是否分局</label>
-							<div class="col-sm-6">
-								<select class="form-control" id="isonlysubo" name="isonlysubo">
-									<option value="1">是</option>
-									<option value="0">否</option>
-								</select>
-							</div>
-						</div>
+						
 					</form>
 				</div>
 			</div>
