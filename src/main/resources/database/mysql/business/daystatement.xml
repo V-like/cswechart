@@ -9,10 +9,10 @@
 	</resultMap>
 	<!-- 查询工程日填报 -->
 	<select id="getdaystatementListData" parameterType="java.util.Map" resultType="java.util.Map">
-		SELECT fms.perentid,
+		SELECT fms.perentid perentid,fms.maintenanceid maintenanceid,
 		fms.priority priority,fms.entnyname entnyname,fms.unit unit,fms.mid `mid`,sd.todayaccomplish todayaccomplish,sd.describe 'describe',sd.dayScheduid dayScheduid
-		FROM (SELECT fm.perentid,
-		fm.priority priority,fm.entnyname entnyname,fm.unit unit,fm.codeno codeno,ms.plannedvolume plannedvolume,ms.mid MID,ms.date DATE
+		FROM (SELECT fm.perentid perentid,fm.maintenanceid maintenanceid,
+		fm.priority priority,fm.entnyname entnyname,fm.unit unit,fm.codeno codeno,ms.plannedvolume plannedvolume,ms.mid `mid`,ms.date `date`
 		FROM t_f_maintenance fm
 		JOIN
 		 (SELECT tmua.mid AS 'authortyMId' ,tmua.authority,tfm.priority  FROM t_m_user_authority tmua 

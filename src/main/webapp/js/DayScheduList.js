@@ -148,7 +148,7 @@ var TableInit = function () {
 				}
 				return { classes: strclass };
 			},//隔行变色
-			idField:'mid',
+			idField:'maintenanceid',
 			parentIdField: 'perentid',
 			treeShowField: 'priority',
 			onResetView: function(data) {
