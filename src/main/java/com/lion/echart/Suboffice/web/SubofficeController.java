@@ -1,6 +1,7 @@
 package com.lion.echart.Suboffice.web;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,6 +25,7 @@ import com.lion.echart.Suboffice.entity.SubofficeEntity;
 import com.lion.echart.base.entity.Page;
 import com.lion.echart.base.logic.BaseService;
 import com.lion.echart.global.GlobalThings;
+import com.lion.echart.project.entity.MaintenanceEntity;
 import com.lion.echart.system.entity.UserEntity;
 
 import net.sf.json.JSONObject;
@@ -55,7 +58,14 @@ public class SubofficeController {
 		//param.put("pageSize", Integer.valueOf(pageSize));
 		//List<Map<String, Object>> list = baseService.queryList("comle.Suboffice.getSubofficeListDBDataByPage", param);
 		//数据总条数
-		List<Map<String, Object>> listAll = baseService.queryList("comle.Suboffice.getSubofficeListDBData", param);
+		List<Map<String, Object>> listAll = null;
+		if(subofficename == null || subofficename=="") {
+			listAll = (List<Map<String, Object>>)GlobalThings.getCash("subofficeList");
+			System.out.println("大集合大集合"+listAll);
+		}else {
+			listAll = baseService.queryList("comle.Suboffice.getSubofficeListDBData", param);
+		}
+		
 		 //封装返回结果
         Page page = new Page();
         //page.setTotal(listAll.size()+"");
@@ -135,6 +145,11 @@ public class SubofficeController {
 				SubofficeEntity suboffice = new SubofficeEntity(0L,Long.parseLong(pid), subofficename, "", 0, "", "", "", new Date());
 				System.out.println("====================================="+suboffice);
 				baseService.insertObject("comle.Suboffice.insertSuboffice", suboffice);
+				//修改缓存中数据
+				List<Map<String,Object>> subList = (List<Map<String,Object>>)GlobalThings.getCash("subofficeList");
+				subList.add(getsubMap(suboffice));
+				System.out.println("集合集合集合"+subList);
+				GlobalThings.putCash("suboffices", subList);
 			}
 		
 			obj.put("msgType", 1);
@@ -202,7 +217,12 @@ public class SubofficeController {
 		return list;
 	}
 	
-	
+	//对象转换成map集合
+	public Map<String,Object> getsubMap(SubofficeEntity sub) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException{
+		Map<String, Object> subMap = BeanUtils.describe(sub); //new HashMap<String,Object>();
+		subMap.put("pid",sub.getPid());
+		return subMap;
+	}
 	
 	
 }

@@ -119,6 +119,7 @@ public class LoginController {
 	    		
 	    		GlobalThings.putCash("suboffices", baseService.queryList("comle.Suboffice.getSubofficeListData", null));
 	    		GlobalThings.putCash("contracts", baseService.queryList("comle.contract.getcontractSignedListData", null));
+	    		maintenanceSetGlobalThings();
 	    		req.removeAttribute("msg");
 	            //重定向到主页面的跳转方法
 	            return "/page/main";
@@ -164,5 +165,16 @@ public class LoginController {
 			result = (List<Map<String, Object>>)obj;
 		}
 		return result;
+	}
+	
+	//缓存各种数据
+	public void maintenanceSetGlobalThings() {
+		//把工程总进度缓存到缓存中
+		GlobalThings.putCash("maintenances",baseService.queryList("comle.Maintenance.getMaintenanceListData", null));
+		//把部门数据放缓存中
+		GlobalThings.putCash("subofficeList",baseService.queryList("comle.Suboffice.getSubofficeListDBData", null));
+		
+		System.out.println("成功缓存工程总进度！！");
+	 
 	}
 }

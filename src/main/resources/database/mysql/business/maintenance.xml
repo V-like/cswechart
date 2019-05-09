@@ -40,8 +40,8 @@
 		order by codeno
 	</select>
 	<insert id="insertMaintenance" parameterType="com.lion.echart.project.entity.MaintenanceEntity">
-           INSERT INTO t_f_maintenance(priority,entnyname,grade,perentid,`index`,codeno,unit,begindate,planfinishdate,workload)  
-               VALUES(#{priority},#{entnyname},#{grade},#{perentid},#{index},#{codeno},#{unit},#{begindate},#{planfinishdate},#{workload} )
+           INSERT INTO t_f_maintenance(maintenanceid,priority,entnyname,grade,perentid,`index`,codeno,unit,begindate,planfinishdate,workload)  
+               VALUES(#{maintenanceid},#{priority},#{entnyname},#{grade},#{perentid},#{index},#{codeno},#{unit},#{begindate},#{planfinishdate},#{workload} )
    	</insert>
    	
    	<select id="getSubMaxInxdexAo" parameterType="java.util.Map" resultType="java.lang.Integer" >

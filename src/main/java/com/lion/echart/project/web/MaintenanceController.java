@@ -1,10 +1,12 @@
 package com.lion.echart.project.web;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,6 +18,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.apache.commons.beanutils.BeanUtils;
 
 import com.lion.echart.base.logic.BaseService;
 import com.lion.echart.global.GlobalThings;
@@ -160,7 +163,8 @@ public class MaintenanceController {
 		}else {
 			param.put("subofficeid", user.getSubofficeid());
 		}
-		List<Map<String, Object>> list = baseService.queryList("comle.Maintenance.getMaintenanceListData", param);
+		//List<Map<String, Object>> list = baseService.queryList("comle.Maintenance.getMaintenanceListData", param);
+		List<Map<String, Object>> list = (List<Map<String, Object>>) GlobalThings.getCash("maintenances");
 		return list;
 	}
 		
@@ -229,7 +233,7 @@ public class MaintenanceController {
 				}
 			}				
 			leftpriority = leftpriority.substring(0,leftpriority.length()-1);
-			
+			maintenance.setMaintenanceid((long)(100+Math.random()*(100000000-100+1)));
 			maintenance.setPriority(leftpriority);
 			maintenance.setGrade(grade);
 			maintenance.setIndex(selfIndex);
@@ -239,11 +243,23 @@ public class MaintenanceController {
 			try {				
 				System.out.println(maintenance);
 				baseService.insertObject("comle.Maintenance.insertMaintenance",maintenance);
+				//新增到缓存
+				List<Map<String, Object>> list = (List<Map<String, Object>>) GlobalThings.getCash("maintenances");
+				//list.add(BeanUtils.describe(maintenance));
+				list.add(getmainMap(maintenance));
+				GlobalThings.putCash("maintenances", list);
 				obj.put("msgType", 1);
 			} catch (Exception e) {
 				e.printStackTrace();
 				obj.put("msgType", 0);
 			}
 			return obj.toString();
-		}		
+		}
+		
+		//对象转换成map集合
+		public Map<String,Object> getmainMap(MaintenanceEntity main) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException{
+			Map<String, Object> mainMap = BeanUtils.describe(main); //new HashMap<String,Object>();
+			mainMap.put("perentid",main.getPerentid());
+			return mainMap;
+		}
 }
