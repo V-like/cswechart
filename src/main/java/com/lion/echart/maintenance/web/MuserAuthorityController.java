@@ -118,7 +118,7 @@ public class MuserAuthorityController {
 				datas[0] = caozstrs;
 			}
 			for (int i = 0; i < datas.length; i++) {
-				if(datas[i] != null && "null".equals(datas[i])) {
+				if(datas[i] != null && !"null".equals(datas[i])) {
 					muserAuthority = new MuserAuthorityEntity();
 					muserAuthority.setMid(leftid);
 					muserAuthority.setAuthority("1");
@@ -136,7 +136,7 @@ public class MuserAuthorityController {
 				datas[0] = chakstrs;
 			}
 			for (int i = 0; i < datas.length; i++) {
-				if(datas[i] != null && "null".equals(datas[i])) {
+				if(datas[i] != null && !"null".equals(datas[i])) {
 					muserAuthority = new MuserAuthorityEntity();
 					muserAuthority.setMid(leftid);
 					muserAuthority.setAuthority("0");
