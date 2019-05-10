@@ -46,6 +46,16 @@ var TableInit = function () {
 				 ,{field: 'unit',title: '单位' }
 				 ,{field: 'begindatestr',title: '计划开工时间' }
 				 ,{field: 'planfinishdatestr',title: '计划完工时间' }			//,align: 'center'
+				 ,{field: 'gongqi',title: '工期',
+					 formatter:function(value, row, index, field){
+					 var begindatestr = row["begindatestr"];
+					 var planfinishdatestr = row["planfinishdatestr"];
+					 if(begindatestr != null && planfinishdatestr != null){
+						 return dateDiffIncludeToday(begindatestr,planfinishdatestr);
+					 }else{
+						 return "-";
+					 }
+				 }}	 				 
 				 ,{field: 'workload',title: '设计工程量' }
 				 ,{field: 'changeworkload',title: '变更工程量' }
 				 ,{field: 'accumulatedcompletion',title: '累计完成量' }
@@ -320,3 +330,15 @@ function saveFun(){
 		closeloding();
 	}
 }
+//获得两个日期间的差天数
+function dateDiffIncludeToday(startDateString, endDateString){  
+
+	var startTime=startDateString.substr(0,10);//截取时间
+	var endTime=endDateString.substr(0,10);
+    var separator = "-"; //日期分隔符  
+    var startDates = startTime.split(separator);  
+    var endDates = endTime.split(separator);  
+    var startDate = new Date(startDates[0], startDates[1]-1, startDates[2]);  
+    var endDate = new Date(endDates[0], endDates[1]-1, endDates[2]);  
+    return parseInt(Math.abs(endDate - startDate)/86400000) + 1;//把相差的毫秒数转换为天数   
+};  
