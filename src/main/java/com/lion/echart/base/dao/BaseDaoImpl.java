@@ -78,12 +78,7 @@ public class BaseDaoImpl implements BaseDao{
 	}
 	
 	public void closeCon() {
-		try {
-			sqlMapClient.close();
-			getSqlMapClient().getConnection().close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		sqlMapClient.close();
 	}
 	
 	public Object queryObject(String sqlid, Object param) {
