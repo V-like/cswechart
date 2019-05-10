@@ -1053,7 +1053,7 @@ function saveRow() {
 			$("#monthplaninvest" + i).val(_monthplaninvest);
 
 		} else {
-			alert("保存失败,请重新保存6")
+			alert("保存失败,请重新保存")
 			return;
 		}
 
@@ -1064,7 +1064,7 @@ function saveRow() {
 			}
 			$("#yearrealityinvest" + i).val(_yearrealityinvest);
 		} else {
-			alert("保存失败,请重新保存7")
+			alert("保存失败,请重新保存")
 			return;
 		}
 
@@ -1075,7 +1075,7 @@ function saveRow() {
 			}
 			$("#monthrealityinvest" + i).val(_monthrealityinvest);
 		} else {
-			alert("保存失败,请重新保存8")
+			alert("保存失败,请重新保存")
 			return;
 		}
 
@@ -1086,7 +1086,7 @@ function saveRow() {
 			}
 			$("#earthwork" + i).val(_earthwork);
 		} else {
-			alert("保存失败,请重新保存9")
+			alert("保存失败,请重新保存")
 			return;
 		}
 
@@ -1097,7 +1097,7 @@ function saveRow() {
 			}
 			$("#stonework" + i).val(_stonework);
 		} else {
-			alert("保存失败,请重新保存10")
+			alert("保存失败,请重新保存")
 			return;
 		}
 
@@ -1108,7 +1108,7 @@ function saveRow() {
 			}
 			$("#beton" + i).val(_beton);
 		} else {
-			alert("保存失败,请重新保存11")
+			alert("保存失败,请重新保存")
 			return;
 		}
 		
@@ -1119,7 +1119,7 @@ function saveRow() {
 			}
 			$("#beton" + i).val(_beton);
 		} else {
-			alert("保存失败,请重新保存11")
+			alert("保存失败,请重新保存")
 			return;
 		}
 
