@@ -40,7 +40,7 @@ FROM 	(SELECT f.maintenanceid AS "fid",f.priority AS "number",f.entnyname AS "en
 	ORDER BY f.codeno ASC) a  
 JOIN 	(SELECT tmua.mid AS 'authortyMId' ,tmua.authority,tfm.priority FROM t_m_user_authority tmua  
 	JOIN t_f_maintenance tfm ON tmua.mid = tfm.maintenanceid 
-	WHERE tmua.uid=#{uid}) b  
+	WHERE tmua.depid=#{depid}) b  
 ON a.fid=b.authortyMId OR a.number LIKE CONCAT(b.priority,'.%')
 LEFT JOIN  (SELECT fid AS fid ,SUM(completionrate) AS annualcompletionrate , SUM(accumulationcumulant) AS annualcompletion FROM t_month_schedule WHERE plannedvolume !="" OR accumulationcumulant!="" AND  DATE LIKE #{year} GROUP BY fid ) ff
 ON ff.fid=a.fid 

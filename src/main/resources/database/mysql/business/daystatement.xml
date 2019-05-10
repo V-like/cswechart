@@ -17,7 +17,7 @@
 		JOIN
 		 (SELECT tmua.mid AS 'authortyMId' ,tmua.authority,tfm.priority  FROM t_m_user_authority tmua 
 				join t_f_maintenance tfm on tmua.mid = tfm.maintenanceid
-				WHERE tmua.uid=#{uid}) b 
+				WHERE tmua.depid=#{depid}) b 
 		on fm.maintenanceid=b.authortyMId or fm.priority like CONCAT(b.priority,'.%')
 		LEFT JOIN t_month_schedule ms
 		ON fm.maintenanceid = ms.fid

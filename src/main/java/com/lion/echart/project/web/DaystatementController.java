@@ -84,7 +84,7 @@ public class DaystatementController {
 			param.put("date", ""+year+"-"+m);
 			param.put("day", day+"");	
 		}
-		param.put("uid", user.getId());
+		param.put("depid", user.getSubofficeid());
 		List<Map<String, Object>> list = baseService.queryList("comle.daystatement.getdaystatementListData", param);
 		System.out.println("========================="+list);
 		return list;
