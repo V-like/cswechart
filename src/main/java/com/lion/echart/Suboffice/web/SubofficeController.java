@@ -151,18 +151,47 @@ public class SubofficeController {
 		SimpleDateFormat si = new SimpleDateFormat("yyyy-MM-dd");
 		JSONObject obj = new JSONObject();
 		try {
-
+			//从缓存中获取所有部门数据
+			List<Map<String,Object>> subList = (List<Map<String,Object>>)GlobalThings.getCash("subofficeList");
+			System.out.println("小集合小集合小集合"+subList);
+			//判断为新增还是修改
 			if(subofficeid!=null && subofficeid!="") {
-
+				
 				SubofficeEntity suboffice = new SubofficeEntity(Long.parseLong(subofficeid),Long.parseLong(pid), subofficename, "", 0, "", "", "", new Date());
 				System.out.println("====================================="+suboffice);
 				baseService.updateObject("comle.Suboffice.updateSuboffice", suboffice);
+				
+				//修改缓存数据
+				int index = -1;
+				for(int i = 0; i<subList.size(); i++) {
+					Map<String,Object> sub = subList.get(i); 
+					System.out.println("map集合map集合"+sub);
+					//比较subofficeid
+					for(Map.Entry<String, Object> map : sub.entrySet()) {
+						String key = map.getKey();
+						String value = map.getValue()+"";
+						//key是suboffice并且value是修改部门的id
+						if("subofficeid".equals(key) && subofficeid.equals(value)) {
+								index = i;
+								System.out.println("成功修改索引："+index);
+								break;	
+						}
+					}
+				}
+				//查找修改的对象替换到集合中
+				Map<String, Object> searchmap = new HashMap<String, Object>();
+				searchmap.put("subofficeid", subofficeid);
+				
+				subList.set(index, getsubMap((SubofficeEntity)baseService.queryObject("comle.Suboffice.getSubofficeLBysubid", searchmap)));
+				System.out.println("修改完后的缓存集合"+subList);
+				GlobalThings.putCash("subofficeList", subList);
+				
 			}else {
 				SubofficeEntity suboffice = new SubofficeEntity(0L,Long.parseLong(pid), subofficename, "", 0, "", "", "", new Date());
 				System.out.println("====================================="+suboffice);
 				baseService.insertObject("comle.Suboffice.insertSuboffice", suboffice);
 				//修改缓存中数据
-				List<Map<String,Object>> subList = (List<Map<String,Object>>)GlobalThings.getCash("subofficeList");
+				
 				subList.add(getsubMap(suboffice));
 				System.out.println("集合集合集合"+subList);
 				GlobalThings.putCash("suboffices", subList);
@@ -216,6 +245,32 @@ public class SubofficeController {
 			}
 			paramUpdate.put("idList", idList);
 			baseService.updateObject("comle.Suboffice.deleteSuboffice", paramUpdate);
+			//从缓存中获取所有部门数据
+			List<Map<String,Object>> subList = (List<Map<String,Object>>)GlobalThings.getCash("subofficeList");
+			//创建
+			//从缓存集合中删除该元素
+			for(int i = 0; i<subList.size(); i++) {
+				Map<String,Object> sub = subList.get(i); 
+				System.out.println("map集合map集合"+sub);
+				int is = 0;
+				//比较subofficeid
+				for(Map.Entry<String, Object> map : sub.entrySet()) {
+					String key = map.getKey();
+					Object value = map.getValue();
+					//key是suboffice并且value是修改部门的id
+					if("subofficeid".equals(key) && idList.contains(Integer.parseInt(value+""))) {
+						is= 1;
+						break;
+					}
+				}
+				if(is == 1) {
+					subList.remove(i);
+					System.out.println("成功修改索引："+i);
+					i--;
+				}
+			}
+			//替换更新后的缓存
+			GlobalThings.putCash("subofficeList", subList);
 			obj.put("msgType", 1);
 		} catch (Exception e) {
 			e.printStackTrace();
