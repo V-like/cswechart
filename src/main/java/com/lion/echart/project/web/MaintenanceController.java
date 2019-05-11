@@ -38,66 +38,7 @@ public class MaintenanceController {
 	@RequestMapping(value = "/maintenance/maintenancelPrem.web",method=RequestMethod.GET)
 	public String maintenancelPrem(HttpServletRequest req,HttpServletResponse resp, HttpSession session , Model model,String maintenanceid) throws IOException { 
 		req.setAttribute("ts", System.currentTimeMillis());
-		req.setAttribute("who", "maintenance");
-		//返回拼装
-		List<Map<String, Object>> result = new ArrayList<Map<String,Object>>();
-		if(GlobalThings.getCash("MTDBTree")== null) {
-			//查询结果
-			List<Map<String, Object>> list = baseService.queryList("comle.Maintenance.getMaintenanceListData2", null);
-			//父id归类
-			Map<String, List<Map<String, Object>>> parents = new HashMap<String, List<Map<String,Object>>>();
-			//临时对象
-			List<Map<String, Object>> temp = null;
-			for (int i = 0; i < list.size(); i++) {
-				if(parents.get(list.get(i).get("maintenanceid").toString()) != null) {
-					list.get(i).put("subs", parents.get(list.get(i).get("maintenanceid").toString()));
-					parents.remove(list.get(i).get("maintenanceid").toString());
-				}
-				
-				if("0".equals(list.get(i).get("perentid").toString())) {
-					result.add(list.get(i));
-				}else {
-					if(parents.get(list.get(i).get("perentid")) != null) {
-						temp = parents.get(list.get(i).get("perentid"));
-					}else {
-						temp = new ArrayList<Map<String,Object>>();
-					}
-					temp.add(list.get(i));
-					parents.put(list.get(i).get("perentid").toString(), temp);
-				}
-			}
-			GlobalThings.putCash("MTDBTree",result);
-		}
-
-		if(GlobalThings.getCash("DepartTree")== null) {
-			result = new ArrayList<Map<String,Object>>();
-			//查询结果
-			List<Map<String, Object>> list = baseService.queryList("comle.Suboffice.getSubofficeTreeData", null);
-			//父id归类
-			Map<String, List<Map<String, Object>>> parents = new HashMap<String, List<Map<String,Object>>>();
-			//临时对象
-			List<Map<String, Object>> temp = null;
-			for (int i = 0; i < list.size(); i++) {
-				if(parents.get(list.get(i).get("subofficeid").toString()) != null) {
-					list.get(i).put("subs", parents.get(list.get(i).get("subofficeid").toString()));
-					parents.remove(list.get(i).get("subofficeid").toString());
-				}
-				
-				if("0".equals(list.get(i).get("pid").toString())) {
-					result.add(list.get(i));
-				}else {
-					if(parents.get(list.get(i).get("pid")) != null) {
-						temp = parents.get(list.get(i).get("pid"));
-					}else {
-						temp = new ArrayList<Map<String,Object>>();
-					}
-					temp.add(list.get(i));
-					parents.put(list.get(i).get("pid").toString(), temp);
-				}
-			}
-			GlobalThings.putCash("DepartTree",result);
-		}
-		
+		req.setAttribute("who", "maintenance");		
 		return "/page/project/maintenancelPrem";
 	}
 
@@ -136,8 +77,31 @@ public class MaintenanceController {
 	public @ResponseBody List<Map<String, Object>> maintenanceGetDBTreeData(String belongTimeStr,HttpServletRequest req,HttpServletResponse resp, 
 			HttpSession session, String subofficeid) throws IOException {
 		List<Map<String, Object>> result = new ArrayList<Map<String,Object>>();
-		if(GlobalThings.getCash("MTDBTree")!= null) {
-			result = (List<Map<String, Object>>)GlobalThings.getCash("MTDBTree");
+		if(GlobalThings.getCash("maintenances")!= null) {
+			//缓存中的结果集
+			List<Map<String, Object>> list = (List<Map<String, Object>>)GlobalThings.getCash("maintenances");
+			//父id归类
+			Map<String, List<Map<String, Object>>> parents = new HashMap<String, List<Map<String,Object>>>();
+			//临时对象
+			List<Map<String, Object>> temp = null;
+			for (int i = 0; i < list.size(); i++) {
+				if(parents.get(list.get(i).get("maintenanceid").toString()) != null) {
+					list.get(i).put("subs", parents.get(list.get(i).get("maintenanceid").toString()));
+					parents.remove(list.get(i).get("maintenanceid").toString());
+				}
+				
+				if("0".equals(list.get(i).get("perentid").toString())) {
+					result.add(list.get(i));
+				}else {
+					if(parents.get(list.get(i).get("perentid")) != null) {
+						temp = parents.get(list.get(i).get("perentid"));
+					}else {
+						temp = new ArrayList<Map<String,Object>>();
+					}
+					temp.add(list.get(i));
+					parents.put(list.get(i).get("perentid").toString(), temp);
+				}
+			}
 		}
 		return result;
 	}

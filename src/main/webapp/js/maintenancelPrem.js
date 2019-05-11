@@ -97,7 +97,7 @@ function setOfficeNodes(data,outp,checkeds){
 		// 节点不可选中
 		//proNode["selectable"] = false;
 		if(value.subs != undefined && value.subs.length > 0)
-			setMaintNodes(value.subs,proNode["nodes"]);
+			setOfficeNodes(value.subs,proNode["nodes"]);
 		
 		outp.push(proNode);
 	});
