@@ -82,33 +82,25 @@ public class SubofficeController {
 	
 	//获取权限设置部门树结构数据
 	@RequestMapping(value = "/suboffice/getDepartTreeData.json",method=RequestMethod.POST)
-	public @ResponseBody List<Map<String, Object>> getDepartTreeData(HttpServletRequest req,
+	public @ResponseBody Map<String, List<Map<String, Object>>> getDepartTreeData(HttpServletRequest req,
 			HttpServletResponse resp,HttpSession session) throws IOException {
-		List<Map<String, Object>> result = new ArrayList<Map<String,Object>>();
-		if(GlobalThings.getCash("suboffices")!= null) {
+		Map<String, List<Map<String, Object>>> result = new HashMap<String, List<Map<String,Object>>>();
+		if(GlobalThings.getCash("subofficeList")!= null) {
 			//查询结果
-			List<Map<String, Object>> list = (List<Map<String, Object>>)GlobalThings.getCash("suboffices");
+			List<Map<String, Object>> list = (List<Map<String, Object>>)GlobalThings.getCash("subofficeList");
 			//父id归类
-			Map<String, List<Map<String, Object>>> parents = new HashMap<String, List<Map<String,Object>>>();
 			//临时对象
 			List<Map<String, Object>> temp = null;
 			for (int i = 0; i < list.size(); i++) {
-				if(parents.get(list.get(i).get("subofficeid").toString()) != null) {
-					list.get(i).put("subs", parents.get(list.get(i).get("subofficeid").toString()));
-					parents.remove(list.get(i).get("subofficeid").toString());
-				}
 				
-				if("0".equals(list.get(i).get("pid").toString())) {
-					result.add(list.get(i));
+				if(result.get(list.get(i).get("pid").toString()) != null) {
+					temp = result.get(list.get(i).get("pid").toString());
 				}else {
-					if(parents.get(list.get(i).get("pid")) != null) {
-						temp = parents.get(list.get(i).get("pid"));
-					}else {
-						temp = new ArrayList<Map<String,Object>>();
-					}
-					temp.add(list.get(i));
-					parents.put(list.get(i).get("pid").toString(), temp);
+					temp = new ArrayList<Map<String,Object>>();
 				}
+				temp.add(list.get(i));
+				result.put(list.get(i).get("pid").toString(), temp);
+			
 			}
 		}
 		

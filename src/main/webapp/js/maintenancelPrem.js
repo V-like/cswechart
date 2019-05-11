@@ -4,8 +4,8 @@ $(document).ready(function(){
 	closeloding();
 });
 var leftDate = null;
-function setMaintNodes(data,outp){
-	$.each(data, function(index, value) {
+function setMaintNodes(data,eachdate,outp){
+	$.each(eachdate, function(index, value) {
 		var proNode = {};
 		// text是显示的内容
 		proNode["priority"] = value.priority;
@@ -14,8 +14,8 @@ function setMaintNodes(data,outp){
 		proNode["nodes"] = [];
 		// 节点不可选中
 		//proNode["selectable"] = false;
-		if(value.subs != undefined && value.subs.length > 0)
-			setMaintNodes(value.subs,proNode["nodes"]);
+		if(data[""+value.maintenanceid] != undefined && data[""+value.maintenanceid].length > 0)
+			setMaintNodes(data,data[""+value.maintenanceid],proNode["nodes"]);
 		
 		outp.push(proNode);
 	});
@@ -28,10 +28,11 @@ function getMaintenanceDate(){
 			dataType:"json",
 			data:null,
 	        success:function(data){
-	        	if (data != undefined && data != null && data.length > 0) {
+	        	if (data != undefined && data != null &&
+	        			data["0"] != undefined && data["0"].length > 0) {
 	        		leftDate = new Array();
 					// 遍历子节点
-	        		setMaintNodes(data,leftDate)
+	        		setMaintNodes(data,data["0"],leftDate)
 					$("#left").treeview({
 						data : leftDate,// 赋值
 						highlightSelected : true,// 选中项不高亮，避免和上述制定的颜色变化规则冲突
@@ -80,8 +81,8 @@ function getMaintenanceDate(){
 }
 
 var offices = null;
-function setOfficeNodes(data,outp,checkeds){
-	$.each(data, function(index, value) {
+function setOfficeNodes(data,eachdata,outp,checkeds){
+	$.each(eachdata, function(index, value) {
 		var proNode = {};
 		// text是显示的内容
 		proNode["pid"] = value.pid;
@@ -96,8 +97,8 @@ function setOfficeNodes(data,outp,checkeds){
 		proNode["nodes"] = [];
 		// 节点不可选中
 		//proNode["selectable"] = false;
-		if(value.subs != undefined && value.subs.length > 0)
-			setOfficeNodes(value.subs,proNode["nodes"]);
+		if(data[""+value.subofficeid] != undefined && data[""+value.subofficeid].length > 0)
+			setOfficeNodes(data,data[""+value.subofficeid],proNode["nodes"],checkeds);
 		
 		outp.push(proNode);
 	});
@@ -109,10 +110,10 @@ function getSubofficeDate(){
 		dataType:"json",
 		data:null,
         success:function(data){
-        	if (data != undefined && data != null && data.length > 0) {
+        	if (data != undefined && data != null && data["0"] != undefined && data["0"].length > 0) {
         		offices = new Array();
 				// 遍历子节点
-        		setOfficeNodes(data,offices,caozqxs);
+        		setOfficeNodes(data,data["0"],offices,caozqxs);
 				$("#caozqx").treeview({
 					data : offices,// 赋值
 					highlightSelected : true,// 选中项不高亮，避免和上述制定的颜色变化规则冲突
@@ -124,7 +125,7 @@ function getSubofficeDate(){
 				
 				offices = new Array();
 				// 遍历子节点
-        		setOfficeNodes(data,offices,chakqxs);
+        		setOfficeNodes(data,data["0"],offices,chakqxs);
         		$("#caozqx").on("click","li",function(){
         			var nodeId = $(this).attr("data-nodeid");
         			var node = $('#caozqx').treeview("getNode",nodeId);

@@ -74,33 +74,22 @@ public class MaintenanceController {
 	
 	//获取工程总进度树结构数据
 	@RequestMapping(value = "/project/maintenanceGetDBTreeData.json",method=RequestMethod.POST)
-	public @ResponseBody List<Map<String, Object>> maintenanceGetDBTreeData(String belongTimeStr,HttpServletRequest req,HttpServletResponse resp, 
+	public @ResponseBody Map<String, List<Map<String, Object>>> maintenanceGetDBTreeData(String belongTimeStr,HttpServletRequest req,HttpServletResponse resp, 
 			HttpSession session, String subofficeid) throws IOException {
-		List<Map<String, Object>> result = new ArrayList<Map<String,Object>>();
+		Map<String, List<Map<String, Object>>> result = new HashMap<String, List<Map<String, Object>>>();
 		if(GlobalThings.getCash("maintenances")!= null) {
 			//缓存中的结果集
 			List<Map<String, Object>> list = (List<Map<String, Object>>)GlobalThings.getCash("maintenances");
-			//父id归类
-			Map<String, List<Map<String, Object>>> parents = new HashMap<String, List<Map<String,Object>>>();
-			//临时对象
 			List<Map<String, Object>> temp = null;
 			for (int i = 0; i < list.size(); i++) {
-				if(parents.get(list.get(i).get("maintenanceid").toString()) != null) {
-					list.get(i).put("subs", parents.get(list.get(i).get("maintenanceid").toString()));
-					parents.remove(list.get(i).get("maintenanceid").toString());
-				}
-				
-				if("0".equals(list.get(i).get("perentid").toString())) {
-					result.add(list.get(i));
+				if(result.get(list.get(i).get("perentid").toString()) != null) {
+					temp = result.get(list.get(i).get("perentid").toString());
 				}else {
-					if(parents.get(list.get(i).get("perentid")) != null) {
-						temp = parents.get(list.get(i).get("perentid"));
-					}else {
-						temp = new ArrayList<Map<String,Object>>();
-					}
-					temp.add(list.get(i));
-					parents.put(list.get(i).get("perentid").toString(), temp);
+					temp = new ArrayList<Map<String,Object>>();
 				}
+				temp.add(list.get(i));
+				result.put(list.get(i).get("perentid").toString(), temp);
+			
 			}
 		}
 		return result;
