@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.apache.commons.beanutils.BeanUtils;
 
+import com.lion.echart.Suboffice.entity.SubofficeEntity;
 import com.lion.echart.base.logic.BaseService;
 import com.lion.echart.global.GlobalThings;
 import com.lion.echart.project.entity.MaintenanceEntity;
@@ -186,7 +187,7 @@ public class MaintenanceController {
 				}
 			}				
 			leftpriority = leftpriority.substring(0,leftpriority.length()-1);
-			maintenance.setMaintenanceid((long)(100+Math.random()*(100000000-100+1)));
+			//maintenance.setMaintenanceid((long)(100+Math.random()*(100000000-100+1)));
 			maintenance.setPriority(leftpriority);
 			maintenance.setGrade(grade);
 			maintenance.setIndex(selfIndex);
@@ -198,8 +199,14 @@ public class MaintenanceController {
 				baseService.insertObject("comle.Maintenance.insertMaintenance",maintenance);
 				//新增到缓存
 				List<Map<String, Object>> list = (List<Map<String, Object>>) GlobalThings.getCash("maintenances");
-				//list.add(BeanUtils.describe(maintenance));
-				list.add(getmainMap(maintenance));
+				//list.add(BeanUtils.describe(maintenance));	 
+				Map<String, Object> searchmap = new HashMap<String, Object>();
+				searchmap.put("priority", leftpriority); 
+				MaintenanceEntity main = (MaintenanceEntity)baseService.queryObject("comle.Maintenance.getMaintenanceByPriority", searchmap);
+				System.out.println("对象对象对象"+main); 
+				
+				
+				list.add(getmainMap(main));
 				GlobalThings.putCash("maintenances", list);
 				obj.put("msgType", 1);
 			} catch (Exception e) {

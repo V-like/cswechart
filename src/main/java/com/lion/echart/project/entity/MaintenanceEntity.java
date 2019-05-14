@@ -22,17 +22,23 @@ public class MaintenanceEntity extends BaseEntity{
 	private String begindatestr;
 	private Date planfinishdate;//计划完工时间
 	private String planfinishdatestr;
-	private Double workload;//工作量
-	private Double changeworkload;//工作量
-	
+	private Double workload;//设计工程总量
+	private Double changeworkload;//总变更工程量
+	private Double accumulatedcompletion;//总累计完成量
+	private Double accumulationcompletionrate;//总累计完成率
 	
 	public MaintenanceEntity() {
 		super();
 	}
 	
-	public MaintenanceEntity(String priority, String entnyname, Long grade, Long perentid, Long index, String codeno,
-			String unit, Date begindate, Date planfinishdate, Double workload) {
+	
+
+	public MaintenanceEntity(Long maintenanceid, String priority, String entnyname, Long grade, Long perentid,
+			Long index, String codeno, String unit, Date begindate, String begindatestr, Date planfinishdate,
+			String planfinishdatestr, Double workload, Double changeworkload, Double accumulatedcompletion,
+			Double accumulationcompletionrate) {
 		super();
+		this.maintenanceid = maintenanceid;
 		this.priority = priority;
 		this.entnyname = entnyname;
 		this.grade = grade;
@@ -41,9 +47,16 @@ public class MaintenanceEntity extends BaseEntity{
 		this.codeno = codeno;
 		this.unit = unit;
 		this.begindate = begindate;
+		this.begindatestr = begindatestr;
 		this.planfinishdate = planfinishdate;
+		this.planfinishdatestr = planfinishdatestr;
 		this.workload = workload;
+		this.changeworkload = changeworkload;
+		this.accumulatedcompletion = accumulatedcompletion;
+		this.accumulationcompletionrate = accumulationcompletionrate;
 	}
+
+
 
 	public Double getChangeworkload() {
 		return changeworkload;
@@ -156,13 +169,31 @@ public class MaintenanceEntity extends BaseEntity{
 			}  
 		}
 	}
-
+	public Double getAccumulatedcompletion() {
+		return accumulatedcompletion;
+	}
+	public void setAccumulatedcompletion(Double accumulatedcompletion) {
+		this.accumulatedcompletion = accumulatedcompletion;
+	}
+	
+	public Double getAccumulationcompletionrate() {
+		return accumulationcompletionrate;
+	}
+	public void setAccumulationcompletionrate(Double accumulationcompletionrate) {
+		this.accumulationcompletionrate = accumulationcompletionrate;
+	}
+	
 	@Override
 	public String toString() {
-		return "MaintenanceEntity [priority=" + priority + ", entnyname=" + entnyname + ", grade=" + grade
-				+ ", perentid=" + perentid + ", index=" + index + ", codeno=" + codeno + ", unit=" + unit
-				+ ", begindate=" + begindate + ", planfinishdate=" + planfinishdate + ", workload=" + workload + "]";
+		return "MaintenanceEntity [maintenanceid=" + maintenanceid + ", priority=" + priority + ", entnyname="
+				+ entnyname + ", grade=" + grade + ", perentid=" + perentid + ", index=" + index + ", codeno=" + codeno
+				+ ", unit=" + unit + ", begindate=" + begindate + ", begindatestr=" + begindatestr + ", planfinishdate="
+				+ planfinishdate + ", planfinishdatestr=" + planfinishdatestr + ", workload=" + workload
+				+ ", changeworkload=" + changeworkload + ", accumulatedcompletion=" + accumulatedcompletion
+				+ ", accumulationcompletionrate=" + accumulationcompletionrate + "]";
 	}
+
+
 
 	@Override
 	public Long getId() {
