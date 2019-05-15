@@ -57,6 +57,8 @@ public class MuserAuthorityEntity  extends BaseEntity{
 	}
 	@Override
 	public String toString() {
-		return "MuserAuthorityEntity [id=" + id + ", authority=" + authority + ", uid=" + uid + ", mid=" + mid + "]";
+		return "MuserAuthorityEntity [id=" + id + ", authority=" + authority + ", uid=" + uid + ", mid=" + mid
+				+ ", depid=" + depid + ", username=" + username + ", realname=" + realname + "]";
 	}
+	
 }

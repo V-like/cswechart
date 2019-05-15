@@ -80,7 +80,7 @@
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="subofficeid" class="col-sm-3 control-label">所属分局:</label>
+							<label for="subofficeid" class="col-sm-3 control-label">所属部门:</label>
 							<div class="col-sm-6">
 								<select id="subofficeid" class="form-control"></select>
 							</div>

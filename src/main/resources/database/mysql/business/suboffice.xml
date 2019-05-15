@@ -65,8 +65,7 @@
    <!-- 部门修改 -->
    <update id="updateSuboffice" parameterType="com.lion.echart.Suboffice.entity.SubofficeEntity">
    		update t_s_suboffice 
-   		set subofficename = #{subofficename},
-   		pid = #{pid}
+   		set subofficename = #{subofficename}
    		where subofficeid=#{subofficeid}
    </update>
       <!-- 删除部门 -->

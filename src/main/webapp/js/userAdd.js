@@ -7,7 +7,7 @@ function subofficeDataInit(){
 	$.ajax({
 		url: $("#fule").val()+'/getCashListData.json',
 		type: 'post',
-		data: {"cashtype": "suboffices"},
+		data: {"cashtype": "subofficeList"},
 		dataType: "json",
 		success: function (data) {
 			for(var i=0;i<data.length;i++){

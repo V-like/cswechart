@@ -26,7 +26,7 @@
 	<!-- 仅供月进度分期对比分期功能页面查询列表使用 -->
 	<select id="monthscheduleData"  parameterType="java.util.Map"
 		resultType="java.util.Map">
-SELECT a.*,b.authortyMId,b.authority ,ff.annualcompletionrate,ff.annualcompletion 
+SELECT DISTINCT a.*,b.authortyMId,b.authority ,ff.annualcompletionrate,ff.annualcompletion 
 FROM 	(SELECT f.maintenanceid AS "fid",f.priority AS "number",f.entnyname AS "entnyname", 
 	f.codeno AS "code" ,f.grade,s.mid AS "mid", f.unit AS "unit",f.perentid,
 	s.changequantity AS "changequantity", f.workload AS "workload",
@@ -40,7 +40,10 @@ FROM 	(SELECT f.maintenanceid AS "fid",f.priority AS "number",f.entnyname AS "en
 	ORDER BY f.codeno ASC) a  
 JOIN 	(SELECT tmua.mid AS 'authortyMId' ,tmua.authority,tfm.priority FROM t_m_user_authority tmua  
 	JOIN t_f_maintenance tfm ON tmua.mid = tfm.maintenanceid 
-	WHERE tmua.depid=#{depid}) b  
+	<if test="depid != null and depid != 0">
+	WHERE tmua.depid=#{depid}
+	</if>
+	) b  
 ON a.fid=b.authortyMId OR a.number LIKE CONCAT(b.priority,'.%')
 LEFT JOIN  (SELECT fid AS fid ,SUM(completionrate) AS annualcompletionrate , SUM(accumulationcumulant) AS annualcompletion FROM t_month_schedule WHERE plannedvolume !="" OR accumulationcumulant!="" AND  DATE LIKE #{year} GROUP BY fid ) ff
 ON ff.fid=a.fid 
